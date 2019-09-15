@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:11dbdff6b0e1ba62eb12f1105fdf5c68:3c06f9b697dbe86502f928b804a36684:16715f1cda8aa4e73ef9b81c4acc1a7a$ -->
+<TextureAtlas imagePath="Logos.png" width="205" height="330">
+    <SubTexture name="ChlorofilLogo" x="1" y="181" width="188" height="59"/>
+    <SubTexture name="ElectroSystemLogo" x="1" y="242" width="106" height="87"/>
+    <SubTexture name="EnergyGlobeLogo" x="1" y="1" width="203" height="178"/>
+</TextureAtlas>

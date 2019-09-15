@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Hello World</title>
+	</head>
+	<script src="pixi.js"></script>
+	<script src="pixi-sound.js"></script>
+	<body>
+		<script type="text/javascript">
+			let type = "WebGL"
+			if(!PIXI.utils.isWebGLSupported()){
+				type = "canvas"
+			}
+
+			PIXI.utils.sayHello(type)
+
+			//Create a Pixi Application
+			let app = new PIXI.Application({ 
+				width: 960, 
+				height: 640,                       
+				antialias: true, 
+				transparent: false, 
+				resolution: 1
+			  }
+			);
+
+			//Add the canvas that Pixi automatically created for you to the HTML document
+			document.body.appendChild(app.view);
+			
+			var sheet0;
+			var sheet1;
+
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
+			PIXI.Loader.shared.add('bird','Assets/music1.mp3');
+			PIXI.Loader.shared.load(function(loader, resources) {
+				sheet0 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-0.json"].spritesheet;
+				let background = new PIXI.Sprite(sheet0.textures["LoadingScreen.png"]);
+				app.stage.addChild(background);
+				sheet1 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-1.json"].spritesheet;
+				resources.bird.sound.play();
+				
+				var button = new PIXI.Sprite(sheet0.textures["item_mobile_big.png"]);
+				button.buttonMode = true;
+				app.stage.addChild(button);
+
+				button.anchor.set(0.5);
+				button.x = 200;
+				button.y = 200;
+
+				// make the button interactive...
+				button.interactive = true;
+				button.buttonMode = true;
+
+				button.on('pointerdown', onButtonDown);
+				button.on('pointerup', onButtonUp);
+				
+				function onButtonDown() {
+				this.isdown = true;
+				//this.texture = sheet0.textures["LoadingScreen.png"];
+				this.alpha = 0.3;
+				PIXI.Loader.shared.resources.bird.sound.stop();
+				}
+				
+				function onButtonUp() {
+				this.isdown = true;
+				//this.texture = sheet0.textures["LoadingScreen.png"];
+				this.alpha = 1;
+				PIXI.Loader.shared.resources.bird.sound.play();
+				}
+			});
+		</script>
+	</body>
+</html>
