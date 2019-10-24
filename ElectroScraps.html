@@ -6,6 +6,8 @@
 	</head>
 	<script src="pixi.js"></script>
 	<script src="pixi-sound.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+	<script src="CatchLevel.js"></script>
 	<body>
 		<script type="text/javascript">
 			let type = "WebGL"
@@ -30,13 +32,15 @@
 			
 			var sheet0;
 			var sheet1;
+			var counter=0;
+			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
 			PIXI.Loader.shared.add('bird','Assets/music1.mp3');
 			PIXI.Loader.shared.load(function(loader, resources) {
 				sheet0 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-0.json"].spritesheet;
-				let background = new PIXI.Sprite(sheet0.textures["LoadingScreen.png"]);
+				let background = new PIXI.Sprite(sheet0.textures[bgList[counter]]);
 				app.stage.addChild(background);
 				sheet1 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-1.json"].spritesheet;
 				resources.bird.sound.play();
@@ -56,20 +60,51 @@
 				button.on('pointerdown', onButtonDown);
 				button.on('pointerup', onButtonUp);
 				
+				let monster = new PIXI.Sprite(sheet1.textures["monster.png"]);
+				monster.x = 100;
+				monster.y = app.stage.height - monster.height;
+				app.stage.addChild(monster);
+				let monsterEyesClosed = new PIXI.Sprite(sheet1.textures["monsterEyesClosed.png"]);
+				monsterEyesClosed.x = 54;
+				monsterEyesClosed.y = 60;
+				monster.addChild(monsterEyesClosed)
+				let monsterEyesOpened = new PIXI.Sprite(sheet1.textures["monsterEyesOpened.png"]);
+				monsterEyesOpened.x = 50;
+				monsterEyesOpened.y = 50;
+				//monster.addChild(monsterEyesOpened)
+				let monsterMouthClosed = new PIXI.Sprite(sheet1.textures["monsterMouthClosed.png"]);
+				monsterMouthClosed.x = 66;
+				monsterMouthClosed.y = 82;
+				monster.addChild(monsterMouthClosed)
+				let monsterMouthOpened = new PIXI.Sprite(sheet1.textures["monsterMouthOpened.png"]);
+				monsterMouthOpened.x = 63;
+				monsterMouthOpened.y = 80;
+				//monster.addChild(monsterMouthOpened)
+				
 				function onButtonDown() {
 				this.isdown = true;
-				//this.texture = sheet0.textures["LoadingScreen.png"];
-				this.alpha = 0.3;
-				PIXI.Loader.shared.resources.bird.sound.stop();
+				counter++;
+				if(counter >= bgList.length) {
+					counter=0;
+				}
+				background.texture = sheet0.textures[bgList[counter]];
+				
 				}
 				
 				function onButtonUp() {
-				this.isdown = true;
+				this.isdown = false;
 				//this.texture = sheet0.textures["LoadingScreen.png"];
 				this.alpha = 1;
 				PIXI.Loader.shared.resources.bird.sound.play();
 				}
+				
+				//initLevels();
 			});
+			
+			function initLevels() {
+				level = new CatchLevel(app);
+				level.init();
+			}
 		</script>
 	</body>
 </html>
