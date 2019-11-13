@@ -9,9 +9,37 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
 	<script src="CatchLevel.js"></script>
 	<body>
+	
+		<script type="text/javascript">
+			function refreshTeamDropDown() {
+				var elementId = "SelectTeam";
+				var element = document.getElementById(elementId);
+				var parentId = element.parentNode.id;
+				//var html = [<?php include "GetTeamDropDownMenu.php";?>];
+				
+				removeElement(elementId);
+				addElement(parentId,elementId,elementId,html);
+			}
+			
+			function removeElement(elementId) {
+				var element = document.getElementById(elementId);
+				element.parentNode.removeChild(element);
+			}
+			
+			function addElement(parentId, elementTag, elementId, html) {
+				// Adds an element to the document
+				var p = document.getElementById(parentId);
+				var newElement = document.createElement(elementTag);
+				newElement.setAttribute('id', elementId);
+				newElement.innerHTML = [{<?php include "GetTeamDropDownMenu.php";?>}];
+				p.appendChild(newElement);
+			}
+		</script>
+	
+		<?php include "GetSchoolDropDownMenu.php";?><br>
+		<?php include "GetTeamDropDownMenu.php";?><br>
+		<?php include "GetPlayerDropDownMenu.php?TeamID=1";?><br>
 		<br><br>
-		
-		<?php include "GetSchoolDropDownMenu.php";?>
 		
 		<script type="text/javascript">
 			let type = "WebGL"
