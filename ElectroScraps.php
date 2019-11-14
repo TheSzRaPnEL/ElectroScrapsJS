@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Hello World</title>
+		<title>ElectroScrapsJS</title>
 	</head>
 	<script src="pixi.js"></script>
 	<script src="pixi-sound.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
-	<script src="CatchLevel.js"></script>
+	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -31,7 +31,7 @@
 				var p = document.getElementById(parentId);
 				var newElement = document.createElement(elementTag);
 				newElement.setAttribute('id', elementId);
-				newElement.innerHTML = [{<?php include "GetTeamDropDownMenu.php";?>}];
+				newElement.innerHTML = "GetTeamDropDownMenu.php";
 				p.appendChild(newElement);
 			}
 		</script>
@@ -162,6 +162,8 @@
 			function initLevel() {
 				level = new CatchLevel();
 				level.init();
+				level.start();
+				level.stop();
 			}
 			
 			function stopLevel() {
