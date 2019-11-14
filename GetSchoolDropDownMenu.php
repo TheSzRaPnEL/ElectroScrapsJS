@@ -11,11 +11,7 @@ $sql = 'SELECT Name, ID FROM School';
 
 $result = $conn->query($sql);
 
-<<<<<<< Updated upstream
 echo '<select id=SchoolSelect onChange=refreshTeamDropDown()>';
-=======
-echo '<select>';
->>>>>>> Stashed changes
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
