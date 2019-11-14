@@ -66,6 +66,7 @@
 			var sheet1;
 			var counter=0;
 			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
+			var itemTextureNames = ["item_calculator_big.png", "item_car_big.png", "item_kettle_big.png","item_mobile_big.png","item_lamp_big.png","item_mixer_big.png","item_mobile_big.png","tem_owen_big.png","item_pc_big.png","item_radio_big.png","item_refrigerator_big.png","item_shaver_big.png","item_smartphone_big.png","item_tvNEW_big.png","item_tvOLD_big.png","item_washer_big.png"];
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -160,10 +161,9 @@
 			});
 			
 			function initLevel() {
-				level = new CatchLevel();
+				level = new CatchLevel(this.itemTextureNames);
 				level.init();
 				level.start();
-				level.stop();
 			}
 			
 			function stopLevel() {
