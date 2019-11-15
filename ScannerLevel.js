@@ -14,6 +14,7 @@ class ScannerLevel {
 			// scannerWheel.visible = false;
 		app.stage.addChild(scannerWheel);
 	}
+	
 	start() {
 		//
 	}

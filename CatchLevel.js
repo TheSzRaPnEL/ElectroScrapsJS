@@ -59,10 +59,14 @@ class CatchLevel {
 			this.indicators.push(indicator);
 		}
 		
+		//pick few items from the item list to throw them around
 		for (var i=0; i<this.selectedItemTextureNamesNum;i++) {
 			var randomIndex = parseInt(Math.random()*this.itemTextureNamesTemp.length);
 			this.selectedItemTextureNames.push(this.itemTextureNamesTemp[randomIndex]);
+			this.itemTextureNamesTemp.splice(randomIndex,1);
+			
 		}
+		console.log(this.selectedItemTextureNames);
 	}
 	
 	start() {
@@ -157,7 +161,6 @@ class CatchLevel {
 			.on('touchmove', onDragMove);
 
 		function onDragStart(event) {
-			context.stop(context);
 			this.data = event.data;
 			this.alpha = 0.5;
 			this.dragging = true;

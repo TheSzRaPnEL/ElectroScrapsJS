@@ -9,6 +9,8 @@
 	<script src="gsap.min.js"></script>
 	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ScannerLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="SortItem.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="ItemComponent.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -65,7 +67,35 @@
 			
 			var counter=0;
 			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
-			var itemTextureNames = ["item_calculator_big.png", "item_car_big.png", "item_kettle_big.png","item_mobile_big.png","item_lamp_big.png","item_mixer_big.png","item_mobile_big.png","item_owen_big.png","item_pc_big.png","item_radio_big.png","item_refrigerator_big.png","item_shaver_big.png","item_smartphone_big.png","item_tvNEW_big.png","item_tvOLD_big.png","item_washer_big.png"];
+			
+			var gameItemComponentsList = [];
+			var aluminium = new ItemComponent("aluminium","raw_res_aluminum.png","metal",10);
+			gameItemComponentsList.push(aluminium);
+			
+			var gameSortItemList = [];
+			var calculator = new SortItem("calculator","item_calculator_big.png",true);
+			calculator.addComponent(aluminium);
+			var car = new SortItem("car","item_car.png",true);
+			car.addComponent(aluminium);
+			var kettle = new SortItem("kettle","item_kettle.png");
+			var lamp = new SortItem("lamp","item_lamp.png");
+			var mixer = new SortItem("mixer","item_mixer.png");
+			var mobile = new SortItem("mobile","item_mobile_big.png");
+			var owen = new SortItem("owen","item_owen.png");
+			var pc = new SortItem("pc","item_pc.png");
+			var radio = new SortItem("radio","item_radio.png");
+			var refrigerator = new SortItem("refrigerator","item_refrigerator.png");
+			var shaver = new SortItem("shaver","item_shaver.png");
+			var smartphone = new SortItem("smartphone","item_smartphone.png");
+			var tvNEW = new SortItem("tvNEW","item_tvNEW.png");
+			var tvOLD = new SortItem("tvOLD","item_tvOLD.png");
+			var washer = new SortItem("washer","item_washer.png");
+			gameSortItemList.push(calculator,car,kettle,lamp,mixer,mobile,owen,pc,radio,refrigerator,shaver,smartphone,tvNEW,tvOLD,washer);
+			
+			var itemTextureNames = [];
+			gameSortItemList.forEach( function(item) {
+				itemTextureNames.push(item.textureName);
+			});
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -144,7 +174,7 @@
 					}
 					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
-						startScannerLevel();
+						initLevel();
 					} else {
 						stopLevel();
 					}
