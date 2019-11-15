@@ -62,23 +62,19 @@
 			//Add the canvas that Pixi automatically created for you to the HTML document
 			document.body.appendChild(app.view);
 			
-			var sheet0;
-			var sheet1;
 			var counter=0;
 			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
-			var itemTextureNames = ["item_calculator_big.png", "item_car_big.png", "item_kettle_big.png","item_mobile_big.png","item_lamp_big.png","item_mixer_big.png","item_mobile_big.png","tem_owen_big.png","item_pc_big.png","item_radio_big.png","item_refrigerator_big.png","item_shaver_big.png","item_smartphone_big.png","item_tvNEW_big.png","item_tvOLD_big.png","item_washer_big.png"];
+			var itemTextureNames = ["item_calculator_big.png", "item_car_big.png", "item_kettle_big.png","item_mobile_big.png","item_lamp_big.png","item_mixer_big.png","item_mobile_big.png","item_owen_big.png","item_pc_big.png","item_radio_big.png","item_refrigerator_big.png","item_shaver_big.png","item_smartphone_big.png","item_tvNEW_big.png","item_tvOLD_big.png","item_washer_big.png"];
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
 			PIXI.Loader.shared.add('bird','Assets/music1.mp3');
 			PIXI.Loader.shared.load(function(loader, resources) {
-				sheet0 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-0.json"].spritesheet;
-				let background = new PIXI.Sprite(sheet0.textures[bgList[counter]]);
+				let background = new PIXI.Sprite(PIXI.Texture.from(bgList[counter]));
 				app.stage.addChild(background);
-				sheet1 = PIXI.Loader.shared.resources["Assets/ES_SS_EN-1.json"].spritesheet;
 				resources.bird.sound.play();
 				
-				var button = new PIXI.Sprite(sheet0.textures["item_mobile_big.png"]);
+				var button = new PIXI.Sprite(PIXI.Texture.from("item_mobile_big.png"));
 				button.buttonMode = true;
 				app.stage.addChild(button);
 
@@ -93,40 +89,40 @@
 				button.on('pointerdown', onButtonDown);
 				button.on('pointerup', onButtonUp);
 				
-				let monster = new PIXI.Sprite(sheet1.textures["monster.png"]);
+				let monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
 				monster.x = 100;
 				monster.y = app.stage.height - monster.height;
 				app.stage.addChild(monster);
-				let monsterEyesClosed = new PIXI.Sprite(sheet1.textures["monsterEyesClosed.png"]);
+				let monsterEyesClosed = new PIXI.Sprite(PIXI.Texture.from("monsterEyesClosed.png"));
 				monsterEyesClosed.x = 54;
 				monsterEyesClosed.y = 60;
 				monster.addChild(monsterEyesClosed);
 				monsterEyesClosed.visible=false;
-				let monsterEyesOpened = new PIXI.Sprite(sheet1.textures["monsterEyesOpened.png"]);
+				let monsterEyesOpened = new PIXI.Sprite(PIXI.Texture.from("monsterEyesOpened.png"));
 				monsterEyesOpened.x = 50;
 				monsterEyesOpened.y = 50;
 				monster.addChild(monsterEyesOpened)
-				let monsterMouthClosed = new PIXI.Sprite(sheet1.textures["monsterMouthClosed.png"]);
+				let monsterMouthClosed = new PIXI.Sprite(PIXI.Texture.from("monsterMouthClosed.png"));
 				monsterMouthClosed.x = 66;
 				monsterMouthClosed.y = 82;
 				monster.addChild(monsterMouthClosed);
 				monsterMouthClosed.visible=false;
-				let monsterMouthOpened = new PIXI.Sprite(sheet1.textures["monsterMouthOpened.png"]);
+				let monsterMouthOpened = new PIXI.Sprite(PIXI.Texture.from("monsterMouthOpened.png"));
 				monsterMouthOpened.x = 63;
 				monsterMouthOpened.y = 80;
 				monster.addChild(monsterMouthOpened)
 
-				TweenMax.to(monster,2,{x:500});
+				gsap.to(monster,2,{x:500});
 				startBlinking();
 
 				function startBlinking() {
-					TweenMax.delayedCall(2,blink);
-					TweenMax.delayedCall(2,startBlinking);
+					gsap.delayedCall(2,blink);
+					gsap.delayedCall(2,startBlinking);
 				}
 
 				function blink() {
 					closeEyes();
-					TweenMax.delayedCall(0.2,openEyes);
+					gsap.delayedCall(0.2,openEyes);
 				}
 
 				function closeEyes() {
@@ -145,7 +141,7 @@
 					if(counter >= bgList.length) {
 						counter=0;
 					}
-					background.texture = sheet0.textures[bgList[counter]];
+					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
 						initLevel();
 					} else {
@@ -155,7 +151,6 @@
 				
 				function onButtonUp() {
 					this.isdown = false;
-					//this.texture = sheet0.textures["LoadingScreen.png"];
 					this.alpha = 1;
 				}
 			});

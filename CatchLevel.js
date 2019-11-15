@@ -19,13 +19,13 @@ class CatchLevel {
 		this.indicatorsShown = 0;
 		this.itemInScannerType = "";
 		
-		this.menuBar = new PIXI.Sprite(sheet0.textures["MenuScreen.png"]);
+		this.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
 		var menuBar = this.menuBar;
 			menuBar.x=-menuBar.width;
 			menuBar.visible = false;
 		app.stage.addChild(menuBar);
 		
-		this.scannerBar = new PIXI.Sprite(sheet0.textures["scannerBG.png"]);
+		this.scannerBar = new PIXI.Sprite(PIXI.Texture.from("scannerBG.png"));
 		var scannerBar = this.scannerBar;
 			scannerBar.pivot.x = scannerBar.width/2;
 			scannerBar.pivot.y = scannerBar.height/2;
@@ -34,7 +34,7 @@ class CatchLevel {
 			scannerBar.visible = false;
 		app.stage.addChild(scannerBar);
 		
-		this.scannerTxt = new PIXI.Sprite(sheet0.textures["skanerTXT.png"]);
+		this.scannerTxt = new PIXI.Sprite(PIXI.Texture.from("skanerTXT.png"));
 		var scannerTxt = this.scannerTxt;
 			scannerTxt.pivot.x = scannerTxt.width/2;
 			scannerTxt.pivot.y = scannerTxt.height/2;
@@ -44,7 +44,7 @@ class CatchLevel {
 		app.stage.addChild(scannerTxt);
 		
 		for (var i=0; i<this.indicatorsNum;i++) {
-			this.indicator = new PIXI.Sprite(sheet1.textures["popupBTNuUp.png"]);
+			this.indicator = new PIXI.Sprite(PIXI.Texture.from("popupBTNuUp.png"));
 			var indicator = this.indicator;
 				indicator.scale.x=0.25;
 				indicator.scale.y=0.25;
@@ -69,8 +69,8 @@ class CatchLevel {
 	}
 	
 	stop(context) {
-		TweenMax.killAll();
 		context.items.forEach( function(item) {
+			gsap.killTweensOf(item);
 			item.parent.removeChild(item);
 		});
 		context.stopRandomItemThrowing(context);
@@ -78,7 +78,7 @@ class CatchLevel {
 	
 	showMenuBar(context) {
 		context.menuBar.visible=true;
-		TweenMax.to(context.menuBar,0.5,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
+		gsap.to(context.menuBar,0.5,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
 	}
 	
 	menuBarShown(context) {
@@ -87,7 +87,7 @@ class CatchLevel {
 	
 	showScannerBar(context) {
 		context.scannerBar.visible=true;
-		TweenMax.to(context.scannerBar,0.5,{x:app.renderer.width-context.scannerBar.width+context.scannerBar.pivot.x, onComplete:context.scannerBarShown, onCompleteParams:[context]});
+		gsap.to(context.scannerBar,0.5,{x:app.renderer.width-context.scannerBar.width+context.scannerBar.pivot.x, onComplete:context.scannerBarShown, onCompleteParams:[context]});
 	}
 	
 	scannerBarShown(context) {
@@ -97,7 +97,7 @@ class CatchLevel {
 	showScannerTxt(context) {
 		context.scannerTxt.visible=true;
 		context.scannerTxt.alpha=0;
-		TweenMax.to(context.scannerTxt,1,{alpha:1, onComplete:context.scannerTxtShown, onCompleteParams:[context]});
+		gsap.to(context.scannerTxt,1,{alpha:1, onComplete:context.scannerTxtShown, onCompleteParams:[context]});
 	}
 	
 	scannerTxtShown(context) {
@@ -113,7 +113,7 @@ class CatchLevel {
 		var indicator = context.indicators[context.indicatorsShown];
 			indicator.alpha=0;
 			indicator.visible=true;
-		TweenMax.to(indicator,0.3,{alpha:0.2, onComplete:context.indicatorShown, onCompleteParams:[context]});
+		gsap.to(indicator,0.3,{alpha:0.2, onComplete:context.indicatorShown, onCompleteParams:[context]});
 	}
 	
 	indicatorShown(context) {
@@ -131,9 +131,7 @@ class CatchLevel {
 	
 	throwRandomItem(context) {
 		var randomItemTextureName = context.selectedItemTextureNames[parseInt(context.selectedItemTextureNames.length*Math.random())];
-		var texture=sheet0.textures[randomItemTextureName];
-		if (texture==null) texture=sheet1.textures[randomItemTextureName];
-		var item = new PIXI.Sprite(texture);
+		var item = new PIXI.Sprite(PIXI.Texture.from(randomItemTextureName));
 			item.name = randomItemTextureName;
 			item.x=Math.random()*app.renderer.width;
 			item.y=app.renderer.height+100;
@@ -142,8 +140,8 @@ class CatchLevel {
 		app.stage.addChild(item);
 		context.items.push(item);
 		
-		TweenMax.to(item,1,{y:200, ease:Quad.easeOut,onComplete:itemFalling,onCompleteParams:[item]});
-		TweenMax.to(item,3,{rotation:item.rotation+Math.PI});
+		gsap.to(item,1,{y:200, ease:Quad.easeOut,onComplete:itemFalling,onCompleteParams:[item]});
+		gsap.to(item,3,{rotation:item.rotation+Math.PI});
 		
 		item.interactive=true;
 		item.anchor.set(0.5);
@@ -161,17 +159,17 @@ class CatchLevel {
 			this.alpha = 0.5;
 			this.dragging = true;
 			
-			TweenMax.killTweensOf(this);
+			gsap.killTweensOf(this);
 		}
 
 		function onDragEnd() {
 			if (this.dragging && !itemOnScanner(this)) {
 				itemFalling(this);
-				TweenMax.to(this,3,{rotation:this.rotation+Math.PI});
+				gsap.to(this,3,{rotation:this.rotation+Math.PI});
 			}
 			
 			if (this.dragging && itemOnScanner(this)) {
-				TweenMax.to(this,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:this.width/10, height:this.height/10, alpha:0, rotation:this.rotation+2*Math.PI, onComplete: itemInScanner, onCompleteParams:[this]});
+				gsap.to(this,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:this.width/10, height:this.height/10, alpha:0, rotation:this.rotation+2*Math.PI, onComplete: itemInScanner, onCompleteParams:[this]});
 			}
 			
 			if (this.dragging) {
@@ -196,7 +194,7 @@ class CatchLevel {
 				if(counter >= bgList.length) {
 					counter=0;
 				}
-				background.texture = sheet0.textures[bgList[counter]];
+				background.texture = PIXI.Texture.from(bgList[counter]);
 				if(counter==2) {
 					initLevel();
 				} else {
@@ -210,11 +208,11 @@ class CatchLevel {
 		}
 		
 		function itemFalling(item) {
-			TweenMax.to(item,1,{y:app.renderer.height+200, ease:Quad.easeIn,onComplete:itemFallen,onCompleteParams:[item]});
+			gsap.to(item,1,{y:app.renderer.height+200, ease:Quad.easeIn,onComplete:itemFallen,onCompleteParams:[item]});
 		}
 		
 		function itemFallen(item) {
-			TweenMax.killTweensOf(item);
+			gsap.killTweensOf(item);
 		}
 		
 		function itemOnScanner(item) {
@@ -225,9 +223,7 @@ class CatchLevel {
 		function itemInScanner(item) {
 			context.indicators.forEach(function (indicator) {
 					var itemTextureName = item.name;
-					var texture=sheet0.textures[itemTextureName];
-					if (texture==null) texture=sheet1.textures[itemTextureName];
-					indicator.texture = texture;
+					indicator.texture = PIXI.Texture.from(itemTextureName);
 				});
 			if (context.itemInScannerType=="" || context.itemInScannerType==item.name) context.itemsInScanner++;
 			else {
