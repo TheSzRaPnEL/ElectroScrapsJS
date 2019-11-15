@@ -4,9 +4,9 @@
 		<meta charset="utf-8">
 		<title>ElectroScrapsJS</title>
 	</head>
-	<script src="pixi.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.js"></script>
 	<script src="pixi-sound.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+	<script src="gsap.min.js"></script>
 	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	

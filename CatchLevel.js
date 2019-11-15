@@ -53,6 +53,7 @@ class CatchLevel {
 				indicator.x = app.renderer.width-scannerBar.width + 50 + (scannerBar.width-50)*i/this.indicatorsNum;
 				indicator.y = scannerBar.y + scannerBar.height/2 + 10;
 				indicator.visible = false;
+				indicator.filters = [new PIXI.filters.BlurFilter(0.1)];
 			app.stage.addChild(indicator);
 			this.indicators.push(indicator);
 		}
@@ -137,6 +138,7 @@ class CatchLevel {
 			item.x=Math.random()*app.renderer.width;
 			item.y=app.renderer.height+100;
 			item.rotation=Math.random()*Math.PI;
+			item.filters = [new PIXI.filters.BlurFilter(0.1)];
 		app.stage.addChild(item);
 		context.items.push(item);
 		
