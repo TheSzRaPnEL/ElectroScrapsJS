@@ -1,7 +1,8 @@
 class CatchLevel {
 	
-	constructor(itemTextureNames) {
+	constructor(itemTextureNames,endFunc) {
 		this.itemTextureNames = [...itemTextureNames];
+		this.endFunc=endFunc;
 	}
 	
 	init() {
@@ -74,6 +75,7 @@ class CatchLevel {
 			item.parent.removeChild(item);
 		});
 		context.stopRandomItemThrowing(context);
+		context.endFunc();
 	}
 	
 	showMenuBar(context) {
@@ -155,6 +157,7 @@ class CatchLevel {
 			.on('touchmove', onDragMove);
 
 		function onDragStart(event) {
+			context.stop(context);
 			this.data = event.data;
 			this.alpha = 0.5;
 			this.dragging = true;

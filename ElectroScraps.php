@@ -8,6 +8,7 @@
 	<script src="pixi-sound.js"></script>
 	<script src="gsap.min.js"></script>
 	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="ScannerLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -143,7 +144,7 @@
 					}
 					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
-						initLevel();
+						startScannerLevel();
 					} else {
 						stopLevel();
 					}
@@ -156,7 +157,13 @@
 			});
 			
 			function initLevel() {
-				level = new CatchLevel(this.itemTextureNames);
+				level = new CatchLevel(this.itemTextureNames,this.startScannerLevel);
+				level.init();
+				level.start();
+			}
+			
+			function startScannerLevel() {
+				level = new ScannerLevel(this.itemTextureNames);
 				level.init();
 				level.start();
 			}
