@@ -11,6 +11,8 @@
 	<script src="ScannerLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="SortItem.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ItemComponent.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="ThrownItem.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="MonsterLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -69,8 +71,27 @@
 			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
 			
 			var gameItemComponentsList = [];
-			var aluminium = new ItemComponent("aluminium","raw_res_aluminum.png","metal",10);
-			gameItemComponentsList.push(aluminium);
+			var aluminium = 	new ItemComponent("aluminium",	"raw_res_aluminum.png",		"metal",	10);
+			var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"metal",	10);
+			var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"metal",	10);
+			var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"metal",	10);
+			var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"metal",	10);
+			var chrome = 		new ItemComponent("chrome",		"raw_res_chrome.png",		"metal",	10);
+			var cobalt = 		new ItemComponent("cobalt",		"raw_res_cobalt.png",		"metal",	10);
+			var copper = 		new ItemComponent("copper",		"raw_res_copper.png",		"metal",	10);
+			var glass = 		new ItemComponent("glass",		"raw_res_glass.png",		"metal",	10);
+			var gold = 			new ItemComponent("gold",		"raw_res_gold.png",			"metal",	10);
+			var lead = 			new ItemComponent("lead",		"raw_res_lead.png",			"metal",	10);
+			var nickel = 		new ItemComponent("nickel",		"raw_res_nickel.png",		"metal",	10);
+			var plastic = 		new ItemComponent("plastic",	"raw_res_plastic.png",		"metal",	10);
+			var platinium = 	new ItemComponent("platinium",	"raw_res_platinium.png",	"metal",	10);
+			var ree = 			new ItemComponent("ree",		"raw_res_ree.png",			"metal",	10);
+			var refrigerant = 	new ItemComponent("refrigerant","raw_res_refrigerant.png",	"metal",	10);
+			var silver = 		new ItemComponent("silver",		"raw_res_silver.png",		"metal",	10);
+			var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"metal",	10);
+			var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"metal",	10);
+			var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"metal",	10);
+			gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);
 			
 			var gameSortItemList = [];
 			var calculator = new SortItem("calculator","item_calculator_big.png",true);
@@ -96,6 +117,8 @@
 			gameSortItemList.forEach( function(item) {
 				itemTextureNames.push(item.textureName);
 			});
+			
+			console.log(gameSortItemList);
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -112,59 +135,12 @@
 				button.anchor.set(0.5);
 				button.x = 200;
 				button.y = 200;
-
-				// make the button interactive...
+				
 				button.interactive = true;
 				button.buttonMode = true;
 
 				button.on('pointerdown', onButtonDown);
 				button.on('pointerup', onButtonUp);
-				
-				let monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
-				monster.x = 100;
-				monster.y = app.stage.height - monster.height;
-				app.stage.addChild(monster);
-				let monsterEyesClosed = new PIXI.Sprite(PIXI.Texture.from("monsterEyesClosed.png"));
-				monsterEyesClosed.x = 54;
-				monsterEyesClosed.y = 60;
-				monster.addChild(monsterEyesClosed);
-				monsterEyesClosed.visible=false;
-				let monsterEyesOpened = new PIXI.Sprite(PIXI.Texture.from("monsterEyesOpened.png"));
-				monsterEyesOpened.x = 50;
-				monsterEyesOpened.y = 50;
-				monster.addChild(monsterEyesOpened)
-				let monsterMouthClosed = new PIXI.Sprite(PIXI.Texture.from("monsterMouthClosed.png"));
-				monsterMouthClosed.x = 66;
-				monsterMouthClosed.y = 82;
-				monster.addChild(monsterMouthClosed);
-				monsterMouthClosed.visible=false;
-				let monsterMouthOpened = new PIXI.Sprite(PIXI.Texture.from("monsterMouthOpened.png"));
-				monsterMouthOpened.x = 63;
-				monsterMouthOpened.y = 80;
-				monster.addChild(monsterMouthOpened)
-
-				gsap.to(monster,2,{x:500});
-				startBlinking();
-
-				function startBlinking() {
-					gsap.delayedCall(2,blink);
-					gsap.delayedCall(2,startBlinking);
-				}
-
-				function blink() {
-					closeEyes();
-					gsap.delayedCall(0.2,openEyes);
-				}
-
-				function closeEyes() {
-					monsterEyesClosed.visible=true;
-					monsterEyesOpened.visible=false;
-				}
-
-				function openEyes() {
-					monsterEyesClosed.visible=false;
-					monsterEyesOpened.visible=true;
-				}
 				
 				function onButtonDown() {
 					this.isdown = true;
@@ -174,9 +150,11 @@
 					}
 					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
-						initLevel();
+						// initLevel();
+						startScannerLevel(gameSortItemList[0]);
+						// startMonsterLevel();
 					} else {
-						stopLevel();
+						endGame();
 					}
 				}
 				
@@ -187,19 +165,25 @@
 			});
 			
 			function initLevel() {
-				level = new CatchLevel(this.itemTextureNames,this.startScannerLevel);
+				level = new CatchLevel(this.gameSortItemList,this.startScannerLevel);
 				level.init();
 				level.start();
 			}
 			
-			function startScannerLevel() {
-				level = new ScannerLevel(this.itemTextureNames);
+			function startScannerLevel(itemInScanner) {
+				level = new ScannerLevel(itemInScanner,this.startMonsterLevel);
 				level.init();
 				level.start();
 			}
 			
-			function stopLevel() {
-				
+			function startMonsterLevel() {
+				level = new MonsterLevel(this.endGame);
+				level.init();
+				level.start();
+			}
+			
+			function endGame() {
+				console.log("The Game has ended.");
 			}
 		</script>
 	</body>

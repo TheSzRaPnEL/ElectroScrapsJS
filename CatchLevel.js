@@ -1,16 +1,16 @@
 class CatchLevel {
 	
-	constructor(itemTextureNames,endFunc) {
-		this.itemTextureNames = [...itemTextureNames];
+	constructor(gameSortItemList,endFunc) {
+		this._gameSortItemList = [...gameSortItemList];
 		this.endFunc=endFunc;
 	}
 	
 	init() {
 		this.items=[];
 		this.indicators = [];
-		this.itemTextureNamesTemp = [...this.itemTextureNames];
-		this.selectedItemTextureNames = [];
-		this.selectedItemTextureNamesNum = 5;
+		this.gameSortItemListTemp = [...this._gameSortItemList];
+		this.selectedGameSortItemList = [];
+		this.selectedGameSortItemListNum = 5;
 		
 		this.itemsInScanner = 0;
 		this.scannerRange = 180;
@@ -18,7 +18,7 @@ class CatchLevel {
 		this.indicatorsHiddenAlpha = 0.2;
 		this.indicatorsShownAlpha = 1;
 		this.indicatorsShown = 0;
-		this.itemInScannerType = "";
+		this.itemInScannerType = null;
 		
 		this.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
 		var menuBar = this.menuBar;
@@ -60,13 +60,13 @@ class CatchLevel {
 		}
 		
 		//pick few items from the item list to throw them around
-		for (var i=0; i<this.selectedItemTextureNamesNum;i++) {
-			var randomIndex = parseInt(Math.random()*this.itemTextureNamesTemp.length);
-			this.selectedItemTextureNames.push(this.itemTextureNamesTemp[randomIndex]);
-			this.itemTextureNamesTemp.splice(randomIndex,1);
+		for (var i=0; i<this.selectedGameSortItemListNum;i++) {
+			var randomIndex = parseInt(Math.random()*this.gameSortItemListTemp.length);
+			this.selectedGameSortItemList.push(this.gameSortItemListTemp[randomIndex]);
+			this.gameSortItemListTemp.splice(randomIndex,1);
 			
 		}
-		console.log(this.selectedItemTextureNames);
+		console.log(this.selectedGameSortItemList);
 	}
 	
 	start() {
@@ -79,7 +79,7 @@ class CatchLevel {
 			item.parent.removeChild(item);
 		});
 		context.stopRandomItemThrowing(context);
-		context.endFunc();
+		context.endFunc(context.itemInScannerType);
 	}
 	
 	showMenuBar(context) {
@@ -136,9 +136,10 @@ class CatchLevel {
 	}
 	
 	throwRandomItem(context) {
-		var randomItemTextureName = context.selectedItemTextureNames[parseInt(context.selectedItemTextureNames.length*Math.random())];
-		var item = new PIXI.Sprite(PIXI.Texture.from(randomItemTextureName));
-			item.name = randomItemTextureName;
+		var randomItem = context.selectedGameSortItemList[parseInt(context.selectedGameSortItemList.length*Math.random())];
+		// var item = new PIXI.Sprite(PIXI.Texture.from(randomItem.textureName));
+		var item = new ThrownItem(randomItem.textureName);
+			item.sortItem=randomItem;
 			item.x=Math.random()*app.renderer.width;
 			item.y=app.renderer.height+100;
 			item.rotation=Math.random()*Math.PI;
@@ -228,10 +229,10 @@ class CatchLevel {
 		
 		function itemInScanner(item) {
 			context.indicators.forEach(function (indicator) {
-					var itemTextureName = item.name;
+					var itemTextureName = item.sortItem.textureName;
 					indicator.texture = PIXI.Texture.from(itemTextureName);
 				});
-			if (context.itemInScannerType=="" || context.itemInScannerType==item.name) context.itemsInScanner++;
+			if (context.itemInScannerType==null || context.itemInScannerType==item.sortItem) context.itemsInScanner++;
 			else {
 				context.indicators.forEach(function (indicator) {
 					indicator.alpha = context.indicatorsHiddenAlpha;
@@ -239,8 +240,8 @@ class CatchLevel {
 				context.itemsInScanner=1;
 			}
 			context.indicators[context.itemsInScanner-1].alpha=context.indicatorsShownAlpha;
-			context.itemInScannerType = item.name;
-			if (context.itemsInScanner>2) context.stop(context);
+			context.itemInScannerType = item.sortItem;
+			if (context.itemsInScanner>context.indicatorsNum-1) context.stop(context);
 		}
 	}
 	
