@@ -3,9 +3,11 @@ class CatchLevel {
 	constructor(gameSortItemList,endFunc) {
 		this._gameSortItemList = [...gameSortItemList];
 		this.endFunc=endFunc;
+		console.log("CatchLevel constructor context: ",this);
 	}
 	
 	init() {
+		console.log("CatchLevel init context: ",this);
 		this.items=[];
 		this.indicators = [];
 		this.gameSortItemListTemp = [...this._gameSortItemList];
@@ -241,6 +243,8 @@ class CatchLevel {
 			}
 			context.indicators[context.itemsInScanner-1].alpha=context.indicatorsShownAlpha;
 			context.itemInScannerType = item.sortItem;
+			console.log("CatchLevel throwRandomItem->itemInScanner context: ",this);
+			console.log("CatchLevel throwRandomItem->itemInScanner context passed: ",context);
 			if (context.itemsInScanner>context.indicatorsNum-1) context.stop(context);
 		}
 	}

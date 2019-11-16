@@ -151,8 +151,8 @@
 					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
 						// initLevel();
-						startScannerLevel(gameSortItemList[0]);
-						// startMonsterLevel();
+						// startScannerLevel(gameSortItemList[0]);
+						startMonsterLevel();
 					} else {
 						endGame();
 					}

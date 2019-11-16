@@ -5,6 +5,8 @@ class MonsterLevel {
 	}
 	
 	init() {
+		let context = this;
+		
 		this.monsterCounter=0;
 		
 		this.monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
@@ -35,7 +37,7 @@ class MonsterLevel {
 			monsterMouthOpened.y = 80;
 			monster.addChild(monsterMouthOpened)
 
-		gsap.to(monster,1,{x:500, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[this]});
+		gsap.to(monster,1,{x:500, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
 		startBlinking();
 		
 		function monsterMovedRight(context) {
@@ -45,7 +47,7 @@ class MonsterLevel {
 		function monsterMovedLeft(context) {
 			console.log(context.monsterCounter);
 			context.monsterCounter++;
-			if(context.monsterCounter>2) context.stop(context)
+			if(context.monsterCounter>1) context.stop(context)
 			else {
 				gsap.to(monster,1,{x:500, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]})
 			}
@@ -78,6 +80,7 @@ class MonsterLevel {
 	
 	stop(context) {
 		console.log("stop(context): ",context);
+		console.log("context.endFunc: ",context.endFunc);
 		context.endFunc();
 	}
 

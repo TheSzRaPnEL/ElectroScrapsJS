@@ -6,8 +6,10 @@ class ScannerLevel {
 	}
 	
 	init() {
+		let context = this;
+		
 		this.scannerComponentList=[];
-		let componentsRevied=0;
+		this.componentsRevied=0;
 		
 		this.scannerWheel = new PIXI.Sprite(PIXI.Texture.from("ResourceWheelEmpty.png"));
 		var scannerWheel = this.scannerWheel;
@@ -45,7 +47,7 @@ class ScannerLevel {
 			resPopupCloseBtn.x = resPopup.x+resPopup.pivot.x-10;
 			resPopupCloseBtn.y = resPopup.y-resPopup.pivot.y+10;
 			resPopupCloseBtn.interactive=true;
-			// resPopupCloseBtn.on('mousedown', onResPopupCloseBtnMouseDown);
+			resPopupCloseBtn.on('mousedown', onResPopupCloseBtnMouseDown);
 			resPopupCloseBtn.visible = false;
 		app.stage.addChild(resPopupCloseBtn);
 		//----------------------------------------//
@@ -66,12 +68,10 @@ class ScannerLevel {
 		}
 		console.log(this.scannerComponentList);
 		
-		app.view.addEventListener﻿("resPopupCloseBtnDown",this.stop(this));
-		
-		var popupsClosed = function(event) {
+		function popupClosed() {
 			console.log("dispatch catched");
-			componentsRevied++;
-			if (componentsRevied>=2) stop();
+			context.componentsRevied++;
+			if (context.componentsRevied>=context.scannerComponentList.length) context.stop(context);
 		}
 		
 		function onComponentMouseDown(event) {
@@ -88,9 +88,7 @@ class ScannerLevel {
 				this.data=true;
 				resPopup.visible=false;
 				resPopupCloseBtn.visible=false;
-				var newEvent = new CustomEvent("resPopupCloseBtnDown");
-				app.view.dispatchEvent﻿(newEvent);
-				console.log("dispatched");
+				popupClosed();
 			// }
 		}
 		
