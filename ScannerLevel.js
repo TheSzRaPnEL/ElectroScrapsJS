@@ -16,7 +16,7 @@ class ScannerLevel {
 			scannerWheel.pivot.x = scannerWheel.width/2;
 			scannerWheel.pivot.y = scannerWheel.height/2;
 			scannerWheel.x = app.renderer.width/2;
-			scannerWheel.y = app.renderer.height/2;
+			scannerWheel.y = 5*app.renderer.height/9;
 			// scannerWheel.visible = false;
 		app.stage.addChild(scannerWheel);
 		
@@ -25,7 +25,7 @@ class ScannerLevel {
 			itemInScanner.pivot.x = itemInScanner.width/2;
 			itemInScanner.pivot.y = itemInScanner.height/2;
 			itemInScanner.x = app.renderer.width/2;
-			itemInScanner.y = app.renderer.height/2;
+			itemInScanner.y = 5*app.renderer.height/9;
 			// itemInScanner.visible = false;
 		app.stage.addChild(itemInScanner);
 		

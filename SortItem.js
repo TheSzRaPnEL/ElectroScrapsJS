@@ -1,10 +1,12 @@
 class SortItem {
 	
-	constructor(name,textureName,hasBatteries=false) {
+	constructor(name,textureName) {
 		this._name=name;
 		this._textureName=textureName;
-		this._hasBatteries=hasBatteries;
+		this._hasBatteries=false;
+		this._hasRefrigerant=false;
 		this.components=[];
+		this.componentAmounts=[];
 	}
 	
 	get name() {
@@ -15,12 +17,28 @@ class SortItem {
 		return this._textureName;
 	}
 	
+	componentAmount(componentName) {
+		return this.componentAmounts[componentName];
+	}
+	
+	componentAmount(componentName,value) {
+		this.componentAmounts[componentName]=value;
+	}
+	
 	hasBatteries() {
 		return this._hasBatteries;
 	}
 	
-	addComponent(component) {
+	hasRefrigerant() {
+		return this._hasRefrigerant;
+	}
+	
+	addComponent(component,amount) {
 		this.components.push(component);
+		var componentName=component.name;
+		if(componentName=="batteryLit" || componentName=="batteryNik") this._hasBatteries=true;
+		if(componentName=="refrigerant") this._hasRefrigerant=true;
+		this.componentAmounts[componentName]=amount;
 	}
 	
 	hasComponent(componentName) {

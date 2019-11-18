@@ -6,13 +6,17 @@
 	</head>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.js"></script>
 	<script src="pixi-sound.js"></script>
-	<script src="gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
 	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ScannerLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="SortItem.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ItemComponent.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ThrownItem.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="MonsterLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="MapLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="CountryIndicator.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="ScoreLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="EndLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -94,23 +98,118 @@
 			gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);
 			
 			var gameSortItemList = [];
-			var calculator = new SortItem("calculator","item_calculator_big.png",true);
-			calculator.addComponent(aluminium);
+			var calculator = new SortItem("calculator","item_calculator_big.png");
+				calculator.addComponent(copper,15);
+				calculator.addComponent(plastic,60);
+				calculator.addComponent(batteryLit,20);
+			
 			var car = new SortItem("car","item_car.png",true);
-			car.addComponent(aluminium);
+				car.addComponent(copper);
+				car.addComponent(plastic);
+				car.addComponent(batteryLit);
+			
 			var kettle = new SortItem("kettle","item_kettle.png");
+				kettle.addComponent(steel);
+				kettle.addComponent(copper);
+				kettle.addComponent(plastic);
+				
 			var lamp = new SortItem("lamp","item_lamp.png");
+				lamp.addComponent(steel);
+				lamp.addComponent(copper);
+				lamp.addComponent(plastic);
+				lamp.addComponent(glass);
+				lamp.addComponent(wolfram);
+				lamp.addComponent(aluminium);
+				
 			var mixer = new SortItem("mixer","item_mixer.png");
+				mixer.addComponent(steel);
+				mixer.addComponent(copper);
+				mixer.addComponent(plastic);
+				mixer.addComponent(aluminium);
+				
 			var mobile = new SortItem("mobile","item_mobile_big.png");
+				mobile.addComponent(steel);
+				mobile.addComponent(copper);
+				mobile.addComponent(plastic);
+				mobile.addComponent(batteryLit);
+				mobile.addComponent(aluminium);
+				mobile.addComponent(silver);
+				mobile.addComponent(gold);
+				mobile.addComponent(platinium);
+				mobile.addComponent(tin);
+				
 			var owen = new SortItem("owen","item_owen.png");
+				owen.addComponent(steel);
+				owen.addComponent(copper);
+				owen.addComponent(brass);
+				owen.addComponent(plastic);
+				owen.addComponent(aluminium);
+				
 			var pc = new SortItem("pc","item_pc.png");
+				pc.addComponent(steel);
+				pc.addComponent(copper);
+				pc.addComponent(plastic);
+				pc.addComponent(aluminium);
+				pc.addComponent(silver);
+				pc.addComponent(gold);
+				pc.addComponent(platinium);
+				pc.addComponent(tin);
+				
 			var radio = new SortItem("radio","item_radio.png");
+				radio.addComponent(steel);
+				radio.addComponent(copper);
+				radio.addComponent(batteryLit);
+				radio.addComponent(plastic);
+				radio.addComponent(aluminium);
+			
 			var refrigerator = new SortItem("refrigerator","item_refrigerator.png");
+				refrigerator.addComponent(steel);
+				refrigerator.addComponent(copper);
+				refrigerator.addComponent(plastic);
+				refrigerator.addComponent(refrigerant);
+				refrigerator.addComponent(aluminium);
+			
 			var shaver = new SortItem("shaver","item_shaver.png");
+				shaver.addComponent(steel);
+				shaver.addComponent(copper);
+				shaver.addComponent(plastic);
+				shaver.addComponent(batteryLit);
+				shaver.addComponent(aluminium);
+				
 			var smartphone = new SortItem("smartphone","item_smartphone.png");
+				smartphone.addComponent(steel);
+				smartphone.addComponent(copper);
+				smartphone.addComponent(plastic);
+				smartphone.addComponent(glass);
+				smartphone.addComponent(batteryLit);
+				smartphone.addComponent(aluminium);
+				smartphone.addComponent(silver);
+				smartphone.addComponent(gold);
+				smartphone.addComponent(platinium);
+				smartphone.addComponent(ree);
+				smartphone.addComponent(tin);
+				
 			var tvNEW = new SortItem("tvNEW","item_tvNEW.png");
+				tvNEW.addComponent(steel);
+				tvNEW.addComponent(copper);
+				tvNEW.addComponent(plastic);
+				tvNEW.addComponent(glass);
+				tvNEW.addComponent(ree);
+				tvNEW.addComponent(tin);
+				
 			var tvOLD = new SortItem("tvOLD","item_tvOLD.png");
+				tvOLD.addComponent(steel);
+				tvOLD.addComponent(copper);
+				tvOLD.addComponent(plastic);
+				tvOLD.addComponent(glass);
+				tvOLD.addComponent(lead);
+				
 			var washer = new SortItem("washer","item_washer.png");
+				washer.addComponent(steel);
+				washer.addComponent(copper);
+				washer.addComponent(plastic);
+				washer.addComponent(aluminium);
+				
 			gameSortItemList.push(calculator,car,kettle,lamp,mixer,mobile,owen,pc,radio,refrigerator,shaver,smartphone,tvNEW,tvOLD,washer);
 			
 			var itemTextureNames = [];
@@ -130,13 +229,14 @@
 				app.stage.addChild(background);
 				resources.bird.sound.play();
 				
-				var button = new PIXI.Sprite(PIXI.Texture.from("item_mobile_big.png"));
+				var button = new PIXI.Sprite(PIXI.Texture.from("StartButton.png"));
 				button.buttonMode = true;
 				app.stage.addChild(button);
 
-				button.anchor.set(0.5);
-				button.x = 200;
-				button.y = 200;
+				button.pivot.x=button.width/2;
+				button.pivot.y=button.height/2;
+				button.x = app.renderer.width/2;
+				button.y = 8*app.renderer.height/9;
 				
 				button.interactive = true;
 				button.buttonMode = true;
@@ -146,18 +246,10 @@
 				
 				function onButtonDown() {
 					this.isdown = true;
-					counter++;
-					if(counter >= bgList.length) {
-						counter=0;
-					}
-					background.texture = PIXI.Texture.from(bgList[counter]);
-					if(counter==2) {
-						initLevel();
-						// startScannerLevel(gameSortItemList[0]);
-						// startMonsterLevel();
-					} else {
-						endGame();
-					}
+					this.visible=false;
+					background.texture=PIXI.Texture.from("EmptyScreen.jpg");
+					initLevel();
+					// startScannerLevel(gameSortItemList[0]);
 				}
 				
 				function onButtonUp() {
@@ -179,7 +271,25 @@
 			}
 			
 			function startMonsterLevel() {
-				level = new MonsterLevel(context.endGame);
+				level = new MonsterLevel(context.startMapLevel);
+				level.init();
+				level.start();
+			}
+			
+			function startMapLevel() {
+				level = new MapLevel(context.startScoreLevel);
+				level.init();
+				level.start();
+			}
+			
+			function startScoreLevel() {
+				level = new ScoreLevel(context.startEndLevel);
+				level.init();
+				level.start();
+			}
+			
+			function startEndLevel() {
+				level = new EndLevel(context.endGame);
 				level.init();
 				level.start();
 			}
