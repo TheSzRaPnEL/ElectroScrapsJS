@@ -75,15 +75,21 @@ class ScannerLevel {
 		}
 		
 		function onComponentMouseDown(event) {
-			// if(!this.data) {
+			context.scannerComponentList.forEach( function(scannerComponent) {
+				scannerComponent.off('mousedown', onComponentMouseDown);
+			});
+			if(!this.data) {
 				this.data=true;
 				this.alpha=0.4;
 				resPopup.visible=true;
 				resPopupCloseBtn.visible=true;
-			// }
+			}
 		}
 		
 		function onResPopupCloseBtnMouseDown(event) {
+			context.scannerComponentList.forEach( function(scannerComponent) {
+				scannerComponent.on('mousedown', onComponentMouseDown);
+			});
 			// if(!this.data) {
 				this.data=true;
 				resPopup.visible=false;
@@ -104,7 +110,7 @@ class ScannerLevel {
 	
 	stop(context) {
 		console.log("end scan level");
-		context.endFunc();
+		context.endFunc(context._itemInScanner.components);
 	}
 
 };

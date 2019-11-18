@@ -5,8 +5,8 @@ class SortItem {
 		this._textureName=textureName;
 		this._hasBatteries=false;
 		this._hasRefrigerant=false;
-		this.components=[];
-		this.componentAmounts=[];
+		this._components=[];
+		this._componentAmounts=[];
 	}
 	
 	get name() {
@@ -17,12 +17,16 @@ class SortItem {
 		return this._textureName;
 	}
 	
+	get components() {
+		return this._components;
+	}
+	
 	componentAmount(componentName) {
-		return this.componentAmounts[componentName];
+		return this._componentAmounts[componentName];
 	}
 	
 	componentAmount(componentName,value) {
-		this.componentAmounts[componentName]=value;
+		this._componentAmounts[componentName]=value;
 	}
 	
 	hasBatteries() {
@@ -34,16 +38,16 @@ class SortItem {
 	}
 	
 	addComponent(component,amount) {
-		this.components.push(component);
+		this._components.push(component);
 		var componentName=component.name;
 		if(componentName=="batteryLit" || componentName=="batteryNik") this._hasBatteries=true;
 		if(componentName=="refrigerant") this._hasRefrigerant=true;
-		this.componentAmounts[componentName]=amount;
+		this._componentAmounts[componentName]=amount;
 	}
 	
 	hasComponent(componentName) {
 		var componentFound=false;
-		this.components.forEach( function(component) {
+		this._components.forEach( function(component) {
 			if (component.name==componentName && !componentFound) componentFound=true;
 		});
 		return componentFound;

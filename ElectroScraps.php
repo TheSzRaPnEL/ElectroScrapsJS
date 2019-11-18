@@ -17,6 +17,7 @@
 	<script src="CountryIndicator.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ScoreLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="EndLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="DropItem.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 	
 		<script type="text/javascript">
@@ -262,6 +263,7 @@
 					background.texture=PIXI.Texture.from("EmptyScreen.jpg");
 					initLevel();
 					// startScannerLevel(gameSortItemList[0]);
+					// startMonsterLevel(gameSortItemList[0].components)
 				}
 				
 				function onButtonUp() {
@@ -290,12 +292,12 @@
 				level.start();
 			}
 			
-			function startMonsterLevel() {
+			function startMonsterLevel(componentList) {
 				PIXI.sound.pause('songOne');
 				PIXI.sound.pause('songTwo');
 				PIXI.sound.resume('songThree');
 				PIXI.sound.pause('songFour');
-				level = new MonsterLevel(context.startMapLevel);
+				level = new MonsterLevel(componentList,context.startMapLevel);
 				level.init();
 				level.start();
 			}
