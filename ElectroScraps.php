@@ -223,11 +223,23 @@
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
-			PIXI.Loader.shared.add('bird','Assets/music1.mp3');
+			PIXI.Loader.shared.add('songOne','Assets/music1.mp3');
+			PIXI.Loader.shared.add('songTwo','Assets/music2.mp3');
+			PIXI.Loader.shared.add('songThree','Assets/music3.mp3');
+			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
+			PIXI.Loader.shared.add('good','Assets/good.mp3');
 			PIXI.Loader.shared.load(function(loader, resources) {
 				let background = new PIXI.Sprite(PIXI.Texture.from(bgList[counter]));
 				app.stage.addChild(background);
-				resources.bird.sound.play();
+				PIXI.sound.play('songOne').loop=true;
+				PIXI.sound.play('songTwo').loop=true;
+				PIXI.sound.play('songThree').loop=true;
+				PIXI.sound.play('songFour').loop=true;
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.pause('songFour');
+				PIXI.sound.resume('songOne');
 				
 				var button = new PIXI.Sprite(PIXI.Texture.from("StartButton.png"));
 				button.buttonMode = true;
@@ -259,42 +271,70 @@
 			});
 			
 			function initLevel() {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.resume('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.pause('songFour');
 				level = new CatchLevel(context.gameSortItemList,context.startScannerLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startScannerLevel(itemInScanner) {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.resume('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.pause('songFour');
 				level = new ScannerLevel(itemInScanner,context.startMonsterLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startMonsterLevel() {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.resume('songThree');
+				PIXI.sound.pause('songFour');
 				level = new MonsterLevel(context.startMapLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startMapLevel() {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.resume('songThree');
+				PIXI.sound.pause('songFour');
 				level = new MapLevel(context.startScoreLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startScoreLevel() {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.resume('songFour');
 				level = new ScoreLevel(context.startEndLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startEndLevel() {
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.resume('songFour');
 				level = new EndLevel(context.endGame);
 				level.init();
 				level.start();
 			}
 			
 			function endGame() {
+				PIXI.sound.resume('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.pause('songFour');
 				console.log("The Game has ended.");
 			}
 		</script>

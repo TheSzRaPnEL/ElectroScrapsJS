@@ -86,7 +86,7 @@ class CatchLevel {
 	
 	showMenuBar(context) {
 		context.menuBar.visible=true;
-		gsap.to(context.menuBar,0.5,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
+		gsap.to(context.menuBar,0.3,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
 	}
 	
 	menuBarShown(context) {
@@ -95,7 +95,7 @@ class CatchLevel {
 	
 	showScannerBar(context) {
 		context.scannerBar.visible=true;
-		gsap.to(context.scannerBar,0.5,{x:app.renderer.width-context.scannerBar.width+context.scannerBar.pivot.x, onComplete:context.scannerBarShown, onCompleteParams:[context]});
+		gsap.to(context.scannerBar,0.3,{x:app.renderer.width-context.scannerBar.width+context.scannerBar.pivot.x, onComplete:context.scannerBarShown, onCompleteParams:[context]});
 	}
 	
 	scannerBarShown(context) {
@@ -105,7 +105,7 @@ class CatchLevel {
 	showScannerTxt(context) {
 		context.scannerTxt.visible=true;
 		context.scannerTxt.alpha=0;
-		gsap.to(context.scannerTxt,1,{alpha:1, onComplete:context.scannerTxtShown, onCompleteParams:[context]});
+		gsap.to(context.scannerTxt,0.3,{alpha:1, onComplete:context.scannerTxtShown, onCompleteParams:[context]});
 	}
 	
 	scannerTxtShown(context) {
@@ -121,7 +121,7 @@ class CatchLevel {
 		var indicator = context.indicators[context.indicatorsShown];
 			indicator.alpha=0;
 			indicator.visible=true;
-		gsap.to(indicator,0.3,{alpha:0.2, onComplete:context.indicatorShown, onCompleteParams:[context]});
+		gsap.to(indicator,0.5,{alpha:0.2, onComplete:context.indicatorShown, onCompleteParams:[context]});
 	}
 	
 	indicatorShown(context) {
@@ -130,6 +130,7 @@ class CatchLevel {
 	}
 	
 	initRandomItemThrowing(context) {
+		context.throwRandomItem(context);
 		context.randomItemThrowingIntervalID = setInterval(context.throwRandomItem,1000,context);
 	}
 	
