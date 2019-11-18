@@ -119,6 +119,8 @@
 			});
 			
 			console.log(gameSortItemList);
+			
+			let context = this;
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -150,9 +152,9 @@
 					}
 					background.texture = PIXI.Texture.from(bgList[counter]);
 					if(counter==2) {
-						// initLevel();
+						initLevel();
 						// startScannerLevel(gameSortItemList[0]);
-						startMonsterLevel();
+						// startMonsterLevel();
 					} else {
 						endGame();
 					}
@@ -165,19 +167,19 @@
 			});
 			
 			function initLevel() {
-				level = new CatchLevel(this.gameSortItemList,this.startScannerLevel);
+				level = new CatchLevel(context.gameSortItemList,context.startScannerLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startScannerLevel(itemInScanner) {
-				level = new ScannerLevel(itemInScanner,this.startMonsterLevel);
+				level = new ScannerLevel(itemInScanner,context.startMonsterLevel);
 				level.init();
 				level.start();
 			}
 			
 			function startMonsterLevel() {
-				level = new MonsterLevel(this.endGame);
+				level = new MonsterLevel(context.endGame);
 				level.init();
 				level.start();
 			}
