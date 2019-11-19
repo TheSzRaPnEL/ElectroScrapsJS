@@ -115,26 +115,26 @@
 				context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
 				
 			context.gameItemComponentsList = [];
-			var aluminium = 	new ItemComponent("aluminium",	"raw_res_aluminum.png",		"metal",	10);
-			var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"metal",	10);
-			var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"metal",	10);
-			var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"metal",	10);
-			var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"metal",	10);
-			var chrome = 		new ItemComponent("chrome",		"raw_res_chrome.png",		"metal",	10);
-			var cobalt = 		new ItemComponent("cobalt",		"raw_res_cobalt.png",		"metal",	10);
-			var copper = 		new ItemComponent("copper",		"raw_res_copper.png",		"metal",	10);
-			var glass = 		new ItemComponent("glass",		"raw_res_glass.png",		"metal",	10);
-			var gold = 			new ItemComponent("gold",		"raw_res_gold.png",			"metal",	10);
-			var lead = 			new ItemComponent("lead",		"raw_res_lead.png",			"metal",	10);
-			var nickel = 		new ItemComponent("nickel",		"raw_res_nickel.png",		"metal",	10);
-			var plastic = 		new ItemComponent("plastic",	"raw_res_plastic.png",		"metal",	10);
-			var platinium = 	new ItemComponent("platinium",	"raw_res_platinium.png",	"metal",	10);
-			var ree = 			new ItemComponent("ree",		"raw_res_ree.png",			"metal",	10);
-			var refrigerant = 	new ItemComponent("refrigerant","raw_res_refrigerant.png",	"metal",	10);
-			var silver = 		new ItemComponent("silver",		"raw_res_silver.png",		"metal",	10);
-			var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"metal",	10);
-			var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"metal",	10);
-			var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"metal",	10);
+			var aluminium = 	new ItemComponent("aluminium",	"raw_res_aluminum.png",		"Other",	7);
+			var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"Other",	5);
+			var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"Other",	5);
+			var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"Metal",	5);
+			var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"Metal",	10);
+			var chrome = 		new ItemComponent("chrome",		"raw_res_chrome.png",		"Metal",	10);
+			var cobalt = 		new ItemComponent("cobalt",		"raw_res_cobalt.png",		"Metal",	10);
+			var copper = 		new ItemComponent("copper",		"raw_res_copper.png",		"Metal",	7);
+			var glass = 		new ItemComponent("glass",		"raw_res_glass.png",		"Other",	5);
+			var gold = 			new ItemComponent("gold",		"raw_res_gold.png",			"Rich",		10);
+			var lead = 			new ItemComponent("lead",		"raw_res_lead.png",			"Danger",	5);
+			var nickel = 		new ItemComponent("nickel",		"raw_res_nickel.png",		"Metal",	10);
+			var plastic = 		new ItemComponent("plastic",	"raw_res_plastic.png",		"Other",	3);
+			var platinium = 	new ItemComponent("platinium",	"raw_res_platinium.png",	"Rich",		10);
+			var ree = 			new ItemComponent("ree",		"raw_res_ree.png",			"Metal",	10);
+			var refrigerant = 	new ItemComponent("refrigerant","raw_res_refrigerant.png",	"Other",	5);
+			var silver = 		new ItemComponent("silver",		"raw_res_silver.png",		"Rich",		10);
+			var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"Metal",	5);
+			var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"Metal",	5);
+			var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"Rich",		8);
 			
 			aluminium.desc = "Noble metal used for equipment housings, screens and batteries, in thermostats, capacitors, washing machine drums etc.";
 			

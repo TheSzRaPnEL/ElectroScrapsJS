@@ -55,7 +55,7 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupCloseBtn.visible = false;
 		this.addChild(resPopupCloseBtn);
 		
-		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 24, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
+		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 20, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
 		var resPopupDesc=this.resPopupDesc;
 			resPopupDesc.pivot.x=resPopupDesc.width/2;
 			resPopupDesc.roundPixels=true;
@@ -64,19 +64,34 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupDesc.visible = false;
 		this.addChild(resPopupDesc);
 		
-		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].name.toUpperCase(),{fontFamily : 'Arial', fontSize: 26, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupHeadIcon = new PIXI.Sprite(PIXI.Texture.from(this._itemInScanner.components[1].textureName));
+		var resPopupHeadIcon=this.resPopupHeadIcon;
+			resPopupHeadIcon.anchor.set(0.5);
+			resPopupHeadIcon.x=resPopup.x-resPopup.pivot.x+resPopup.width/9;
+			resPopupHeadIcon.y=resPopup.y-8*resPopup.height/20;
+			resPopupHeadIcon.visible = false;
+		this.addChild(resPopupHeadIcon);
+		
+		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].name.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
 		var resPopupHead=this.resPopupHead;
 			resPopupHead.roundPixels=true;
-			resPopupHead.x=resPopup.x-resPopup.pivot.x+resPopup.width/19;
-			resPopupHead.y=resPopup.y-9*resPopup.height/21;
+			resPopupHead.x=resPopup.x-resPopup.pivot.x+resPopup.width/5;
+			resPopupHead.y=resPopup.y-10*resPopup.height/22;
 			resPopupHead.visible = false;
 		this.addChild(resPopupHead);
 		
-		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 26, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupType = new PIXI.Sprite(PIXI.Texture.from("containerType"+this._itemInScanner.components[1].type+".png"));
+		var resPopupType=this.resPopupType;
+			resPopupType.x=resPopup.x-resPopup.pivot.x+resPopup.width/20;
+			resPopupType.y=resPopup.y+11*resPopup.height/60;
+			resPopupType.visible = false;
+		this.addChild(resPopupType);
+		
+		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 34, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
 		var resPopupValue=this.resPopupValue;
 			resPopupValue.roundPixels=true;
-			resPopupValue.x=resPopup.x+resPopup.width/16;
-			resPopupValue.y=resPopup.y+18*resPopup.height/50;
+			resPopupValue.x=resPopup.x+resPopup.width/14;
+			resPopupValue.y=resPopup.y+18*resPopup.height/51;
 			resPopupValue.visible = false;
 		this.addChild(resPopupValue);
 		//----------------------------------------//
@@ -114,13 +129,17 @@ class ScannerLevel extends PIXI.Sprite {
 				console.log("context here: ",this);
 				
 				resPopupDesc.text=this.desc;
+				resPopupHeadIcon.texture=PIXI.Texture.from(this.textureName);
 				resPopupHead.text=this.name.toUpperCase();
+				resPopupType.texture=PIXI.Texture.from("containerType"+this.type+".png");
 				resPopupValue.text=this.points;
 				
 				resPopup.visible=true;
 				resPopupCloseBtn.visible=true;
 				resPopupDesc.visible=true;
+				resPopupHeadIcon.visible=true;
 				resPopupHead.visible=true;
+				resPopupType.visible=true;
 				resPopupValue.visible=true;
 			}
 		}
@@ -134,7 +153,9 @@ class ScannerLevel extends PIXI.Sprite {
 				resPopup.visible=false;
 				resPopupCloseBtn.visible=false;
 				resPopupDesc.visible=false;
+				resPopupHeadIcon.visible=false;
 				resPopupHead.visible=false;
+				resPopupType.visible=false;
 				resPopupValue.visible=false;
 				popupClosed();
 			// }
