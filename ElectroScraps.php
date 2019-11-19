@@ -75,7 +75,46 @@
 			var counter=0;
 			var bgList=["LoadingScreen.png","LeagueScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","EmptyScreen.jpg","ScoreScreen.jpg","endScreen.jpg"];
 			
-			var gameItemComponentsList = [];
+			let context = this;
+
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
+			PIXI.Loader.shared.add('songOne','Assets/music1.mp3');
+			PIXI.Loader.shared.add('songTwo','Assets/music2.mp3');
+			PIXI.Loader.shared.add('songThree','Assets/music3.mp3');
+			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
+			PIXI.Loader.shared.add('good','Assets/good.mp3');
+			PIXI.Loader.shared.load(function(loader, resources) {
+				let background = new PIXI.Sprite(PIXI.Texture.from(bgList[counter]));
+				app.stage.addChild(background);
+				PIXI.sound.play('songOne').loop=true;
+				PIXI.sound.play('songTwo').loop=true;
+				PIXI.sound.play('songThree').loop=true;
+				PIXI.sound.play('songFour').loop=true;
+				PIXI.sound.pause('songOne');
+				PIXI.sound.pause('songTwo');
+				PIXI.sound.pause('songThree');
+				PIXI.sound.pause('songFour');
+				PIXI.sound.resume('songOne');
+				
+				var button = new PIXI.Sprite(PIXI.Texture.from("StartButton.png"));
+				button.buttonMode = true;
+				app.stage.addChild(button);
+
+				button.pivot.x=button.width/2;
+				button.pivot.y=button.height/2;
+				button.x = app.renderer.width/2;
+				button.y = 8*app.renderer.height/9;
+				
+				button.interactive = true;
+				button.buttonMode = true;
+
+				button.on('pointerdown', onButtonDown);
+				button.on('pointerup', onButtonUp);
+				
+				context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
+				
+			context.gameItemComponentsList = [];
 			var aluminium = 	new ItemComponent("aluminium",	"raw_res_aluminum.png",		"metal",	10);
 			var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"metal",	10);
 			var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"metal",	10);
@@ -96,9 +135,50 @@
 			var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"metal",	10);
 			var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"metal",	10);
 			var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"metal",	10);
-			gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);
 			
-			var gameSortItemList = [];
+			aluminium.desc = "Noble metal used for equipment housings, screens and batteries, in thermostats, capacitors, washing machine drums etc.";
+			
+			batteryLit.desc = "There are different types of batteries. They may contain heavy metals harmful to health, such as cadmium (Cd) and nickel (Ni) nickel-cadmium batteries: Ni-Cd, as battery sticks AA, might be used in various devices e.g. small radios, becouse they can be recharged multiple times. For cordless, telephones, cameras etc., mass production of other batteries and producted: new generation lithium ion batteries (Li-Ion), inside which cathode are made out of cobalt oxide (CoO2).";
+			
+			batteryNik.desc = batteryNik.desc;
+			
+			brass.desc = "Copper and zinc alloy with high corrosion resistance.";
+			
+			cadm.desc = "";
+			
+			chrome.desc = "";
+			
+			cobalt.desc = "";
+			
+			copper.desc = "Known since antiquity, used today in engine and cable production, processors, semiconductors and circuit boards printed for householding devices and RTV.";
+			
+			glass.desc = "Inorganic material obtained from quartz sand and additions like sodium carbonate, calcium carbonate, fluxes and pigments. All those raw materials are heated to very high temperatures around 1700 degrees Celsius and cooled to reach steady state without cristalization.";
+			
+			gold.desc = "Noble metal used in electronics for its resistance to weather conditions, e.g. for coating processors, cable contacts, chips and other elements of PC.";
+			
+			lead.desc = "It is a heavy metal, dangerous for health. Proctects from X-rays, was used in old television's cathode ray tubes, CRT screens and soldering alloys.";
+			
+			nickel.desc = "";
+			
+			plastic.desc = "Plastics have great variety of features and properties: in household devices and RTV e.g. polycarbonates (PC) or polystyrene (HIPS) are used to build their covers, flexible rubber used for cable housing (PVC), polyethylene and polypropylene used in toys production and high precision parts, foils. Plastic may contain admixture of substance dangerous for health.";
+			
+			platinium.desc = "Noble metal used in components of the computer's hard disk, cell phone antennas or CD-DVD drives.";
+			
+			ree.desc = "Wide usage perspectives for renewable energy and automotive, called the metals of the future because of it. Used in electronics for device screens.";
+			
+			refrigerant.desc = "The first coolant used in refrigerators on a wide scale was the freon 12, chlorofluorocarbon compound (also known as CFC or CCl2F2). Due to its heavy impact on the ozone layer, freons were replaced with hydrofluorocarbons (HFC in short). When disassembling devices for recyckling, cooling gas is separated in a safe way so it does not get into the air.";
+			
+			silver.desc = "Noble metal, in use since antiquit, used in electronics due to having longer durability than tin.";
+			
+			steel.desc = "Iron and carbon alloy, usualy also contains other components. There are various types of steel with many different properties. Steel if used to make structural and fixing elements of many devices, magnets and screws.";
+			
+			tin.desc = "Known since antiquity, tin vessels were made of it in the Middle Ages, today it is primary metal used for alloys on printed circuit boards: in unleaded alloys besides tin there are small amounts of silver and copper being added.";
+			
+			wolfram.desc = "Very important armaments industry's metal. Thin wire made of tungsten inside a bulb bubble, makes the bulb shine.";
+			
+			context.gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);
+			
+			context.gameSortItemList = [];
 			var calculator = new SortItem("calculator","item_calculator_big.png");
 				calculator.addComponent(copper,15);
 				calculator.addComponent(plastic,60);
@@ -211,7 +291,7 @@
 				washer.addComponent(plastic);
 				washer.addComponent(aluminium);
 				
-			gameSortItemList.push(calculator,car,kettle,lamp,mixer,mobile,owen,pc,radio,refrigerator,shaver,smartphone,tvNEW,tvOLD,washer);
+			context.gameSortItemList.push(calculator,car,kettle,lamp,mixer,mobile,owen,pc,radio,refrigerator,shaver,smartphone,tvNEW,tvOLD,washer);
 			
 			var itemTextureNames = [];
 			gameSortItemList.forEach( function(item) {
@@ -219,45 +299,6 @@
 			});
 			
 			console.log(gameSortItemList);
-			
-			let context = this;
-
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
-			PIXI.Loader.shared.add('songOne','Assets/music1.mp3');
-			PIXI.Loader.shared.add('songTwo','Assets/music2.mp3');
-			PIXI.Loader.shared.add('songThree','Assets/music3.mp3');
-			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
-			PIXI.Loader.shared.add('good','Assets/good.mp3');
-			PIXI.Loader.shared.load(function(loader, resources) {
-				let background = new PIXI.Sprite(PIXI.Texture.from(bgList[counter]));
-				app.stage.addChild(background);
-				PIXI.sound.play('songOne').loop=true;
-				PIXI.sound.play('songTwo').loop=true;
-				PIXI.sound.play('songThree').loop=true;
-				PIXI.sound.play('songFour').loop=true;
-				PIXI.sound.pause('songOne');
-				PIXI.sound.pause('songTwo');
-				PIXI.sound.pause('songThree');
-				PIXI.sound.pause('songFour');
-				PIXI.sound.resume('songOne');
-				
-				var button = new PIXI.Sprite(PIXI.Texture.from("StartButton.png"));
-				button.buttonMode = true;
-				app.stage.addChild(button);
-
-				button.pivot.x=button.width/2;
-				button.pivot.y=button.height/2;
-				button.x = app.renderer.width/2;
-				button.y = 8*app.renderer.height/9;
-				
-				button.interactive = true;
-				button.buttonMode = true;
-
-				button.on('pointerdown', onButtonDown);
-				button.on('pointerup', onButtonUp);
-				
-				context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
 				
 				function onButtonDown() {
 					this.isdown = true;

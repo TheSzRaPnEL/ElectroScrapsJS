@@ -54,12 +54,37 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupCloseBtn.on('mousedown', onResPopupCloseBtnMouseDown);
 			resPopupCloseBtn.visible = false;
 		this.addChild(resPopupCloseBtn);
+		
+		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 24, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
+		var resPopupDesc=this.resPopupDesc;
+			resPopupDesc.pivot.x=resPopupDesc.width/2;
+			resPopupDesc.roundPixels=true;
+			resPopupDesc.x=resPopup.x;
+			resPopupDesc.y=resPopup.y-11*resPopup.height/40;
+			resPopupDesc.visible = false;
+		this.addChild(resPopupDesc);
+		
+		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].name.toUpperCase(),{fontFamily : 'Arial', fontSize: 26, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		var resPopupHead=this.resPopupHead;
+			resPopupHead.roundPixels=true;
+			resPopupHead.x=resPopup.x-resPopup.pivot.x+resPopup.width/19;
+			resPopupHead.y=resPopup.y-9*resPopup.height/21;
+			resPopupHead.visible = false;
+		this.addChild(resPopupHead);
+		
+		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 26, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		var resPopupValue=this.resPopupValue;
+			resPopupValue.roundPixels=true;
+			resPopupValue.x=resPopup.x+resPopup.width/16;
+			resPopupValue.y=resPopup.y+18*resPopup.height/50;
+			resPopupValue.visible = false;
+		this.addChild(resPopupValue);
 		//----------------------------------------//
 		
 		var componentsNum = this._itemInScanner.components.length;
 		for (var i=0;i<componentsNum;i++) {
 			var component = this._itemInScanner.components[i];
-			var componentInScanner = new PIXI.Sprite(PIXI.Texture.from(component.textureName));
+			var componentInScanner = new ItemComponent(component.name,component.textureName,component.type,component.points,component.desc);
 				componentInScanner.pivot.x = componentInScanner.width/2;
 				componentInScanner.pivot.y = componentInScanner.height/2;
 				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
@@ -85,8 +110,18 @@ class ScannerLevel extends PIXI.Sprite {
 			if(!this.data) {
 				this.data=true;
 				this.alpha=0.4;
+				
+				console.log("context here: ",this);
+				
+				resPopupDesc.text=this.desc;
+				resPopupHead.text=this.name.toUpperCase();
+				resPopupValue.text=this.points;
+				
 				resPopup.visible=true;
 				resPopupCloseBtn.visible=true;
+				resPopupDesc.visible=true;
+				resPopupHead.visible=true;
+				resPopupValue.visible=true;
 			}
 		}
 		
@@ -98,6 +133,9 @@ class ScannerLevel extends PIXI.Sprite {
 				this.data=true;
 				resPopup.visible=false;
 				resPopupCloseBtn.visible=false;
+				resPopupDesc.visible=false;
+				resPopupHead.visible=false;
+				resPopupValue.visible=false;
 				popupClosed();
 			// }
 		}
