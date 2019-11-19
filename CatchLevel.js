@@ -1,12 +1,18 @@
-class CatchLevel {
+class CatchLevel extends PIXI.Sprite {
 	
 	constructor(gameSortItemList,endFunc) {
+		super();
 		this._gameSortItemList = [...gameSortItemList];
 		this.endFunc=endFunc;
 		console.log("CatchLevel constructor context: ",this);
 	}
 	
 	init() {
+		let context = this;
+		
+		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
+		this.addChild(this.bg);
+		
 		console.log("CatchLevel init context: ",this);
 		this.items=[];
 		this.indicators = [];
@@ -22,11 +28,8 @@ class CatchLevel {
 		this.indicatorsShown = 0;
 		this.itemInScannerType = null;
 		
-		this.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
-		var menuBar = this.menuBar;
-			menuBar.x=-menuBar.width;
-			menuBar.visible = false;
-		app.stage.addChild(menuBar);
+		// this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
+		// this.addChild(this.bg);
 		
 		this.scannerBar = new PIXI.Sprite(PIXI.Texture.from("scannerBG.png"));
 		var scannerBar = this.scannerBar;
@@ -35,7 +38,7 @@ class CatchLevel {
 			scannerBar.x = app.renderer.width+scannerBar.pivot.x;
 			scannerBar.y = scannerBar.pivot.y;
 			scannerBar.visible = false;
-		app.stage.addChild(scannerBar);
+		this.addChild(scannerBar);
 		
 		this.scannerTxt = new PIXI.Sprite(PIXI.Texture.from("skanerTXT.png"));
 		var scannerTxt = this.scannerTxt;
@@ -44,7 +47,7 @@ class CatchLevel {
 			scannerTxt.x = app.renderer.width-scannerBar.width/2;
 			scannerTxt.y = scannerBar.y;
 			scannerTxt.visible = false;
-		app.stage.addChild(scannerTxt);
+		this.addChild(scannerTxt);
 		
 		for (var i=0; i<this.indicatorsNum;i++) {
 			this.indicator = new PIXI.Sprite(PIXI.Texture.from("popupBTNuUp.png"));
@@ -57,7 +60,7 @@ class CatchLevel {
 				indicator.y = scannerBar.y + scannerBar.height/2 + 10;
 				indicator.visible = false;
 				indicator.filters = [new PIXI.filters.BlurFilter(0.1)];
-			app.stage.addChild(indicator);
+			this.addChild(indicator);
 			this.indicators.push(indicator);
 		}
 		
@@ -71,8 +74,8 @@ class CatchLevel {
 		console.log(this.selectedGameSortItemList);
 	}
 	
-	start() {
-		this.showMenuBar(this);
+	begin(context) {
+		context.showScannerBar(context);
 	}
 	
 	stop(context) {
@@ -84,40 +87,33 @@ class CatchLevel {
 		context.endFunc(context.itemInScannerType);
 	}
 	
-	showMenuBar(context) {
-		context.menuBar.visible=true;
-		gsap.to(context.menuBar,0.3,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
-	}
-	
-	menuBarShown(context) {
-		context.showScannerBar(context);
-	}
-	
 	showScannerBar(context) {
 		context.scannerBar.visible=true;
 		gsap.to(context.scannerBar,0.3,{x:app.renderer.width-context.scannerBar.width+context.scannerBar.pivot.x, onComplete:context.scannerBarShown, onCompleteParams:[context]});
 	}
-	
+
 	scannerBarShown(context) {
 		context.showScannerTxt(context);
 	}
-	
+
 	showScannerTxt(context) {
 		context.scannerTxt.visible=true;
 		context.scannerTxt.alpha=0;
 		gsap.to(context.scannerTxt,0.3,{alpha:1, onComplete:context.scannerTxtShown, onCompleteParams:[context]});
 	}
-	
+
 	scannerTxtShown(context) {
-		context.showIndicators(context);
+		context.showIndicators(context)
 	}
 	
 	showIndicators(context) {
+		console.log("showIndicators");
 		if (context.indicatorsShown>=context.indicatorsNum) context.initRandomItemThrowing(context)
 		else context.showIndicator(context);
 	}
 	
 	showIndicator(context) {
+		console.log("showIndicator");
 		var indicator = context.indicators[context.indicatorsShown];
 			indicator.alpha=0;
 			indicator.visible=true;
@@ -125,11 +121,13 @@ class CatchLevel {
 	}
 	
 	indicatorShown(context) {
+		console.log("indicatorShown");
 		context.indicatorsShown++;
 		context.showIndicators(context);
 	}
 	
 	initRandomItemThrowing(context) {
+		console.log("initRandomItemThrowing");
 		context.throwRandomItem(context);
 		context.randomItemThrowingIntervalID = setInterval(context.throwRandomItem,1000,context);
 	}
@@ -147,7 +145,7 @@ class CatchLevel {
 			item.y=app.renderer.height+100;
 			item.rotation=Math.random()*Math.PI;
 			item.filters = [new PIXI.filters.BlurFilter(0.1)];
-		app.stage.addChild(item);
+		context.addChild(item);
 		context.items.push(item);
 		
 		gsap.to(item,1,{y:200, ease:Quad.easeOut,onComplete:itemFalling,onCompleteParams:[item]});

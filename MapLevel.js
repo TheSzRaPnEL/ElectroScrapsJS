@@ -1,15 +1,19 @@
-class MapLevel {
+class MapLevel extends PIXI.Sprite {
 	
 	constructor(endFunc) {
+		super();
 		this.endFunc=endFunc;
 	}
 	
 	init() {
 		let context = this;
 		
+		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
+		this.addChild(this.bg);
+		
 		var worldMap = new PIXI.Sprite(PIXI.Texture.from("mapShape.png"));
 			worldMap.y = 150;
-		app.stage.addChild(worldMap);
+		this.addChild(worldMap);
 		
 		const countryName = {
 			POLSKA		:	'Poland',
@@ -77,7 +81,7 @@ class MapLevel {
 			countryIndicator.init();
 			countryIndicator.interactive=true;
 			countryIndicator.on('mousedown',onIndicatorMouseDown);
-			app.stage.addChild(countryIndicator);
+			context.addChild(countryIndicator);
 			context.countryIndicatorList.push(countryIndicator);
 		});
 		
@@ -89,7 +93,7 @@ class MapLevel {
 		}
 	}
 	
-	start() {
+	begin() {
 		//
 	}
 	

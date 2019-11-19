@@ -1,6 +1,7 @@
-class ScannerLevel {
+class ScannerLevel extends PIXI.Sprite {
 	
 	constructor(itemInScanner,endFunc) {
+		super();
 		this._itemInScanner=itemInScanner;
 		this.endFunc=endFunc;
 	}
@@ -11,6 +12,9 @@ class ScannerLevel {
 		this.scannerComponentList=[];
 		this.componentsRevied=0;
 		
+		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
+		this.addChild(this.bg);
+		
 		this.scannerWheel = new PIXI.Sprite(PIXI.Texture.from("ResourceWheelEmpty.png"));
 		var scannerWheel = this.scannerWheel;
 			scannerWheel.pivot.x = scannerWheel.width/2;
@@ -18,7 +22,7 @@ class ScannerLevel {
 			scannerWheel.x = app.renderer.width/2;
 			scannerWheel.y = 5*app.renderer.height/9;
 			// scannerWheel.visible = false;
-		app.stage.addChild(scannerWheel);
+		this.addChild(scannerWheel);
 		
 		this.itemInScanner = new PIXI.Sprite(PIXI.Texture.from(this._itemInScanner.textureName));
 		var itemInScanner = this.itemInScanner;
@@ -27,7 +31,7 @@ class ScannerLevel {
 			itemInScanner.x = app.renderer.width/2;
 			itemInScanner.y = 5*app.renderer.height/9;
 			// itemInScanner.visible = false;
-		app.stage.addChild(itemInScanner);
+		this.addChild(itemInScanner);
 		
 		//----------------------------------------//
 		//CONVERT THIS SECTION INTO RESPOPUP CLASS//
@@ -38,7 +42,7 @@ class ScannerLevel {
 			resPopup.x = app.renderer.width/2;
 			resPopup.y = app.renderer.height/2;
 			resPopup.visible = false;
-		app.stage.addChild(resPopup);
+		this.addChild(resPopup);
 		
 		this.resPopupCloseBtn = new PIXI.Sprite(PIXI.Texture.from("popupX.png"));
 		var resPopupCloseBtn = this.resPopupCloseBtn;
@@ -49,7 +53,7 @@ class ScannerLevel {
 			resPopupCloseBtn.interactive=true;
 			resPopupCloseBtn.on('mousedown', onResPopupCloseBtnMouseDown);
 			resPopupCloseBtn.visible = false;
-		app.stage.addChild(resPopupCloseBtn);
+		this.addChild(resPopupCloseBtn);
 		//----------------------------------------//
 		
 		var componentsNum = this._itemInScanner.components.length;
@@ -63,7 +67,7 @@ class ScannerLevel {
 				componentInScanner.interactive=true;
 				componentInScanner.on('mousedown', onComponentMouseDown);
 				// componentInScanner.visible = false;
-			app.stage.addChild(componentInScanner);
+			this.addChild(componentInScanner);
 			this.scannerComponentList.push(componentInScanner);
 		}
 		console.log(this.scannerComponentList);
@@ -104,7 +108,7 @@ class ScannerLevel {
 		}
 	}
 	
-	start() {
+	begin() {
 		//
 	}
 	

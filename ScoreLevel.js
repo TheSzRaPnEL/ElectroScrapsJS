@@ -1,6 +1,7 @@
-class ScoreLevel {
+class ScoreLevel extends PIXI.Sprite {
 	
 	constructor(endFunc) {
+		super();
 		this.endFunc=endFunc;
 	}
 	
@@ -11,7 +12,7 @@ class ScoreLevel {
 		var bg = context.bg;
 			bg.interactive=true;
 			bg.on('mousedown',onBgMouseDown);
-		app.stage.addChild(bg);
+		this.addChild(bg);
 		
 		function onBgMouseDown(event) {
 			console.log(context);
@@ -19,7 +20,7 @@ class ScoreLevel {
 		}
 	}
 	
-	start() {
+	begin() {
 		//
 	}
 	

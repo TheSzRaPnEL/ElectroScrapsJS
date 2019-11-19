@@ -1,6 +1,7 @@
-class MonsterLevel {
+class MonsterLevel extends PIXI.Sprite {
 	
 	constructor(components,endFunc) {
+		super();
 		this.endFunc=endFunc;
 		this.components=components;
 	}
@@ -13,11 +14,14 @@ class MonsterLevel {
 		this.itemCaught;
 		this.itemsInScanner=0;
 		
+		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
+		this.addChild(this.bg);
+		
 		this.monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
 		var monster = this.monster;
 			monster.x = 100;
 			monster.y = app.stage.height - monster.height;
-		app.stage.addChild(monster);
+		this.addChild(monster);
 		
 		this.monsterEyesClosed = new PIXI.Sprite(PIXI.Texture.from("monsterEyesClosed.png"));
 		var monsterEyesClosed = this.monsterEyesClosed;
@@ -108,7 +112,7 @@ class MonsterLevel {
 			item.y=-100;
 			item.rotation=0;
 			item.filters = [new PIXI.filters.BlurFilter(0.1)];
-		app.stage.addChild(item);
+		context.addChild(item);
 		context.items.push(item);
 		
 		item.interactive=true;
@@ -165,7 +169,7 @@ class MonsterLevel {
 		}
 	}
 	
-	start() {
+	begin() {
 		//
 	}
 	

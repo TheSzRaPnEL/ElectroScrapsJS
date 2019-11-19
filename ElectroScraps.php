@@ -257,13 +257,13 @@
 				button.on('pointerdown', onButtonDown);
 				button.on('pointerup', onButtonUp);
 				
+				context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
+				
 				function onButtonDown() {
 					this.isdown = true;
 					this.visible=false;
-					background.texture=PIXI.Texture.from("EmptyScreen.jpg");
-					initLevel();
-					// startScannerLevel(gameSortItemList[0]);
-					// startMonsterLevel(gameSortItemList[0].components)
+					
+					initGame();
 				}
 				
 				function onButtonUp() {
@@ -272,14 +272,45 @@
 				}
 			});
 			
-			function initLevel() {
+			function initGame() {
+				var menuBar = context.menuBar;
+					menuBar.x=-menuBar.width;
+					menuBar.visible = false;
+				app.stage.addChild(menuBar);
+				
+				context.showMenuBar(context);
+				
+				context.startCatchLevel();
+				// context.startScannerLevel(context.gameSortItemList[0]);
+				// context.startMonsterLevel(context.gameSortItemList[0].components)
+			}
+			
+			function showMenuBar(context) {
+				context.menuBar.visible=true;
+				gsap.to(context.menuBar,0.3,{x:0, onComplete:context.menuBarShown, onCompleteParams:[context]});
+			}
+
+			function menuBarShown(context) {
+				context.level.begin(context.level);
+			}
+			
+			function hideMenuBar(context) {
+				context.menuBar.visible=true;
+				gsap.to(context.menuBar,0.3,{x:-context.menuBar.width, onComplete:context.menuBarHidden, onCompleteParams:[context]});
+			}
+
+			function menuBarHidden(context) {
+				context.menuBar.visible=false;
+			}
+			
+			function startCatchLevel() {
 				PIXI.sound.pause('songOne');
 				PIXI.sound.resume('songTwo');
 				PIXI.sound.pause('songThree');
 				PIXI.sound.pause('songFour');
 				level = new CatchLevel(context.gameSortItemList,context.startScannerLevel);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
 			}
 			
 			function startScannerLevel(itemInScanner) {
@@ -288,8 +319,9 @@
 				PIXI.sound.pause('songThree');
 				PIXI.sound.pause('songFour');
 				level = new ScannerLevel(itemInScanner,context.startMonsterLevel);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
+				level.begin();
 			}
 			
 			function startMonsterLevel(componentList) {
@@ -298,8 +330,9 @@
 				PIXI.sound.resume('songThree');
 				PIXI.sound.pause('songFour');
 				level = new MonsterLevel(componentList,context.startMapLevel);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
+				level.begin();
 			}
 			
 			function startMapLevel() {
@@ -308,18 +341,23 @@
 				PIXI.sound.resume('songThree');
 				PIXI.sound.pause('songFour');
 				level = new MapLevel(context.startScoreLevel);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
+				level.begin();
 			}
 			
 			function startScoreLevel() {
+				context.hideMenuBar(context);
+				
 				PIXI.sound.pause('songOne');
 				PIXI.sound.pause('songTwo');
 				PIXI.sound.pause('songThree');
 				PIXI.sound.resume('songFour');
+				
 				level = new ScoreLevel(context.startEndLevel);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
+				level.begin();
 			}
 			
 			function startEndLevel() {
@@ -328,8 +366,9 @@
 				PIXI.sound.pause('songThree');
 				PIXI.sound.resume('songFour');
 				level = new EndLevel(context.endGame);
+				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
-				level.start();
+				level.begin();
 			}
 			
 			function endGame() {
@@ -338,6 +377,11 @@
 				PIXI.sound.pause('songThree');
 				PIXI.sound.pause('songFour');
 				console.log("The Game has ended.");
+				context.restartGame();
+			}
+			
+			function restartGame() {
+				context.initGame();
 			}
 		</script>
 	</body>
