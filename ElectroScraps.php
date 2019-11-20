@@ -376,12 +376,12 @@
 				level.begin();
 			}
 			
-			function startMapLevel() {
+			function startMapLevel(itemComponent) {
 				PIXI.sound.pause('songOne');
 				PIXI.sound.pause('songTwo');
 				PIXI.sound.resume('songThree');
 				PIXI.sound.pause('songFour');
-				level = new MapLevel(context.startScoreLevel);
+				level = new MapLevel(itemComponent,context.startScoreLevel);
 				app.stage.addChildAt(level,app.stage.children.length-1);
 				level.init();
 				level.begin();

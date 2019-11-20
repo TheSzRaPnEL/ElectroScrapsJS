@@ -17,9 +17,11 @@ class MonsterLevel extends PIXI.Sprite {
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
 		
+		 //---------------------------------------//
+		//CONVERT THIS SECTION INTO MONSTER CLASS//
 		this.monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
 		var monster = this.monster;
-			monster.x = 100;
+			monster.x = 150;
 			monster.y = app.stage.height - monster.height;
 		this.addChild(monster);
 		
@@ -48,8 +50,41 @@ class MonsterLevel extends PIXI.Sprite {
 			monsterMouthOpened.x = 63;
 			monsterMouthOpened.y = 80;
 		monster.addChild(monsterMouthOpened)
+		//----------------------------------------//
+		
+		this.metalContainer = new PIXI.Sprite(PIXI.Texture.from("metaleBG2.png"));
+		var metalContainer = this.metalContainer;
+			metalContainer.anchor.set(0.5);
+			metalContainer.name="Metal";
+			metalContainer.x = app.renderer.width-metalContainer.width/2+50;
+			metalContainer.y = 200;
+		this.addChild(metalContainer);
+		
+		this.dangerContainer = new PIXI.Sprite(PIXI.Texture.from("niebezpieczneBG2.png"));
+		var dangerContainer = this.dangerContainer;
+			dangerContainer.anchor.set(0.5);
+			dangerContainer.name="Danger";
+			dangerContainer.x = dangerContainer.width/2-50;
+			dangerContainer.y = 200;
+		this.addChild(dangerContainer);
+		
+		this.richContainer = new PIXI.Sprite(PIXI.Texture.from("cenneBG2.png"));
+		var richContainer = this.richContainer;
+			richContainer.anchor.set(0.5);
+			richContainer.name="Rich";
+			richContainer.x = richContainer.width/2-50;
+			richContainer.y = 400;
+		this.addChild(richContainer);
+		
+		this.otherContainer = new PIXI.Sprite(PIXI.Texture.from("inneMetarialyBG2.png"));
+		var otherContainer = this.otherContainer;
+			otherContainer.anchor.set(0.5);
+			otherContainer.name="Other";
+			otherContainer.x = app.renderer.width-otherContainer.width/2+50;
+			otherContainer.y = 400;
+		this.addChild(otherContainer);
 
-		gsap.to(monster,1,{x:500, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
+		gsap.to(monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
 		startBlinking();
 		
 		context.initRandomItemDrop(context);
@@ -57,21 +92,35 @@ class MonsterLevel extends PIXI.Sprite {
 		app.ticker.add( function(delta) {
 			//monster.y=monster.y-2*delta;
 			context.items.forEach( function(item) {
-				item.y=item.y+2*delta
+				item.y=item.y+2*delta;
+				if(!context.monsterEating && item.y>19*app.renderer.height/30) {
+					context.monsterEating=true;
+					gsap.killTweensOf(context.monster);
+					gsap.to(context.monster,1,{x:item.x-context.monster.width/2, ease:Quad.easeOut, onComplete:monsterAte, onCompleteParams:[item]});
+				}
 			});
 		});
 		
+		function monsterAte(item) {
+			eat();
+			if (item.y>19*app.renderer.height/30) {
+				context.items.splice(context.items.indexOf(item),1);
+				context.removeChild(item);
+			}
+			context.monsterEating=false;
+			if (Math.random()>0.5) gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
+			else gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
+		}
+		
 		function monsterMovedRight(context) {
-			gsap.to(monster,1,{x:100, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
+			gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
 		}
 		
 		function monsterMovedLeft(context) {
 			console.log(context.monsterCounter);
 			//context.monsterCounter++;
 			if(context.monsterCounter>1) context.stop(context)
-			else {
-				gsap.to(monster,1,{x:500, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]})
-			}
+			else gsap.to(monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]})
 		}
 
 		function startBlinking() {
@@ -93,6 +142,26 @@ class MonsterLevel extends PIXI.Sprite {
 			monsterEyesClosed.visible=false;
 			monsterEyesOpened.visible=true;
 		}
+		
+		function startEating() {
+			gsap.delayedCall(0.5,blink);
+			gsap.delayedCall(0.5,startEating);
+		}
+
+		function eat() {
+			closeMouth();
+			gsap.delayedCall(0.2,openMouth);
+		}
+
+		function closeMouth() {
+			monsterMouthClosed.visible=true;
+			monsterMouthOpened.visible=false;
+		}
+
+		function openMouth() {
+			monsterMouthClosed.visible=false;
+			monsterMouthOpened.visible=true;
+		}
 	}
 	
 	initRandomItemDrop(context) {
@@ -108,10 +177,9 @@ class MonsterLevel extends PIXI.Sprite {
 		var randomItem = context.components[parseInt(context.components.length*Math.random())];
 		var item = new DropItem(randomItem.textureName);
 			item.refItem=randomItem;
-			item.x=Math.random()*app.renderer.width;
+			item.x=Math.random()*(app.renderer.width-600)+300;
 			item.y=-100;
 			item.rotation=0;
-			item.filters = [new PIXI.filters.BlurFilter(0.1)];
 		context.addChild(item);
 		context.items.push(item);
 		
@@ -140,7 +208,7 @@ class MonsterLevel extends PIXI.Sprite {
 			}
 			
 			if (this.dragging && itemOnScanner(this)) {
-				itemInScanner(this)
+				itemInScanner(this,itemOnScanner(this))
 			}
 			
 			if (this.dragging) {
@@ -159,12 +227,23 @@ class MonsterLevel extends PIXI.Sprite {
 		}
 		
 		function itemOnScanner(item) {
-			if (Math.hypot(item.x-0,item.y-0)<2000) return true;
-			return false;
+			if (Math.hypot(item.x-context.metalContainer.x,		item.y-context.metalContainer.y)	<80) return context.metalContainer.name;
+			if (Math.hypot(item.x-context.dangerContainer.x,	item.y-context.dangerContainer.y)	<80) return context.dangerContainer.name;
+			if (Math.hypot(item.x-context.richContainer.x,		item.y-context.richContainer.y)		<80) return context.richContainer.name;
+			if (Math.hypot(item.x-context.otherContainer.x,		item.y-context.otherContainer.y)	<80) return context.otherContainer.name;
+			return null;
 		}
 		
-		function itemInScanner(item) {
-			context.itemsInScanner++;
+		function itemInScanner(item,containerType) {
+			item.off('mousedown', onDragStart)
+				.off('touchstart', onDragStart)
+				.off('mouseup', onDragEnd)
+				.off('mouseupoutside', onDragEnd)
+				.off('touchend', onDragEnd)
+				.off('touchendoutside', onDragEnd)
+				.off('mousemove', onDragMove)
+				.off('touchmove', onDragMove);
+			if(item.refItem.type==containerType) context.itemsInScanner++;
 			if (context.itemsInScanner>3) context.stop(context);
 		}
 	}
@@ -179,7 +258,7 @@ class MonsterLevel extends PIXI.Sprite {
 			item.parent.removeChild(item);
 		});
 		gsap.killTweensOf(context.monster);
-		context.endFunc();
+		context.endFunc(context.itemCaught.refItem);
 	}
 
 };

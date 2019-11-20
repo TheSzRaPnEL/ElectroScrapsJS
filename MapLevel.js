@@ -1,8 +1,9 @@
 class MapLevel extends PIXI.Sprite {
 	
-	constructor(endFunc) {
+	constructor(itemComponent,endFunc) {
 		super();
 		this.endFunc=endFunc;
+		this.itemComponent=itemComponent;
 	}
 	
 	init() {
@@ -10,6 +11,12 @@ class MapLevel extends PIXI.Sprite {
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
+		
+		var itemComponentIcon = new PIXI.Sprite(PIXI.Texture.from(this.itemComponent.textureName));
+			itemComponentIcon.anchor.set(0.5);
+			itemComponentIcon.x = app.renderer.width/2;
+			itemComponentIcon.y = 120;
+		this.addChild(itemComponentIcon);
 		
 		var worldMap = new PIXI.Sprite(PIXI.Texture.from("mapShape.png"));
 			worldMap.y = 150;
@@ -63,11 +70,11 @@ class MapLevel extends PIXI.Sprite {
 		context.indicatorList.push([countryName.GWINEA,		countryIndicatorSize.BIG,			true,	385,	360]);
 		context.indicatorList.push([countryName.KONGO,		countryIndicatorSize.SMALL,			true,	440,	400]);
 		context.indicatorList.push([countryName.ZAMBIA,		countryIndicatorSize.BIG,			true,	485,	450]);
-		context.indicatorList.push([countryName.RPA,		countryIndicatorSize.VERY_SMALL,	true,	490,	510]);
+		context.indicatorList.push([countryName.RPA,		countryIndicatorSize.VERY_BIG,		true,	490,	510]);
 		context.indicatorList.push([countryName.CHINY,		countryIndicatorSize.SMALL,			false,	630,	320]);
 		context.indicatorList.push([countryName.INDIE,		countryIndicatorSize.SMALL,			true,	625,	375]);
 		context.indicatorList.push([countryName.INDONEZJA,	countryIndicatorSize.VERY_BIG,		true,	690,	420]);
-		context.indicatorList.push([countryName.AUSTRALIA,	countryIndicatorSize.VERY_BIG,		false,	640,	480]);
+		context.indicatorList.push([countryName.AUSTRALIA,	countryIndicatorSize.VERY_BIG,		false,	640,	470]);
 		context.indicatorList.push([countryName.KOREA,		countryIndicatorSize.VERY_BIG,		true,	770,	305]);
 		context.indicatorList.push([countryName.JAPONIA,	countryIndicatorSize.BIG,			true,	770,	350]);
 		context.indicatorList.push([countryName.AUSTRIA,	countryIndicatorSize.BIG,			true,	460,	315]);

@@ -35,21 +35,31 @@ class CountryIndicator extends PIXI.Sprite {
 		var dot = this.dot;
 			dot.pivot.x=dot.width/2;
 			dot.pivot.y=dot.height/2;
-			if (context.dotLeft) dot.x=bg.width-20
-			else dot.x=20;
+			if (context.dotLeft) dot.x=20
+			else dot.x=bg.width-20;
 			dot.y=bg.height/2;
 		context.addChild(dot);
+		
+		this.countryTXTF = new PIXI.Text(this.countryName,{fontFamily : 'Arial', fontSize: 20, bold: true, fill : 0x000000, align : 'left'});
+		var countryTXTF=this.countryTXTF;
+			countryTXTF.roundPixels=true;
+			countryTXTF.anchor.set(0.5);
+			countryTXTF.x=bg.x+bg.width/2;
+			countryTXTF.y=bg.y+bg.height/2;
+		this.addChild(countryTXTF);
 	}
 	
 	highlight() {
 		this.bg.texture = this.HTexture;
 		this.dot.texture = this.WhiteDotTexture;
+		this.countryTXTF.style.fill=0xffffff;
 		this.isHighlighted = true;
 	}
 	
 	unhighlight() {
 		this.bg.texture = this.UHTexture;
 		this.dot.texture = this.DotTexture;
+		this.countryTXTF.style.fill=0x000000;
 		this.isHighlighted = false;
 	}
 

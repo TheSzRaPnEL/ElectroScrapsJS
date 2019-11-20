@@ -33,7 +33,7 @@ class ScannerLevel extends PIXI.Sprite {
 			// itemInScanner.visible = false;
 		this.addChild(itemInScanner);
 		
-		//----------------------------------------//
+		 //----------------------------------------//
 		//CONVERT THIS SECTION INTO RESPOPUP CLASS//
 		this.resPopup = new PIXI.Sprite(PIXI.Texture.from("popupResBG.png"));
 		var resPopup = this.resPopup;
