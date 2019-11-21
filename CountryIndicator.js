@@ -19,7 +19,6 @@ class CountryIndicator extends PIXI.Sprite {
 	init() {
 		let context=this;
 		
-		console.log("countryIndicatorSize: ",context.countryIndicatorSize);
 		context.HTexture = PIXI.Texture.from("countryPlaceholder_"+context.countryIndicatorSize+"H.png");
 		
 		context.UHTexture = PIXI.Texture.from("countryPlaceholder_"+context.countryIndicatorSize+".png");

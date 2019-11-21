@@ -74,8 +74,8 @@ class CatchLevel extends PIXI.Sprite {
 		console.log(this.selectedGameSortItemList);
 	}
 	
-	begin(context) {
-		context.showScannerBar(context);
+	begin() {
+		this.showScannerBar(this);
 	}
 	
 	stop(context) {
