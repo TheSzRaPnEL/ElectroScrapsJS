@@ -240,6 +240,7 @@ class CatchLevel extends PIXI.Sprite {
 				});
 				context.itemsInScanner=1;
 			}
+			window.addPoints(context.itemsInScanner);
 			context.indicators[context.itemsInScanner-1].alpha=context.indicatorsShownAlpha;
 			context.itemInScannerType = item.sortItem;
 			console.log("CatchLevel throwRandomItem->itemInScanner context: ",this);

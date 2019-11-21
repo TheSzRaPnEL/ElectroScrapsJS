@@ -23,69 +23,17 @@ class MenuLevel extends PIXI.Sprite {
 			startBtn.on('pointerup', onButtonUp);
 		context.addChild(startBtn);
 		
-		context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
-		context.clock = new PIXI.Text("120",{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'left'});
-		var clock=this.clock;
-			clock.pivot.x=clock.width/2;
-			clock.roundPixels=true;
-			clock.x=390;
-			clock.y=12;
-			clock.visible = false;
-		
 		function onButtonDown() {
 			this.isdown = true;
-			this.visible=false;
-				
-			var menuBar = context.menuBar;
-				menuBar.x=-menuBar.width;
-				menuBar.visible = false;
-			app.stage.addChild(menuBar);
-			
-			showMenuBar(context);
+			this.alpha = 0.5;
+			startBtn.interactive = false;
+			startBtn.buttonMode = false;
+			context.stop(context);
 		}
 			
 		function onButtonUp() {
 			this.isdown = false;
 			this.alpha = 1;
-		}
-		
-		function showMenuBar(context) {
-			context.menuBar.visible=true;
-			gsap.to(context.menuBar,0.3,{x:0, onComplete:menuBarShown, onCompleteParams:[context]});
-		}
-
-		function menuBarShown(context) {
-			showClock(context);
-		}
-		
-		function showClock(context) {
-			context.clock.visible=true;
-			app.stage.addChild(context.clock);
-			context.clockIntervalID = setInterval(countdown,1000,context);
-			context.stop(context);
-		}
-		
-		function hideClock(context) {
-			context.clock.visible=false;
-			clearInterval(context.clockIntervalID);
-		}
-		
-		function countdown(context) {
-			context.clock.text=(parseInt(context.clock.text)-1).toString();
-			if(parseInt(context.clock.text)<0) {
-				hideMenuBar(context);
-				window.startScoreLevel();
-			}
-		}
-		
-		function hideMenuBar(context) {
-			hideClock(context);
-			context.menuBar.visible=true;
-			gsap.to(context.menuBar,0.3,{x:-context.menuBar.width, onComplete:menuBarHidden, onCompleteParams:[context]});
-		}
-
-		function menuBarHidden(context) {
-			context.menuBar.visible=false;
 		}
 	}
 	

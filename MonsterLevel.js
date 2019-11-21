@@ -107,6 +107,7 @@ class MonsterLevel extends PIXI.Sprite {
 				context.items.splice(context.items.indexOf(item),1);
 				context.removeChild(item);
 			}
+			window.addPoints(-1*item.refItem.points);
 			context.monsterEating=false;
 			if (Math.random()>0.5) gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
 			else gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
@@ -244,6 +245,7 @@ class MonsterLevel extends PIXI.Sprite {
 				.off('mousemove', onDragMove)
 				.off('touchmove', onDragMove);
 			if(item.refItem.type==containerType) context.itemsInScanner++;
+			window.addPoints(item.refItem.points);
 			if (context.itemsInScanner>3) context.stop(context);
 		}
 	}

@@ -148,6 +148,8 @@ class ScannerLevel extends PIXI.Sprite {
 			context.scannerComponentList.forEach( function(scannerComponent) {
 				scannerComponent.on('mousedown', onComponentMouseDown);
 			});
+			
+			window.addPoints(parseInt(resPopupValue.text));
 			// if(!this.data) {
 				this.data=true;
 				resPopup.visible=false;

@@ -1,7 +1,8 @@
 class ScoreLevel extends PIXI.Sprite {
 	
-	constructor(endFunc) {
+	constructor(points,endFunc) {
 		super();
+		this.points=points;
 		this.endFunc=endFunc;
 	}
 	
@@ -18,6 +19,16 @@ class ScoreLevel extends PIXI.Sprite {
 			console.log(context);
 			context.endLevel(context);
 		}
+		
+		context.pointsTxtF = new PIXI.Text(context.points.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var pointsTxtF=this.pointsTxtF;
+			pointsTxtF.anchor.set(0.5);
+			pointsTxtF.roundPixels=true;
+			pointsTxtF.x=400;
+			pointsTxtF.y=265;
+		this.addChild(pointsTxtF);
+			
+		while(pointsTxtF.width>50) pointsTxtF.style.fontSize--;
 	}
 	
 	begin() {

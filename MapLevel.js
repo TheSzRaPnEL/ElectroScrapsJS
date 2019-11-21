@@ -95,6 +95,7 @@ class MapLevel extends PIXI.Sprite {
 		function onIndicatorMouseDown(event) {
 			if (!this.isHighlighted) {
 				this.highlight();
+				window.addPoints(50);
 				context.endLevel(context);
 			}
 		}

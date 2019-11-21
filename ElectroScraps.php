@@ -20,6 +20,7 @@
 	<script src="DropItem.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ItemConfig.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="MenuLevel.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="OverlayMenu.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -47,7 +48,7 @@
 		</script>
 		
 		<script type="text/javascript">
-			let type = "WebGL"
+			let type = "WebGL";
 			if(!PIXI.utils.isWebGLSupported()){
 				type = "canvas"
 			}
@@ -68,6 +69,9 @@
 			document.body.appendChild(app.view);
 			
 			let context = this;
+			let childOnTop=1;
+			let overlayMenu; 
+			let gameIteration; 
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -90,6 +94,11 @@
 				PIXI.sound.play('songFour').loop=true;
 				context.playMusic(0);
 				
+				overlayMenu=new OverlayMenu();
+				overlayMenu.init();
+				app.stage.addChild(overlayMenu);
+				
+				gameIteration=1;				
 				startMenuLevel();
 			}
 			
@@ -97,11 +106,13 @@
 				context.playMusic(1);
 				level = new MenuLevel(context.initGame);
 				app.stage.currentLevel=level;
-				app.stage.addChild(level);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
+				level.begin();
 			}
 			
 			function initGame() {
+				overlayMenu.showMenuBar();
 				context.startCatchLevel();
 				// context.startScannerLevel(context.gameSortItemList[0]);
 				// context.startMonsterLevel(context.gameSortItemList[0].components);
@@ -113,7 +124,7 @@
 				level = new CatchLevel(context.gameSortItemList,context.startScannerLevel);
 				app.stage.currentLevel=level;
 				console.log("CHILDREN: ",app.stage.children);
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
@@ -122,7 +133,7 @@
 				context.playMusic(2);
 				level = new ScannerLevel(itemInScanner,context.startMonsterLevel);
 				app.stage.currentLevel=level;
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
@@ -131,7 +142,7 @@
 				context.playMusic(3);
 				level = new MonsterLevel(componentList,context.startMapLevel);
 				app.stage.currentLevel=level;
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
@@ -140,16 +151,16 @@
 				context.playMusic(3);
 				level = new MapLevel(itemComponent,context.restartGame);
 				app.stage.currentLevel=level;
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
 			
 			function startScoreLevel() {
 				context.playMusic(4);
-				level = new ScoreLevel(context.startEndLevel);
+				level = new ScoreLevel(parseInt(overlayMenu.points.text),context.startEndLevel);
 				app.stage.currentLevel=level;
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
@@ -158,7 +169,7 @@
 				context.playMusic(4);
 				level = new EndLevel(context.endGame);
 				app.stage.currentLevel=level;
-				app.stage.addChildAt(level,app.stage.children.length-2);
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
 				level.begin();
 			}
@@ -170,10 +181,12 @@
 				
 				app.stage.removeChildren();
 				
+				gameIteration=1;
 				startMenuLevel();
 			}
 			
 			function restartGame() {
+				gameIteration*=2;
 				context.initGame();
 			}
 			
@@ -186,6 +199,10 @@
 				if (value==2) PIXI.sound.resume('songTwo');
 				if (value==3) PIXI.sound.resume('songThree');
 				if (value==4) PIXI.sound.resume('songFour');
+			}
+			
+			function addPoints(value) {
+				overlayMenu.addPoints(value*gameIteration);
 			}
 		</script>
 	</body>
