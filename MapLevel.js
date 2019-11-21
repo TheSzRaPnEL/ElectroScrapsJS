@@ -111,7 +111,8 @@ class MapLevel extends PIXI.Sprite {
 	
 	endLevel(context) {
 		context.indicatorList.forEach( function(indicator) {
-			indicator.interactive=false
+			indicator.interactive=false;
+			indicator.off('pointerdown',onIndicatorMouseDown);
 		});
 		gsap.delayedCall(2,context.stop,[context]);
 	}

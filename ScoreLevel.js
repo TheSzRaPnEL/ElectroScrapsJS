@@ -41,6 +41,7 @@ class ScoreLevel extends PIXI.Sprite {
 	
 	endLevel(context) {
 		context.bg.interactive=false;
+		context.bg.off('pointerdown',onBgMouseDown);
 		gsap.delayedCall(2,context.stop,[context]);
 	}
 

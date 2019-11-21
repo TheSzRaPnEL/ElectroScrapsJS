@@ -42,6 +42,8 @@ class MenuLevel extends PIXI.Sprite {
 	}
 	
 	stop(context) {
+		startBtn.off('pointerdown', onButtonDown);
+		startBtn.off('pointerup', onButtonUp);
 		context.endFunc();
 	}
 
