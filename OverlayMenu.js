@@ -60,6 +60,7 @@ class OverlayMenu extends PIXI.Sprite {
 			context.hideMenuBar(context);
 			context.hideClock(context);
 			context.hidePoints(context);
+			app.stage.currentLevel.end(app.stage.currentLevel);
 			window.startScoreLevel();
 		}
 	}

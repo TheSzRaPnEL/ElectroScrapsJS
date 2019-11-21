@@ -258,13 +258,17 @@ class MonsterLevel extends PIXI.Sprite {
 	}
 	
 	stop(context) {
+		context.end(context);
+		context.endFunc(context.itemCaught.refItem);
+	}
+	
+	end(context) {
 		context.stopRandomItemDrop(context);
 		app.ticker.remove(context.monsterLoop);
 		context.items.forEach( function(item) {
 			item.parent.removeChild(item);
 		});
 		gsap.killTweensOf(context.monster);
-		context.endFunc(context.itemCaught.refItem);
 	}
 
 };

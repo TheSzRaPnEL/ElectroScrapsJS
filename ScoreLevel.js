@@ -9,16 +9,16 @@ class ScoreLevel extends PIXI.Sprite {
 	init() {
 		let context = this;
 		
+		this.onBgMouseDown = function(event) {
+			context.end(context);
+			gsap.delayedCall(2,context.stop,[context]);
+		}
+		
 		context.bg = new PIXI.Sprite(PIXI.Texture.from("ScoreScreen.jpg"));
 		var bg = context.bg;
 			bg.interactive=true;
-			bg.on('pointerdown',onBgMouseDown);
+			bg.on('pointerdown',this.onBgMouseDown);
 		this.addChild(bg);
-		
-		function onBgMouseDown(event) {
-			console.log(context);
-			context.endLevel(context);
-		}
 		
 		context.pointsTxtF = new PIXI.Text(context.points.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
 		var pointsTxtF=this.pointsTxtF;
@@ -36,13 +36,13 @@ class ScoreLevel extends PIXI.Sprite {
 	}
 	
 	stop(context) {
+		context.end(context);
 		context.endFunc();
 	}
 	
-	endLevel(context) {
+	end(context) {
 		context.bg.interactive=false;
-		context.bg.off('pointerdown',onBgMouseDown);
-		gsap.delayedCall(2,context.stop,[context]);
+		context.bg.off('pointerdown',context.onBgMouseDown);
 	}
 
 };

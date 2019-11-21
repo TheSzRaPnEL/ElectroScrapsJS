@@ -15,8 +15,9 @@ class EndLevel extends PIXI.Sprite {
 		this.addChild(bg);
 		
 		function onBgMouseDown(event) {
-			console.log(context);
-			context.endLevel(context);
+			bg.interactive=false;
+			bg.off('pointerdown',onBgMouseDown);
+			context.end(context);
 		}
 	}
 	
@@ -28,9 +29,7 @@ class EndLevel extends PIXI.Sprite {
 		context.endFunc();
 	}
 	
-	endLevel(context) {
-		context.bg.interactive=false;
-		context.bg.off('pointerdown',onBgMouseDown);
+	end(context) {
 		gsap.delayedCall(2,context.stop,[context]);
 	}
 

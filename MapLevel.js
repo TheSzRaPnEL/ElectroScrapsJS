@@ -9,6 +9,8 @@ class MapLevel extends PIXI.Sprite {
 	init() {
 		let context = this;
 		
+		this.onIndicatorMouseDown;
+		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
 		
@@ -81,24 +83,25 @@ class MapLevel extends PIXI.Sprite {
 		
 		context.countryIndicatorList=[];
 		
+		this.onIndicatorMouseDown = function(event) {
+			if (!this.isHighlighted) {
+				this.highlight();
+				window.addPoints(50);
+				context.end(context);
+				gsap.delayedCall(2,context.stop,[context]);
+			}
+		}
+		
 		context.indicatorList.forEach( function(indicator) {
 			var countryIndicator = new CountryIndicator(indicator[0],indicator[1],indicator[2]);
 			countryIndicator.x = indicator[3];
 			countryIndicator.y = indicator[4];
 			countryIndicator.init();
 			countryIndicator.interactive=true;
-			countryIndicator.on('pointerdown',onIndicatorMouseDown);
+			countryIndicator.on('pointerdown',context.onIndicatorMouseDown);
 			context.addChild(countryIndicator);
 			context.countryIndicatorList.push(countryIndicator);
 		});
-		
-		function onIndicatorMouseDown(event) {
-			if (!this.isHighlighted) {
-				this.highlight();
-				window.addPoints(50);
-				context.endLevel(context);
-			}
-		}
 	}
 	
 	begin() {
@@ -106,15 +109,15 @@ class MapLevel extends PIXI.Sprite {
 	}
 	
 	stop(context) {
+		context.end(context);
 		context.endFunc();
 	}
 	
-	endLevel(context) {
-		context.indicatorList.forEach( function(indicator) {
-			indicator.interactive=false;
-			indicator.off('pointerdown',onIndicatorMouseDown);
+	end(context) {
+		context.countryIndicatorList.forEach( function(countryIndicator) {
+			countryIndicator.interactive=false;
+			countryIndicator.off('pointerdown',context.onIndicatorMouseDown);
 		});
-		gsap.delayedCall(2,context.stop,[context]);
 	}
 
 };

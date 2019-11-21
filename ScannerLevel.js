@@ -177,5 +177,9 @@ class ScannerLevel extends PIXI.Sprite {
 		console.log("end scan level");
 		context.endFunc(context._itemInScanner.components);
 	}
+	
+	end(context) {
+		//
+	}
 
 };

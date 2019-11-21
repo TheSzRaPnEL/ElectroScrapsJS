@@ -79,12 +79,16 @@ class CatchLevel extends PIXI.Sprite {
 	}
 	
 	stop(context) {
+		context.end(context);
+		context.endFunc(context.itemInScannerType);
+	}
+	
+	end(context) {
 		context.items.forEach( function(item) {
 			gsap.killTweensOf(item);
 			item.parent.removeChild(item);
 		});
 		context.stopRandomItemThrowing(context);
-		context.endFunc(context.itemInScannerType);
 	}
 	
 	showScannerBar(context) {
