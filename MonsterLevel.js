@@ -13,6 +13,7 @@ class MonsterLevel extends PIXI.Sprite {
 		this.items=[];
 		this.itemCaught;
 		this.itemsInScanner=0;
+		this.monsterLoop;
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
@@ -89,9 +90,7 @@ class MonsterLevel extends PIXI.Sprite {
 		
 		context.initRandomItemDrop(context);
 		
-		app.ticker.add(monsterLevelLoop);
-		
-		function monsterLevelLoop(delta) {
+		this.monsterLoop = function(delta) {
 			context.items.forEach( function(item) {
 				item.y=item.y+2*delta;
 				if(!context.monsterEating && item.y>19*app.renderer.height/30) {
@@ -101,6 +100,8 @@ class MonsterLevel extends PIXI.Sprite {
 				}
 			});
 		}
+		
+		app.ticker.add(this.monsterLoop);
 		
 		function monsterAte(item) {
 			eat();
@@ -258,7 +259,7 @@ class MonsterLevel extends PIXI.Sprite {
 	
 	stop(context) {
 		context.stopRandomItemDrop(context);
-		app.ticker.remove(context.monsterLevelLoop);
+		app.ticker.remove(context.monsterLoop);
 		context.items.forEach( function(item) {
 			item.parent.removeChild(item);
 		});
