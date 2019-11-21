@@ -89,8 +89,9 @@ class MonsterLevel extends PIXI.Sprite {
 		
 		context.initRandomItemDrop(context);
 		
-		app.ticker.add( function(delta) {
-			//monster.y=monster.y-2*delta;
+		app.ticker.add(monsterLevelLoop);
+		
+		function monsterLevelLoop(delta) {
 			context.items.forEach( function(item) {
 				item.y=item.y+2*delta;
 				if(!context.monsterEating && item.y>19*app.renderer.height/30) {
@@ -99,7 +100,7 @@ class MonsterLevel extends PIXI.Sprite {
 					gsap.to(context.monster,1,{x:item.x-context.monster.width/2, ease:Quad.easeOut, onComplete:monsterAte, onCompleteParams:[item]});
 				}
 			});
-		});
+		}
 		
 		function monsterAte(item) {
 			eat();
@@ -256,6 +257,7 @@ class MonsterLevel extends PIXI.Sprite {
 	
 	stop(context) {
 		context.stopRandomItemDrop(context);
+		app.ticker.remove(context.monsterLevelLoop);
 		context.items.forEach( function(item) {
 			item.parent.removeChild(item);
 		});

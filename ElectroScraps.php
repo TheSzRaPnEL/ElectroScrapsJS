@@ -27,7 +27,7 @@
 		<?php include "GetPlayerDropDownMenu.php?TeamID=1";?><br>
 		<br>
 		
-		<button onclick="openFullscreen();" class="gamecanvas" style="margin-bottom:8px">Open Video in Fullscreen</button>
+		<button onclick="openFullscreen();" class="gamecanvas" style="margin-bottom:8px">Open Game in Fullscreen</button>
 		<br>
 		
 		<script type="text/javascript">
@@ -181,12 +181,14 @@
 				
 				app.stage.removeChildren();
 				
+				app.stage.addChild(overlayMenu);
+				overlayMenu.init();
 				gameIteration=1;
 				startMenuLevel();
 			}
 			
 			function restartGame() {
-				gameIteration*=2;
+				gameIteration++;
 				context.initGame();
 			}
 			

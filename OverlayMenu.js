@@ -6,9 +6,12 @@ class OverlayMenu extends PIXI.Sprite {
 	
 	init() {
 		let context = this;
+		let startClockValue="120";
+		let startPointsValue="0";
 		
-		context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
-		context.clock = new PIXI.Text("8",{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'center'});
+		if (context.menuBar==null) context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));
+		if (context.clock==null) context.clock = new PIXI.Text(startClockValue,{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'center'})
+		else context.clock.text=startClockValue;
 		var clock=this.clock;
 			clock.anchor.set(0.5);
 			clock.roundPixels=true;
@@ -16,7 +19,8 @@ class OverlayMenu extends PIXI.Sprite {
 			clock.y=32;
 			clock.visible = false;
 			
-		context.points = new PIXI.Text("0",{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'center'});
+		if (context.points==null) context.points = new PIXI.Text(startPointsValue,{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'center'})
+		else context.points.text=startPointsValue;
 		var points=this.points;
 			points.anchor.set(0.5);
 			points.roundPixels=true;
@@ -41,6 +45,7 @@ class OverlayMenu extends PIXI.Sprite {
 	showClock(context) {
 		context.clock.visible=true;
 		if (context.clock.parent==null) context.addChild(context.clock);
+		if (context.clockIntervalID) clearInterval(context.clockIntervalID);
 		context.clockIntervalID = setInterval(context.countdown,1000,context);
 	}
 	
@@ -79,6 +84,7 @@ class OverlayMenu extends PIXI.Sprite {
 	
 	addPoints(value) {
 		this.points.text=(parseInt(this.points.text)+value).toString();
+		while(this.points.width>50) this.points.style.fontSize--;
 		this.points.scale.x=2;
 		this.points.scale.y=2;
 		gsap.to(this.points.scale,1,{x:1,y:1,ease:Elastic.easeOut.config(1, 0.3)});
