@@ -11,7 +11,7 @@ class EndLevel extends PIXI.Sprite {
 		context.bg = new PIXI.Sprite(PIXI.Texture.from("endScreen.jpg"));
 		var bg = context.bg;
 			bg.interactive=true;
-			bg.on('mousedown',onBgMouseDown);
+			bg.on('pointerdown',onBgMouseDown);
 		this.addChild(bg);
 		
 		function onBgMouseDown(event) {

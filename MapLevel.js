@@ -87,7 +87,7 @@ class MapLevel extends PIXI.Sprite {
 			countryIndicator.y = indicator[4];
 			countryIndicator.init();
 			countryIndicator.interactive=true;
-			countryIndicator.on('mousedown',onIndicatorMouseDown);
+			countryIndicator.on('pointerdown',onIndicatorMouseDown);
 			context.addChild(countryIndicator);
 			context.countryIndicatorList.push(countryIndicator);
 		});

@@ -51,7 +51,7 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupCloseBtn.x = resPopup.x+resPopup.pivot.x-10;
 			resPopupCloseBtn.y = resPopup.y-resPopup.pivot.y+10;
 			resPopupCloseBtn.interactive=true;
-			resPopupCloseBtn.on('mousedown', onResPopupCloseBtnMouseDown);
+			resPopupCloseBtn.on('pointerdown', onResPopupCloseBtnMouseDown);
 			resPopupCloseBtn.visible = false;
 		this.addChild(resPopupCloseBtn);
 		
@@ -105,7 +105,7 @@ class ScannerLevel extends PIXI.Sprite {
 				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
 				componentInScanner.y = 9*app.renderer.height/10;
 				componentInScanner.interactive=true;
-				componentInScanner.on('mousedown', onComponentMouseDown);
+				componentInScanner.on('pointerdown', onComponentMouseDown);
 				// componentInScanner.visible = false;
 			this.addChild(componentInScanner);
 			this.scannerComponentList.push(componentInScanner);
@@ -120,7 +120,7 @@ class ScannerLevel extends PIXI.Sprite {
 		
 		function onComponentMouseDown(event) {
 			context.scannerComponentList.forEach( function(scannerComponent) {
-				scannerComponent.off('mousedown', onComponentMouseDown);
+				scannerComponent.off('pointerdown', onComponentMouseDown);
 			});
 			if(!this.data) {
 				this.data=true;
@@ -146,7 +146,7 @@ class ScannerLevel extends PIXI.Sprite {
 		
 		function onResPopupCloseBtnMouseDown(event) {
 			context.scannerComponentList.forEach( function(scannerComponent) {
-				scannerComponent.on('mousedown', onComponentMouseDown);
+				scannerComponent.on('pointerdown', onComponentMouseDown);
 			});
 			
 			window.addPoints(parseInt(resPopupValue.text));

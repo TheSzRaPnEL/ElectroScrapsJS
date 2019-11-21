@@ -168,6 +168,7 @@ class MonsterLevel extends PIXI.Sprite {
 	
 	initRandomItemDrop(context) {
 		context.dropRandomItem(context);
+		if (context.randomItemDropIntervalID) clearInterval(context.randomItemDropIntervalID);
 		context.randomItemDropIntervalID = setInterval(context.dropRandomItem,2000,context);
 	}
 	
