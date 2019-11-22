@@ -23,32 +23,6 @@ class MapLevel extends PIXI.Sprite {
 		var worldMap = new PIXI.Sprite(PIXI.Texture.from("mapShape.png"));
 			worldMap.y = 150;
 		this.addChild(worldMap);
-		
-		const countryName = {
-			POLSKA		:	'Poland',
-			WENEZUELA	:	'Venezuela',
-			GWINEA		:	'Guinea',
-			AUSTRALIA	:	'Australia',
-			USA			:	'USA',
-			CHINY		:	'China',
-			KONGO		:	'Kongo',
-			KUBA		:	'Cuba',
-			CHILE		:	'Chile',
-			ZAMBIA		:	'Zambia',
-			RPA			:	'South Africa',
-			ROSJA		:	'Russia',
-			KANADA		:	'Canada',
-			MEKSYK		:	'Mexico',
-			PERU		:	'Peru',
-			JAPONIA		:	'Japan',
-			INDIE		:	'India',
-			INDONEZJA	:	'Indonesia',
-			BOLIWIA		:	'Bolivia',
-			BRAZYLIA	:	'Brazil',
-			AUSTRIA		:	'Austria',
-			KOREA		:	'Korea',
-			KAMERUN		:	'Cameroon'
-		}
 
 		const countryIndicatorSize = {
 			VERY_SMALL	:	'VerySmall',
@@ -87,21 +61,47 @@ class MapLevel extends PIXI.Sprite {
 			if (!this.isHighlighted) {
 				this.highlight();
 				window.addPoints(50);
+				window.selectedMineCountries().push(this.countryName);
 				context.end(context);
 				gsap.delayedCall(2,context.stop,[context]);
 			}
 		}
 		
+		let availableCountries=0;
 		context.indicatorList.forEach( function(indicator) {
 			var countryIndicator = new CountryIndicator(indicator[0],indicator[1],indicator[2]);
 			countryIndicator.x = indicator[3];
 			countryIndicator.y = indicator[4];
 			countryIndicator.init();
-			countryIndicator.interactive=true;
-			countryIndicator.on('pointerdown',context.onIndicatorMouseDown);
+			countryIndicator.alpha=0.4;
+			var indicatorSelectedBefore = window.selectedMineCountries().includes(indicator[0]);
+			if (context.itemComponent.mineCountries.includes(indicator[0]) && indicatorSelectedBefore==false) {
+				countryIndicator.interactive=true;
+				countryIndicator.on('pointerdown',context.onIndicatorMouseDown);
+				countryIndicator.alpha=1;
+				availableCountries++;
+			}
+			if (indicatorSelectedBefore) {
+				countryIndicator.highlight();
+				countryIndicator.alpha=1;
+			}
 			context.addChild(countryIndicator);
 			context.countryIndicatorList.push(countryIndicator);
 		});
+		
+		if (availableCountries==0) {
+			context.countryIndicatorList.forEach( function(countryIndicator) {
+				countryIndicator.alpha=0.4;
+				if (context.itemComponent.mineCountries.includes(countryIndicator.countryName)) {
+					countryIndicator.interactive=true;
+					countryIndicator.on('pointerdown',context.onIndicatorMouseDown);
+					countryIndicator.alpha=1;
+					countryIndicator.unhighlight();
+				}
+			});
+			window.addPoints(100);
+			window.clearSelectedMineCountries();
+		}
 	}
 	
 	begin() {

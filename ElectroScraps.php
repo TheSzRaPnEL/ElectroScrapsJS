@@ -71,7 +71,34 @@
 			let context = this;
 			let childOnTop=1;
 			let overlayMenu; 
-			let gameIteration; 
+			let gameIteration;
+			let _selectedMineCountries=[];
+			
+			const countryName = {
+				POLSKA		:	'Poland',
+				WENEZUELA	:	'Venezuela',
+				GWINEA		:	'Guinea',
+				AUSTRALIA	:	'Australia',
+				USA			:	'USA',
+				CHINY		:	'China',
+				KONGO		:	'Kongo',
+				KUBA		:	'Cuba',
+				CHILE		:	'Chile',
+				ZAMBIA		:	'Zambia',
+				RPA			:	'South Africa',
+				ROSJA		:	'Russia',
+				KANADA		:	'Canada',
+				MEKSYK		:	'Mexico',
+				PERU		:	'Peru',
+				JAPONIA		:	'Japan',
+				INDIE		:	'India',
+				INDONEZJA	:	'Indonesia',
+				BOLIWIA		:	'Bolivia',
+				BRAZYLIA	:	'Brazil',
+				AUSTRIA		:	'Austria',
+				KOREA		:	'Korea',
+				KAMERUN		:	'Cameroon'
+			}
 
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
@@ -184,6 +211,7 @@
 				app.stage.addChild(overlayMenu);
 				overlayMenu.init();
 				gameIteration=1;
+				_selectedMineCountries=[];
 				startMenuLevel();
 			}
 			
@@ -205,6 +233,14 @@
 			
 			function addPoints(value) {
 				overlayMenu.addPoints(value*gameIteration);
+			}
+			
+			function selectedMineCountries() {
+				return _selectedMineCountries;
+			}
+			
+			function clearSelectedMineCountries() {
+				_selectedMineCountries=[];
 			}
 		</script>
 	</body>

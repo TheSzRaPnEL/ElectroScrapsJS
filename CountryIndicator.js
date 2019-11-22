@@ -2,10 +2,14 @@ class CountryIndicator extends PIXI.Sprite {
 	
 	constructor(countryName, countryIndicatorSize, dotLeft = true) {
 		super();
-		this.countryName=countryName;
+		this._countryName=countryName;
 		this.countryIndicatorSize=countryIndicatorSize;
 		this.dotLeft=dotLeft;
 		this._isHighlighted=false;
+	}
+	
+	get countryName() {
+		return this._countryName;
 	}
 	
 	get isHighlighted()	{

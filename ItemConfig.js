@@ -29,6 +29,9 @@ class ItemConfig {
 		var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"Metal",	5);
 		var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"Rich",		8);
 		
+		aluminium.addMineCountry(countryName.AUSTRALIA);
+		aluminium.addMineCountry(countryName.GWINEA);
+		aluminium.addMineCountry(countryName.WENEZUELA);
 		aluminium.desc = "Noble metal used for equipment housings, screens and batteries, in thermostats, capacitors, washing machine drums etc.";
 		
 		batteryLit.desc = "There are different types of batteries. They may contain heavy metals harmful to health, such as cadmium (Cd) and nickel (Ni) nickel-cadmium batteries: Ni-Cd, as battery sticks AA, might be used in various devices e.g. small radios, becouse they can be recharged multiple times. For cordless, telephones, cameras etc., mass production of other batteries and producted: new generation lithium ion batteries (Li-Ion), inside which cathode are made out of cobalt oxide (CoO2).";
@@ -37,36 +40,70 @@ class ItemConfig {
 		
 		brass.desc = "Copper and zinc alloy with high corrosion resistance.";
 		
+		cadm.addMineCountry(countryName.CHINY);
+		cadm.addMineCountry(countryName.POLSKA);
+		cadm.addMineCountry(countryName.USA);
 		cadm.desc = "";
 		
 		chrome.desc = "";
 		
+		cobalt.addMineCountry(countryName.AUSTRALIA);
+		cobalt.addMineCountry(countryName.KONGO);
+		cobalt.addMineCountry(countryName.KUBA);
 		cobalt.desc = "";
 		
+		copper.addMineCountry(countryName.CHILE);
+		copper.addMineCountry(countryName.POLSKA);
+		copper.addMineCountry(countryName.ZAMBIA);
 		copper.desc = "Known since antiquity, used today in engine and cable production, processors, semiconductors and circuit boards printed for householding devices and RTV.";
 		
 		glass.desc = "Inorganic material obtained from quartz sand and additions like sodium carbonate, calcium carbonate, fluxes and pigments. All those raw materials are heated to very high temperatures around 1700 degrees Celsius and cooled to reach steady state without cristalization.";
 		
+		gold.addMineCountry(countryName.POLSKA);
+		gold.addMineCountry(countryName.RPA);
+		gold.addMineCountry(countryName.USA);
 		gold.desc = "Noble metal used in electronics for its resistance to weather conditions, e.g. for coating processors, cable contacts, chips and other elements of PC.";
 		
+		lead.addMineCountry(countryName.AUSTRALIA);
+		lead.addMineCountry(countryName.KANADA);
+		lead.addMineCountry(countryName.MEKSYK);
 		lead.desc = "It is a heavy metal, dangerous for health. Proctects from X-rays, was used in old television's cathode ray tubes, CRT screens and soldering alloys.";
 		
+		nickel.addMineCountry(countryName.KANADA);
+		nickel.addMineCountry(countryName.KUBA);
+		nickel.addMineCountry(countryName.ROSJA);
 		nickel.desc = "";
 		
 		plastic.desc = "Plastics have great variety of features and properties: in household devices and RTV e.g. polycarbonates (PC) or polystyrene (HIPS) are used to build their covers, flexible rubber used for cable housing (PVC), polyethylene and polypropylene used in toys production and high precision parts, foils. Plastic may contain admixture of substance dangerous for health.";
 		
+		platinium.addMineCountry(countryName.KANADA);
+		platinium.addMineCountry(countryName.ROSJA);
+		platinium.addMineCountry(countryName.RPA);
 		platinium.desc = "Noble metal used in components of the computer's hard disk, cell phone antennas or CD-DVD drives.";
 		
+		ree.addMineCountry(countryName.CHINY);
 		ree.desc = "Wide usage perspectives for renewable energy and automotive, called the metals of the future because of it. Used in electronics for device screens.";
 		
 		refrigerant.desc = "The first coolant used in refrigerators on a wide scale was the freon 12, chlorofluorocarbon compound (also known as CFC or CCl2F2). Due to its heavy impact on the ozone layer, freons were replaced with hydrofluorocarbons (HFC in short). When disassembling devices for recyckling, cooling gas is separated in a safe way so it does not get into the air.";
 		
+		silver.addMineCountry(countryName.MEKSYK);
+		silver.addMineCountry(countryName.PERU);
+		silver.addMineCountry(countryName.POLSKA);
 		silver.desc = "Noble metal, in use since antiquit, used in electronics due to having longer durability than tin.";
 		
+		steel.addMineCountry(countryName.CHINY);
+		steel.addMineCountry(countryName.INDIE);
+		steel.addMineCountry(countryName.JAPONIA);
 		steel.desc = "Iron and carbon alloy, usualy also contains other components. There are various types of steel with many different properties. Steel if used to make structural and fixing elements of many devices, magnets and screws.";
 		
+		tin.addMineCountry(countryName.BOLIWIA);
+		tin.addMineCountry(countryName.BRAZYLIA);
+		tin.addMineCountry(countryName.INDONEZJA);
 		tin.desc = "Known since antiquity, tin vessels were made of it in the Middle Ages, today it is primary metal used for alloys on printed circuit boards: in unleaded alloys besides tin there are small amounts of silver and copper being added.";
 		
+		wolfram.addMineCountry(countryName.AUSTRALIA);
+		wolfram.addMineCountry(countryName.AUSTRIA);
+		wolfram.addMineCountry(countryName.KOREA);
 		wolfram.desc = "Very important armaments industry's metal. Thin wire made of tungsten inside a bulb bubble, makes the bulb shine.";
 		
 		context.gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);

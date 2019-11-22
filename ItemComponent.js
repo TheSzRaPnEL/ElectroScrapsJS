@@ -7,6 +7,7 @@ class ItemComponent extends PIXI.Sprite {
 		this._type=type;
 		this._points=points;
 		this._desc=desc;
+		this._mineCountries=[];
 	}
 	
 	get name() {
@@ -31,6 +32,14 @@ class ItemComponent extends PIXI.Sprite {
 	
 	set desc(txt) {
 		this._desc=txt;
+	}
+	
+	addMineCountry(txt) {
+		this._mineCountries.push(txt);
+	}
+	
+	get mineCountries() {
+		return this._mineCountries;
 	}
 
 };
