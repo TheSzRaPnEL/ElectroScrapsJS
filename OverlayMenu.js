@@ -29,6 +29,18 @@ class OverlayMenu extends PIXI.Sprite {
 			points.visible = false;
 			
 		while(points.width>50) points.style.fontSize--;
+		
+		context._earthIndicator = new EarthIndicator();
+		var earthIndicator=context._earthIndicator;
+			earthIndicator.anchor.set(0.5);
+			earthIndicator.x=75;
+			earthIndicator.y=140;
+			earthIndicator.visible = false;
+			earthIndicator.init();
+	}
+	
+	get earthIndicator() {
+		return this._earthIndicator;
 	}
 		
 	showMenuBar() {
@@ -40,6 +52,7 @@ class OverlayMenu extends PIXI.Sprite {
 	menuBarShown(context) {
 		context.showClock(context);
 		context.showPoints(context);
+		context.showEarthIndicator(context);
 	}
 	
 	showClock(context) {
@@ -60,6 +73,7 @@ class OverlayMenu extends PIXI.Sprite {
 			context.hideMenuBar(context);
 			context.hideClock(context);
 			context.hidePoints(context);
+			context.hideEarthIndicator(context);
 			app.stage.currentLevel.end(app.stage.currentLevel);
 			window.startScoreLevel();
 		}
@@ -70,6 +84,11 @@ class OverlayMenu extends PIXI.Sprite {
 		if (context.points.parent==null) context.addChild(context.points);
 	}
 	
+	showEarthIndicator(context) {
+		context._earthIndicator.visible=true;
+		if (context._earthIndicator.parent==null) context.addChild(context._earthIndicator);
+	}
+	
 	hidePoints(context) {
 		context.points.visible=false;
 	}
@@ -77,6 +96,10 @@ class OverlayMenu extends PIXI.Sprite {
 	hideMenuBar(context) {
 		context.menuBar.visible=true;
 		gsap.to(context.menuBar,0.3,{x:-context.menuBar.width, onComplete:context.menuBarHidden, onCompleteParams:[context]});
+	}
+	
+	hideEarthIndicator(context) {
+		context._earthIndicator.visible=false;
 	}
 
 	menuBarHidden(context) {

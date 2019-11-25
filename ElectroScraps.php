@@ -21,6 +21,7 @@
 	<script src="ItemConfig.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="MenuLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="OverlayMenu.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="EarthIndicator.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -241,6 +242,11 @@
 			
 			function clearSelectedMineCountries() {
 				_selectedMineCountries=[];
+			}
+			
+			function improveCondition() {
+				var earthIndicator=overlayMenu.earthIndicator;
+				earthIndicator.improveCondition();
 			}
 		</script>
 	</body>

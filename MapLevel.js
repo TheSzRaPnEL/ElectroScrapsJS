@@ -60,6 +60,7 @@ class MapLevel extends PIXI.Sprite {
 		this.onIndicatorMouseDown = function(event) {
 			if (!this.isHighlighted) {
 				this.highlight();
+				window.improveCondition();
 				window.addPoints(50);
 				window.selectedMineCountries().push(this.countryName);
 				context.end(context);
