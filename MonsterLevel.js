@@ -58,7 +58,7 @@ class MonsterLevel extends PIXI.Sprite {
 			metalContainer.anchor.set(0.5);
 			metalContainer.name="Metal";
 			metalContainer.x = app.renderer.width-metalContainer.width/2+50;
-			metalContainer.y = 200;
+			metalContainer.y = 250;
 		this.addChild(metalContainer);
 		
 		this.dangerContainer = new PIXI.Sprite(PIXI.Texture.from("niebezpieczneBG2.png"));
@@ -66,7 +66,7 @@ class MonsterLevel extends PIXI.Sprite {
 			dangerContainer.anchor.set(0.5);
 			dangerContainer.name="Danger";
 			dangerContainer.x = dangerContainer.width/2-50;
-			dangerContainer.y = 200;
+			dangerContainer.y = 250;
 		this.addChild(dangerContainer);
 		
 		this.richContainer = new PIXI.Sprite(PIXI.Texture.from("cenneBG2.png"));
@@ -74,7 +74,7 @@ class MonsterLevel extends PIXI.Sprite {
 			richContainer.anchor.set(0.5);
 			richContainer.name="Rich";
 			richContainer.x = richContainer.width/2-50;
-			richContainer.y = 400;
+			richContainer.y = 440;
 		this.addChild(richContainer);
 		
 		this.otherContainer = new PIXI.Sprite(PIXI.Texture.from("inneMetarialyBG2.png"));
@@ -82,7 +82,7 @@ class MonsterLevel extends PIXI.Sprite {
 			otherContainer.anchor.set(0.5);
 			otherContainer.name="Other";
 			otherContainer.x = app.renderer.width-otherContainer.width/2+50;
-			otherContainer.y = 400;
+			otherContainer.y = 440;
 		this.addChild(otherContainer);
 
 		gsap.to(monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
@@ -109,7 +109,7 @@ class MonsterLevel extends PIXI.Sprite {
 				context.items.splice(context.items.indexOf(item),1);
 				context.removeChild(item);
 			}
-			window.addPoints(-1*item.refItem.points);
+			window.removePoints(item.refItem.points);
 			context.monsterEating=false;
 			if (Math.random()>0.5) gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
 			else gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
@@ -247,8 +247,10 @@ class MonsterLevel extends PIXI.Sprite {
 				.off('touchendoutside', onDragEnd)
 				.off('mousemove', onDragMove)
 				.off('touchmove', onDragMove);
-			if(item.refItem.type==containerType) context.itemsInScanner++;
-			window.addPoints(item.refItem.points);
+			if(item.refItem.type==containerType) {
+				context.itemsInScanner++;
+				window.addPoints(item.refItem.points);
+			}
 			if (context.itemsInScanner>3) context.stop(context);
 		}
 	}

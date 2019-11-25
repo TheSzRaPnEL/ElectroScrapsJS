@@ -29,6 +29,16 @@ class ScoreLevel extends PIXI.Sprite {
 		this.addChild(pointsTxtF);
 			
 		while(pointsTxtF.width>50) pointsTxtF.style.fontSize--;
+		
+		context.playerName = new PIXI.Text(overlayMenu.getPlayerName(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var playerName=this.playerName;
+			playerName.anchor.set(0.5);
+			playerName.roundPixels=true;
+			playerName.x=app.renderer.width/2;
+			playerName.y=175;
+		this.addChild(playerName);
+			
+		while(playerName.width>500) playerName.style.fontSize--;
 	}
 	
 	begin() {

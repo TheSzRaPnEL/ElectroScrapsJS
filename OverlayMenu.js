@@ -130,6 +130,18 @@ class OverlayMenu extends PIXI.Sprite {
 	
 	addPoints(value) {
 		this.points.text=(parseInt(this.points.text)+value).toString();
+		PIXI.sound.play("good");
+		this.updatePoints();
+	}
+	
+	removePoints(value) {
+		this.points.text=(parseInt(this.points.text)-value).toString();
+		PIXI.sound.play("bad");
+		this.updatePoints();
+	}
+	
+	updatePoints() {
+		this.points.style.fontSize=34;
 		while(this.points.width>50) this.points.style.fontSize--;
 		this.points.scale.x=2;
 		this.points.scale.y=2;
@@ -141,6 +153,10 @@ class OverlayMenu extends PIXI.Sprite {
 		this.playerName.text=txt;
 		while(this.playerName.width>250) this.playerName.style.fontSize--;
 		this.playerName.pivot.y=this.playerName.height/2;
+	}
+	
+	getPlayerName(txt) {
+		return this.playerName.text;
 	}
 
 };

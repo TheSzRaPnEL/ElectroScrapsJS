@@ -213,7 +213,7 @@ class ScannerLevel extends PIXI.Sprite {
 				scannerBarTxTF.roundPixels=true;
 				scannerBarTxTF.x=currScannerBar.x;
 				scannerBarTxTF.y=currScannerBar.y+10;
-			context.addChild(scannerBarTxTF);
+			context.addChildAt(scannerBarTxTF,context.getChildIndex(currScannerBar));
 			
 			gsap.to(currScannerBar,0.5,{height:-200*currItemComponentAmount/100,ease:Bounce.easeOut,onComplete:context.scannerBarShown,onCompleteParams:[context]});
 		}
