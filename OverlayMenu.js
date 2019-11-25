@@ -30,6 +30,17 @@ class OverlayMenu extends PIXI.Sprite {
 			
 		while(points.width>50) points.style.fontSize--;
 		
+		if (context.playerName==null) context.playerName = new PIXI.Text("PlayerName",{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'left'})
+		else context.playerName.text="PlayerName";
+		var playerName=this.playerName;
+			playerName.roundPixels=true;
+			playerName.pivot.y=playerName.height/2;
+			playerName.x=20;
+			playerName.y=32;
+			playerName.visible = false;
+			
+		while(playerName.width>250) playerName.style.fontSize--;
+		
 		context._earthIndicator = new EarthIndicator();
 		var earthIndicator=context._earthIndicator;
 			earthIndicator.anchor.set(0.5);
@@ -53,6 +64,7 @@ class OverlayMenu extends PIXI.Sprite {
 		context.showClock(context);
 		context.showPoints(context);
 		context.showEarthIndicator(context);
+		context.showPlayerName(context);
 	}
 	
 	showClock(context) {
@@ -74,6 +86,7 @@ class OverlayMenu extends PIXI.Sprite {
 			context.hideClock(context);
 			context.hidePoints(context);
 			context.hideEarthIndicator(context);
+			context.hidePlayerName(context);
 			app.stage.currentLevel.end(app.stage.currentLevel);
 			window.startScoreLevel();
 		}
@@ -89,6 +102,11 @@ class OverlayMenu extends PIXI.Sprite {
 		if (context._earthIndicator.parent==null) context.addChild(context._earthIndicator);
 	}
 	
+	showPlayerName(context) {
+		context.playerName.visible=true;
+		if (context.playerName.parent==null) context.addChild(context.playerName);
+	}
+	
 	hidePoints(context) {
 		context.points.visible=false;
 	}
@@ -101,6 +119,10 @@ class OverlayMenu extends PIXI.Sprite {
 	hideEarthIndicator(context) {
 		context._earthIndicator.visible=false;
 	}
+	
+	hidePlayerName(context) {
+		context.playerName.visible=false;
+	}
 
 	menuBarHidden(context) {
 		context.menuBar.visible=false;
@@ -112,6 +134,13 @@ class OverlayMenu extends PIXI.Sprite {
 		this.points.scale.x=2;
 		this.points.scale.y=2;
 		gsap.to(this.points.scale,1,{x:1,y:1,ease:Elastic.easeOut.config(1, 0.3)});
+	}
+	
+	setPlayerName(txt) {
+		this.playerName.style.fontSize=34;
+		this.playerName.text=txt;
+		while(this.playerName.width>250) this.playerName.style.fontSize--;
+		this.playerName.pivot.y=this.playerName.height/2;
 	}
 
 };

@@ -11,7 +11,7 @@ $sql = 'SELECT Name, ID FROM Team';
 
 $result = $conn->query($sql);
 
-echo '<select id=SelectTeam>';
+echo '<select id=SelectTeam onChange=refreshPlayerDropDown()>';
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {

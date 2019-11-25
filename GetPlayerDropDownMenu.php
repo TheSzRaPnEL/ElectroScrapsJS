@@ -1,23 +1,21 @@
 <?php
 require "DBCredits.php";
 
-$teamID = htmlspecialchars($_GET["TeamID"]);
-
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = 'SELECT PlayerID, TeamID FROM PlayerTeamSchoolRelation WHERE TeamID=' . $teamID;
+$sql = 'SELECT Name, ID FROM Player';
 
 $result = $conn->query($sql);
 
-echo '<select id=PlayerSelect>';
+echo '<select id=PlayerSelect onChange=refreshPlayerDropDown()>';
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-		echo '<option value="' . $row[PlayerID] . '">' . $row[PlayerID] . '</option>';
+		echo '<option value="' . $row[ID] . '">' . $row[Name] . '</option>';
     }
 } else {
     echo "siema";

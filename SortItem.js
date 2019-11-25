@@ -21,11 +21,11 @@ class SortItem {
 		return this._components;
 	}
 	
-	componentAmount(componentName) {
+	getComponentAmount(componentName) {
 		return this._componentAmounts[componentName];
 	}
 	
-	componentAmount(componentName,value) {
+	setComponentAmount(componentName,value) {
 		this._componentAmounts[componentName]=value;
 	}
 	
@@ -37,7 +37,7 @@ class SortItem {
 		return this._hasRefrigerant;
 	}
 	
-	addComponent(component,amount) {
+	addComponent(component,amount=2) {
 		this._components.push(component);
 		var componentName=component.name;
 		if(componentName=="batteryLit" || componentName=="batteryNik") this._hasBatteries=true;

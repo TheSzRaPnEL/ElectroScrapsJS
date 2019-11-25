@@ -25,8 +25,18 @@
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
-		<?php include "GetPlayerDropDownMenu.php?TeamID=1";?><br>
+		<?php include "GetPlayerDropDownMenu.php";?><br>
 		<br>
+		
+		<script type="text/javascript">
+			function refreshTeamDropDown() {
+				//
+			}
+			
+			function refreshPlayerDropDown() {
+				overlayMenu.setPlayerName(document.getElementById('PlayerSelect')[document.getElementById('PlayerSelect').selectedIndex].text);
+			}
+		</script>
 		
 		<button onclick="openFullscreen();" class="gamecanvas" style="margin-bottom:8px">Open Game in Fullscreen</button>
 		<br>

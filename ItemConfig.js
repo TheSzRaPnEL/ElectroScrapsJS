@@ -111,8 +111,8 @@ class ItemConfig {
 		context.gameSortItemList = [];
 		var calculator = new SortItem("calculator","item_calculator_big.png");
 			calculator.addComponent(copper,15);
-			calculator.addComponent(plastic,60);
 			calculator.addComponent(batteryLit,20);
+			calculator.addComponent(plastic,60);
 		
 		var car = new SortItem("car","item_car.png",true);
 			car.addComponent(copper);

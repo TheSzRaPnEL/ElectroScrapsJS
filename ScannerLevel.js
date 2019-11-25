@@ -10,6 +10,8 @@ class ScannerLevel extends PIXI.Sprite {
 		let context = this;
 		
 		this.scannerComponentList=[];
+		this.scannerBarList=[];
+		this.scannerBarIndex=0;
 		this.componentsRevied=0;
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
@@ -32,6 +34,44 @@ class ScannerLevel extends PIXI.Sprite {
 			itemInScanner.y = 5*app.renderer.height/9;
 			// itemInScanner.visible = false;
 		this.addChild(itemInScanner);
+		
+		for (var i=0;i<3;i++) {
+			var scannerGraphLine = new PIXI.Graphics();
+				scannerGraphLine.beginFill(0x333333);
+				scannerGraphLine.drawRect(0, 0, app.stage.width, 2);
+				scannerGraphLine.endFill();
+				scannerGraphLine.y=500-i*100;
+				scannerGraphLine.alpha=0.5;
+			this.addChild(scannerGraphLine);
+		}
+		
+		var componentsNum = this._itemInScanner.components.length;
+		for (var i=0;i<componentsNum;i++) {
+			var component = this._itemInScanner.components[i];
+			var componentInScanner = new ItemComponent(component.name,component.textureName,component.type,component.points,component.desc);
+				componentInScanner.pivot.x = componentInScanner.width/2;
+				componentInScanner.pivot.y = componentInScanner.height/2;
+				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
+				componentInScanner.y = 9*app.renderer.height/10;
+				componentInScanner.interactive=true;
+				componentInScanner.on('pointerdown', onComponentMouseDown);
+				// componentInScanner.visible = false;
+			this.addChild(componentInScanner);
+			this.scannerComponentList.push(componentInScanner);
+			
+			var scannerBar = new PIXI.Graphics();
+				scannerBar.beginFill(parseInt(16777216 * Math.random()));
+				scannerBar.drawRect(0, 0, 50, 4);
+				scannerBar.endFill();
+				scannerBar.pivot.x=scannerBar.width/2;
+				scannerBar.pivot.y=0;
+				scannerBar.scale.y=-1;
+				scannerBar.x=componentInScanner.x;
+				scannerBar.y=componentInScanner.y-76;
+			this.addChild(scannerBar);
+			this.scannerBarList.push(scannerBar);
+		}
+		console.log(this.scannerComponentList);
 		
 		 //----------------------------------------//
 		//CONVERT THIS SECTION INTO RESPOPUP CLASS//
@@ -96,22 +136,6 @@ class ScannerLevel extends PIXI.Sprite {
 		this.addChild(resPopupValue);
 		//----------------------------------------//
 		
-		var componentsNum = this._itemInScanner.components.length;
-		for (var i=0;i<componentsNum;i++) {
-			var component = this._itemInScanner.components[i];
-			var componentInScanner = new ItemComponent(component.name,component.textureName,component.type,component.points,component.desc);
-				componentInScanner.pivot.x = componentInScanner.width/2;
-				componentInScanner.pivot.y = componentInScanner.height/2;
-				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
-				componentInScanner.y = 9*app.renderer.height/10;
-				componentInScanner.interactive=true;
-				componentInScanner.on('pointerdown', onComponentMouseDown);
-				// componentInScanner.visible = false;
-			this.addChild(componentInScanner);
-			this.scannerComponentList.push(componentInScanner);
-		}
-		console.log(this.scannerComponentList);
-		
 		function popupClosed() {
 			console.log("dispatch catched");
 			context.componentsRevied++;
@@ -170,7 +194,29 @@ class ScannerLevel extends PIXI.Sprite {
 	}
 	
 	begin() {
-		//
+		this.scannerBarIndex=-1;
+		this.scannerBarShown(this);
+	}
+	
+	scannerBarShown(context) {
+		context.scannerBarIndex++;
+		var scannerBarListLength = context.scannerBarList.length;
+		if (context.scannerBarIndex<scannerBarListLength) {
+			var currScannerBar = context.scannerBarList[context.scannerBarIndex];
+			var currItemComponent=context.scannerComponentList[context.scannerBarIndex];
+			var currItemComponentName=currItemComponent.name;
+			var itemInScanner=context._itemInScanner;
+			var currItemComponentAmount=itemInScanner.getComponentAmount(currItemComponentName);
+			
+			var scannerBarTxTF = new PIXI.Text(currItemComponentAmount+"%",{fontFamily:"Arial", fontWeight:"bold", fontSize:20, fill:0x000000, align:"left"});
+				scannerBarTxTF.pivot.x=scannerBarTxTF.width/2;
+				scannerBarTxTF.roundPixels=true;
+				scannerBarTxTF.x=currScannerBar.x;
+				scannerBarTxTF.y=currScannerBar.y+10;
+			context.addChild(scannerBarTxTF);
+			
+			gsap.to(currScannerBar,0.5,{height:-200*currItemComponentAmount/100,ease:Bounce.easeOut,onComplete:context.scannerBarShown,onCompleteParams:[context]});
+		}
 	}
 	
 	stop(context) {
