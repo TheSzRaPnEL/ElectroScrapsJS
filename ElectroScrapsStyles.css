@@ -1,0 +1,16 @@
+#GameContainer {
+  width: 960px;
+  height: 640px;
+  position: relative;
+}
+#GameArea,
+#GamePreloader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#GameArea {
+  z-index: 10;
+}

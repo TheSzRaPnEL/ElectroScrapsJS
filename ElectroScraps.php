@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>ElectroScrapsJS</title>
+		<link rel="stylesheet" href="ElectroScrapsStyles.css">
 	</head>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.js"></script>
 	<script src="pixi-sound.js"></script>
@@ -41,6 +42,14 @@
 		<button onclick="openFullscreen();" class="gamecanvas" style="margin-bottom:8px">Open Game in Fullscreen</button>
 		<br>
 		
+		<div id="GameContainer">
+			<div id="GamePreloader">
+				<img src="Assets/LoadingScreen.jpg">
+			</div>
+			<div id="GameArea">
+			</div>
+		</div>
+		
 		<script type="text/javascript">
 			function openFullscreen() {
 				var elem = document.getElementsByTagName("canvas")[0];
@@ -59,6 +68,17 @@
 		</script>
 		
 		<script type="text/javascript">
+			function enablePreloader() {
+				var elem = document.getElementsByTagName("canvas")[0];
+				elem.setAttribute("id", "gamecanvas");
+				
+				var parentDiv = document.getElementById("GameArea");
+				
+				parentDiv.appendChild(elem);      
+			}
+		</script>
+		
+		<script type="text/javascript">
 			let type = "WebGL";
 			if(!PIXI.utils.isWebGLSupported()){
 				type = "canvas"
@@ -71,13 +91,15 @@
 				width: 960, 
 				height: 640,                       
 				antialias: true, 
-				transparent: false, 
+				transparent: true, 
 				resolution: 1
 			  }
 			);
 
 			//Add the canvas that Pixi automatically created for you to the HTML document
 			document.body.appendChild(app.view);
+			
+			enablePreloader();
 			
 			let context = this;
 			let childOnTop=1;
@@ -110,16 +132,32 @@
 				KOREA		:	'Korea',
 				KAMERUN		:	'Cameroon'
 			}
+			
+			var preloader = new PIXI.Graphics();
+				preloader.beginFill(0xffffff);
+				preloader.drawRect(0,0,96,20);
+				preloader.endFill();
+				preloader.x=0;
+				preloader.y=560;
+			app.stage.addChild(preloader);
+			
+			var assetsLoaded=0;
+			var assetsNum=9;
 
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
+			
 			PIXI.Loader.shared.add('songOne','Assets/music1.mp3');
 			PIXI.Loader.shared.add('songTwo','Assets/music2.mp3');
 			PIXI.Loader.shared.add('songThree','Assets/music3.mp3');
 			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
 			PIXI.Loader.shared.add('good','Assets/good.mp3');
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
+			PIXI.Loader.shared.onProgress.add( function() {
+				assetsLoaded++;
+				preloader.width=parseInt(960*assetsLoaded/assetsNum);
+			});
 			PIXI.Loader.shared.load( function(loader, resources) {
-				init();
+				gsap.delayedCall(0.3,init);
 			});
 			
 			function init() {
