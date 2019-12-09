@@ -23,6 +23,7 @@
 	<script src="MenuLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="OverlayMenu.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="EarthIndicator.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="Popup.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -150,6 +151,7 @@
 			PIXI.Loader.shared.add('songThree','Assets/music3.mp3');
 			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
 			PIXI.Loader.shared.add('good','Assets/good.mp3');
+			PIXI.Loader.shared.add('bad','Assets/bad.mp3');
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
 			PIXI.Loader.shared.onProgress.add( function() {
@@ -282,6 +284,10 @@
 			
 			function addPoints(value) {
 				overlayMenu.addPoints(value*gameIteration);
+			}
+			
+			function removePoints(value) {
+				overlayMenu.removePoints(value*gameIteration);
 			}
 			
 			function selectedMineCountries() {

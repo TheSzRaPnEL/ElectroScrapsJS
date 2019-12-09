@@ -18,6 +18,13 @@ class MonsterLevel extends PIXI.Sprite {
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
 		
+		this.collectedListIcon = new PIXI.Sprite(PIXI.Texture.from("indexTXT.png"));
+		var collectedListIcon = this.collectedListIcon;
+			collectedListIcon.anchor.set(0.5);
+			collectedListIcon.x = 5*app.renderer.width/6;
+			collectedListIcon.y = 40;
+		this.addChild(collectedListIcon);
+		
 		 //---------------------------------------//
 		//CONVERT THIS SECTION INTO MONSTER CLASS//
 		this.monster = new PIXI.Sprite(PIXI.Texture.from("monster.png"));
@@ -201,8 +208,16 @@ class MonsterLevel extends PIXI.Sprite {
 		function onDragStart(event) {
 			this.data = event.data;
 			this.alpha = 0.5;
-			this.dragging = true;
 			context.itemCaught=this;
+			if (!this.dragging) {
+				context.itemCaught.texture=PIXI.Texture.from("res_"+context.itemCaught.refItem.name+".png");
+				context.itemCaught.pivot.x = -100;
+				context.itemCaught.pivot.y = 0;
+				console.log("res_"+context.itemCaught.refItem.name+".png");
+				console.log(context.itemCaught.refItem.type);
+				context.getChildByName(context.itemCaught.refItem.type).alpha=0.5;
+				this.dragging = true;
+			}
 			context.items.splice(context.items.indexOf(this),1)
 		}
 
@@ -218,6 +233,10 @@ class MonsterLevel extends PIXI.Sprite {
 			if (this.dragging) {
 				this.alpha = 1;
 				this.dragging = false;
+				context.itemCaught.texture=PIXI.Texture.from(context.itemCaught.refItem.textureName);
+				context.itemCaught.pivot.x = 0;
+				context.itemCaught.pivot.y = 0;
+				context.getChildByName(context.itemCaught.refItem.type).alpha=1;
 			}
 		}
 
@@ -248,8 +267,20 @@ class MonsterLevel extends PIXI.Sprite {
 				.off('mousemove', onDragMove)
 				.off('touchmove', onDragMove);
 			if(item.refItem.type==containerType) {
+				gsap.to(item,1,{rotation:2*Math.PI,alpha:0});
+				gsap.to(item.scale,1,{x:0.1,y:0.1,onComplete:itemVanish,onCompleteParams:[item,containerType,true]});
+			} else {
+				gsap.to(item,1,{alpha:0,onComplete:itemVanish,onCompleteParams:[item,containerType]});
+			}
+			
+		}
+		
+		function itemVanish(item,containerType,correct=false) {
+			if(correct) {
 				context.itemsInScanner++;
 				window.addPoints(item.refItem.points);
+			} else {
+				window.removePoints(0);
 			}
 			if (context.itemsInScanner>3) context.stop(context);
 		}
