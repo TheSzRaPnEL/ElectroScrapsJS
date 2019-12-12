@@ -12,13 +12,14 @@ class MonsterLevel extends PIXI.Sprite {
 		this.monsterCounter=0;
 		this.items=[];
 		this.itemCaught;
+		this.lastItemInScanner;
 		this.itemsInScanner=[];
 		this.monsterLoop;
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
 		
-		this.popup = new ItemCollectedPopup(closePopup);
+		this.popup = new ItemCollectedPopup();
 		var popup = this.popup;
 			popup.anchor.set(0.5);
 			popup.x = app.renderer.width/2;
@@ -27,10 +28,15 @@ class MonsterLevel extends PIXI.Sprite {
 			popup.visible=false;
 		this.addChild(popup);
 		
-		function closePopup() {
-			context.popup.visible=false;
-			context.initRandomItemDrop(context);
-		}
+		this.recyclePopup = new RecyclePopup();
+		var recyclePopup = this.recyclePopup;
+			recyclePopup.anchor.set(0.5);
+			recyclePopup.x = app.renderer.width/2;
+			recyclePopup.y = app.renderer.height/2+30;
+			recyclePopup.init();
+			recyclePopup.visible=false;
+			recyclePopup.desc="!!! Udało Ci się zebrać 600kg !!!";
+		this.addChild(recyclePopup);
 		
 		this.collectedListIcon = new PIXI.Sprite(PIXI.Texture.from("indexTXT.png"));
 		var collectedListIcon = this.collectedListIcon;
@@ -309,17 +315,31 @@ class MonsterLevel extends PIXI.Sprite {
 		}
 		
 		function itemVanish(item,containerType,correct=false) {
+			context.lastItemInScanner=item;
 			var collectedComponents=window.collectedComponents();
 			if(correct) {
 				if (context.itemsInScanner[item.refItem.name]) context.itemsInScanner[item.refItem.name]++
 				else context.itemsInScanner[item.refItem.name]=1;
 				window.addPoints(item.refItem.points);
-				if (collectedComponents[item.refItem.name]) collectedComponents[item.refItem.name]=collectedComponents[item.refItem.name]+100;
-				else collectedComponents[item.refItem.name]=100;
+				if (collectedComponents[item.refItem.name]) collectedComponents[item.refItem.name]=collectedComponents[item.refItem.name]+200;
+				else collectedComponents[item.refItem.name]=200;
 			} else {
 				window.removePoints(0);
 			}
-			if (context.itemsInScanner[item.refItem.name]>=3) context.stop(context);
+			if (collectedComponents[item.refItem.name]%600==0) {
+				context.stopRandomItemDrop(context);
+				context.recyclePopup.visible=true;
+				context.recyclePopup.setResIcon(item.refItem.textureName);
+				context.recyclePopup.setResIconTXT(item.refItem.name);
+				context.setChildIndex(context.recyclePopup,context.children.length-1);
+			}
+		}
+	}
+	
+	checkItemsInScanner(context) {
+		// if (context.itemCaught && context.itemsInScanner[context.itemCaught.refItem.name]>=3) {
+		if (context.lastItemInScanner && window.collectedComponents()[context.lastItemInScanner.refItem.name]%600==0) {
+			context.stop(context);
 		}
 	}
 	
@@ -329,7 +349,7 @@ class MonsterLevel extends PIXI.Sprite {
 	
 	stop(context) {
 		context.end(context);
-		context.endFunc(context.itemCaught.refItem);
+		context.endFunc(context.lastItemInScanner.refItem);
 	}
 	
 	end(context) {

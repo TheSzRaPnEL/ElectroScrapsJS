@@ -41,5 +41,6 @@ class Popup extends PIXI.Sprite {
 		this.popupDesc.style.fontSize=100;
 		this.popupDesc.text=txt;
 		while(this.popupDesc.width>4*this.popupBG.width/5) this.popupDesc.style.fontSize--;
+		this.popupDesc.pivot.x=this.popupDesc.width/2;
 	}
 };

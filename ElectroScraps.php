@@ -26,6 +26,7 @@
 	<script src="Popup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ItemCollectedPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="CollectedItemData.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="RecyclePopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -312,7 +313,17 @@
 			
 			function hideMonsterLevelCollectedItemsPopup() {
 				app.stage.currentLevel.popup.visible=false;
+				app.stage.currentLevel.recyclePopup.visible=false;
 				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
+				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
+			}
+			
+			function hideMonsterLevelRecyclePopup() {
+				overlayMenu.addPoints(100*gameIteration);
+				
+				app.stage.currentLevel.recyclePopup.visible=false;
+				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
+				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
 			}
 		</script>
 	</body>
