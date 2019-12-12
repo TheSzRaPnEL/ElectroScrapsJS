@@ -114,97 +114,107 @@ class MonsterLevel extends PIXI.Sprite {
 			otherContainer.x = app.renderer.width-otherContainer.width/2+50;
 			otherContainer.y = 440;
 		this.addChild(otherContainer);
-
-		gsap.to(monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
-		startBlinking();
 		
-		context.initRandomItemDrop(context);
-		
-		this.monsterLoop = function(delta) {
+		context.monsterLoop = function(delta) {
 			context.items.forEach( function(item) {
 				item.y=item.y+2*delta;
 				if(!context.monsterEating && item.y>19*app.renderer.height/30) {
 					context.monsterEating=true;
 					gsap.killTweensOf(context.monster);
-					gsap.to(context.monster,1,{x:item.x-context.monster.width/2, ease:Quad.easeOut, onComplete:monsterAte, onCompleteParams:[item]});
+					gsap.to(context.monster,1,{x:item.x-context.monster.width/2, ease:Quad.easeOut, onComplete:context.monsterAte, onCompleteParams:[context,item]});
 				}
 			});
 		}
 		
-		app.ticker.add(this.monsterLoop);
+		context.dropRandomItem(context);
+		context.initRandomItemDrop(context);
+	}
 		
-		function monsterAte(item) {
-			eat();
-			if (item.y>19*app.renderer.height/30) {
-				context.items.splice(context.items.indexOf(item),1);
-				context.removeChild(item);
-			}
-			window.removePoints(item.refItem.points);
-			context.monsterEating=false;
-			if (Math.random()>0.5) gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]});
-			else gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
+	monsterAte(context,item) {
+		context.eat(context);
+		if (item.y>19*app.renderer.height/30) {
+			context.items.splice(context.items.indexOf(item),1);
+			context.removeChild(item);
 		}
-		
-		function monsterMovedRight(context) {
-			gsap.to(monster,1,{x:150, ease:Quad.easeInOut, onComplete:monsterMovedLeft, onCompleteParams:[context]});
-		}
-		
-		function monsterMovedLeft(context) {
-			console.log(context.monsterCounter);
-			//context.monsterCounter++;
-			if(context.monsterCounter>1) context.stop(context)
-			else gsap.to(monster,1,{x:600, ease:Quad.easeInOut, onComplete:monsterMovedRight, onCompleteParams:[context]})
-		}
+		window.removePoints(item.refItem.points);
+		context.monsterEating=false;
+		if (Math.random()>0.5) gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:context.monsterMovedRight, onCompleteParams:[context]});
+		else gsap.to(context.monster,1,{x:150, ease:Quad.easeInOut, onComplete:context.monsterMovedLeft, onCompleteParams:[context]});
+	}
+	
+	monsterMovedRight(context) {
+		gsap.to(context.monster,1,{x:150, ease:Quad.easeInOut, onComplete:context.monsterMovedLeft, onCompleteParams:[context]});
+	}
+	
+	monsterMovedLeft(context) {
+		console.log(context.monsterCounter);
+		//context.monsterCounter++;
+		if(context.monsterCounter>1) context.stop(context)
+		else gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:context.monsterMovedRight, onCompleteParams:[context]})
+	}
 
-		function startBlinking() {
-			gsap.delayedCall(2,blink);
-			gsap.delayedCall(2,startBlinking);
-		}
+	startBlinking(context) {
+		gsap.delayedCall(2,context.blink,[context]);
+		gsap.delayedCall(2,context.startBlinking,[context]);
+	}
 
-		function blink() {
-			closeEyes();
-			gsap.delayedCall(0.2,openEyes);
-		}
+	blink(context) {
+		context.closeEyes(context);
+		gsap.delayedCall(0.2,context.openEyes,[context]);
+	}
 
-		function closeEyes() {
-			monsterEyesClosed.visible=true;
-			monsterEyesOpened.visible=false;
-		}
+	closeEyes(context) {
+		context.monsterEyesClosed.visible=true;
+		context.monsterEyesOpened.visible=false;
+	}
 
-		function openEyes() {
-			monsterEyesClosed.visible=false;
-			monsterEyesOpened.visible=true;
-		}
-		
-		function startEating() {
-			gsap.delayedCall(0.5,blink);
-			gsap.delayedCall(0.5,startEating);
-		}
+	openEyes(context) {
+		context.monsterEyesClosed.visible=false;
+		context.monsterEyesOpened.visible=true;
+	}
+	
+	startEating(context) {
+		gsap.delayedCall(0.5,context.blink,[context]);
+		gsap.delayedCall(0.5,context.startEating,[context]);
+	}
 
-		function eat() {
-			closeMouth();
-			gsap.delayedCall(0.2,openMouth);
-		}
+	eat(context) {
+		context.closeMouth(context);
+		gsap.delayedCall(0.2,context.openMouth,[context]);
+	}
 
-		function closeMouth() {
-			monsterMouthClosed.visible=true;
-			monsterMouthOpened.visible=false;
-		}
+	closeMouth(context) {
+		context.monsterMouthClosed.visible=true;
+		context.monsterMouthOpened.visible=false;
+	}
 
-		function openMouth() {
-			monsterMouthClosed.visible=false;
-			monsterMouthOpened.visible=true;
-		}
+	openMouth(context) {
+		context.monsterMouthClosed.visible=false;
+		context.monsterMouthOpened.visible=true;
 	}
 	
 	initRandomItemDrop(context) {
-		context.dropRandomItem(context);
 		if (context.randomItemDropIntervalID) clearInterval(context.randomItemDropIntervalID);
 		context.randomItemDropIntervalID = setInterval(context.dropRandomItem,2000,context);
+		
+		gsap.to(context.monster,1,{x:600, ease:Quad.easeInOut, onComplete:context.monsterMovedRight, onCompleteParams:[context]});
+		
+		context.startBlinking(context);
+		
+		app.ticker.add(context.monsterLoop);
+		
+		context.monsterEating=false;
 	}
 	
 	stopRandomItemDrop(context) {
 		clearInterval(context.randomItemDropIntervalID);
+		
+		app.ticker.remove(context.monsterLoop);
+		
+		gsap.killTweensOf(context.monster);
+		gsap.killTweensOf(context.blink);
+		gsap.killTweensOf(context.startBlinking);
+		gsap.killTweensOf(context.openEyes);
 	}
 	
 	dropRandomItem(context) {

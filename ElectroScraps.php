@@ -312,6 +312,7 @@
 			
 			function hideMonsterLevelCollectedItemsPopup() {
 				app.stage.currentLevel.popup.visible=false;
+				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
 			}
 		</script>
 	</body>
