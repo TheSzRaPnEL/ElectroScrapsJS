@@ -24,6 +24,8 @@
 	<script src="OverlayMenu.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="EarthIndicator.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="Popup.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="ItemCollectedPopup.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="CollectedItemData.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -107,6 +109,7 @@
 			let overlayMenu; 
 			let gameIteration;
 			let _selectedMineCountries=[];
+			let _collectedComponents=[];
 			
 			const countryName = {
 				POLSKA		:	'Poland',
@@ -301,6 +304,14 @@
 			function improveCondition() {
 				var earthIndicator=overlayMenu.earthIndicator;
 				earthIndicator.improveCondition();
+			}
+			
+			function collectedComponents() {
+				return _collectedComponents;
+			}
+			
+			function hideMonsterLevelCollectedItemsPopup() {
+				app.stage.currentLevel.popup.visible=false;
 			}
 		</script>
 	</body>

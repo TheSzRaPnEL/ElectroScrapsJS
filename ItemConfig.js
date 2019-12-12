@@ -8,7 +8,7 @@ class ItemConfig {
 		let context=this.context;
 		
 		context.gameItemComponentsList = [];
-		var aluminium = 	new ItemComponent("aluminium",	"raw_res_aluminum.png",		"Other",	7);
+		var aluminium = 	new ItemComponent("aluminum",	"raw_res_aluminum.png",		"Other",	7);
 		var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"Other",	5);
 		var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"Other",	5);
 		var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"Metal",	5);

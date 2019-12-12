@@ -12,18 +12,41 @@ class MonsterLevel extends PIXI.Sprite {
 		this.monsterCounter=0;
 		this.items=[];
 		this.itemCaught;
-		this.itemsInScanner=0;
+		this.itemsInScanner=[];
 		this.monsterLoop;
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
+		
+		this.popup = new ItemCollectedPopup(closePopup);
+		var popup = this.popup;
+			popup.anchor.set(0.5);
+			popup.x = app.renderer.width/2;
+			popup.y = app.renderer.height/2+30;
+			popup.init();
+			popup.visible=false;
+		this.addChild(popup);
+		
+		function closePopup() {
+			context.popup.visible=false;
+			context.initRandomItemDrop(context);
+		}
 		
 		this.collectedListIcon = new PIXI.Sprite(PIXI.Texture.from("indexTXT.png"));
 		var collectedListIcon = this.collectedListIcon;
 			collectedListIcon.anchor.set(0.5);
 			collectedListIcon.x = 5*app.renderer.width/6;
 			collectedListIcon.y = 40;
+			collectedListIcon.interactive=true;
+			collectedListIcon.on("pointerdown", onIndexClick);
 		this.addChild(collectedListIcon);
+		
+		function onIndexClick(event) {
+			context.stopRandomItemDrop(context);
+			context.popup.visible=true;
+			context.popup.updateCollectedItemDataAmount();
+			context.setChildIndex(context.popup,context.children.length-1);
+		}
 		
 		 //---------------------------------------//
 		//CONVERT THIS SECTION INTO MONSTER CLASS//
@@ -250,10 +273,10 @@ class MonsterLevel extends PIXI.Sprite {
 		}
 		
 		function itemOnScanner(item) {
-			if (Math.hypot(item.x-context.metalContainer.x,		item.y-context.metalContainer.y)	<80) return context.metalContainer.name;
-			if (Math.hypot(item.x-context.dangerContainer.x,	item.y-context.dangerContainer.y)	<80) return context.dangerContainer.name;
-			if (Math.hypot(item.x-context.richContainer.x,		item.y-context.richContainer.y)		<80) return context.richContainer.name;
-			if (Math.hypot(item.x-context.otherContainer.x,		item.y-context.otherContainer.y)	<80) return context.otherContainer.name;
+			if (Math.hypot(item.x-context.metalContainer.x,		item.y-context.metalContainer.y)	<90) return context.metalContainer.name;
+			if (Math.hypot(item.x-context.dangerContainer.x,	item.y-context.dangerContainer.y)	<90) return context.dangerContainer.name;
+			if (Math.hypot(item.x-context.richContainer.x,		item.y-context.richContainer.y)		<90) return context.richContainer.name;
+			if (Math.hypot(item.x-context.otherContainer.x,		item.y-context.otherContainer.y)	<90) return context.otherContainer.name;
 			return null;
 		}
 		
@@ -276,13 +299,17 @@ class MonsterLevel extends PIXI.Sprite {
 		}
 		
 		function itemVanish(item,containerType,correct=false) {
+			var collectedComponents=window.collectedComponents();
 			if(correct) {
-				context.itemsInScanner++;
+				if (context.itemsInScanner[item.refItem.name]) context.itemsInScanner[item.refItem.name]++
+				else context.itemsInScanner[item.refItem.name]=1;
 				window.addPoints(item.refItem.points);
+				if (collectedComponents[item.refItem.name]) collectedComponents[item.refItem.name]=collectedComponents[item.refItem.name]+100;
+				else collectedComponents[item.refItem.name]=100;
 			} else {
 				window.removePoints(0);
 			}
-			if (context.itemsInScanner>3) context.stop(context);
+			if (context.itemsInScanner[item.refItem.name]>=3) context.stop(context);
 		}
 	}
 	
@@ -296,6 +323,7 @@ class MonsterLevel extends PIXI.Sprite {
 	}
 	
 	end(context) {
+		context.itemsInScanner=[];
 		context.stopRandomItemDrop(context);
 		app.ticker.remove(context.monsterLoop);
 		context.items.forEach( function(item) {

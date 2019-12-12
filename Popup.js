@@ -5,6 +5,7 @@ class Popup extends PIXI.Sprite {
 	}
 	
 	init() {
+		let context=this;
 		this.popupBG = new PIXI.Sprite(PIXI.Texture.from("popupBG.png"));
 		var popupBG = this.popupBG;
 			popupBG.pivot.x = popupBG.width/2;
@@ -32,14 +33,13 @@ class Popup extends PIXI.Sprite {
 		this.addChild(popupCloseBtn);
 		
 		function onPopupCloseBtnClick() {
-			var event = new Event('pointerTriggered');
-			app.stage.dispatchEvent(event);
+			window.hideMonsterLevelCollectedItemsPopup();
 		}
 	}
 	
 	set desc(txt) {
 		this.popupDesc.style.fontSize=100;
-		this.popupBG.text=txt;
+		this.popupDesc.text=txt;
 		while(this.popupDesc.width>4*this.popupBG.width/5) this.popupDesc.style.fontSize--;
 	}
 };
