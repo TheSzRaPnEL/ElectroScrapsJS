@@ -28,6 +28,7 @@ class ItemConfig {
 		var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"Metal",	5);
 		var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"Metal",	5);
 		var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"Rich",		8);
+		var mercury = 		new ItemComponent("mercury",	"raw_res_wolfram.png",		"Danger",	7);
 		
 		aluminium.addMineCountry(countryName.AUSTRALIA);
 		aluminium.addMineCountry(countryName.GWINEA);
@@ -106,7 +107,10 @@ class ItemConfig {
 		wolfram.addMineCountry(countryName.KOREA);
 		wolfram.desc = "Very important armaments industry's metal. Thin wire made of tungsten inside a bulb bubble, makes the bulb shine.";
 		
-		context.gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram);
+		mercury.addMineCountry(countryName.CHINY);
+		mercury.desc = "Była ceniona w medycynie ( w termometrach) i technice dentystycznej ( amalgamaty). Lampy rtęciowe szeroko stosowane były w oświetleniu zewnętrznym, hal przemysłowych oraz magazynów, a także w kineskopach starych telewizorów.";
+		
+		context.gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram,mercury);
 		
 		context.gameSortItemList = [];
 		var calculator = new SortItem("calculator","item_calculator_big.png");
@@ -209,10 +213,11 @@ class ItemConfig {
 			tvNEW.addComponent(glass,30);
 			
 		var tvOLD = new SortItem("tvOLD","item_tvOLD.png");
-			tvOLD.addComponent(steel,5);
-			tvOLD.addComponent(lead,10);
-			tvOLD.addComponent(glass,30);
+			tvOLD.addComponent(mercury,2);
+			tvOLD.addComponent(steel,4);
+			tvOLD.addComponent(lead,9);
 			tvOLD.addComponent(copper,15);
+			tvOLD.addComponent(glass,30);
 			tvOLD.addComponent(plastic,40);
 			
 		var washer = new SortItem("washer","item_washer.png");
