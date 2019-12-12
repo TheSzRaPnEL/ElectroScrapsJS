@@ -13,12 +13,12 @@ class CatchLevel extends PIXI.Sprite {
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
 		
-		console.log("CatchLevel init context: ",this);
 		this.items=[];
 		this.indicators = [];
 		this.gameSortItemListTemp = [...this._gameSortItemList];
 		this.selectedGameSortItemList = [];
 		this.selectedGameSortItemListNum = 5;
+		this.lastItemCatch;
 		
 		this.itemsInScanner = 0;
 		this.scannerRange = 180;
@@ -63,6 +63,15 @@ class CatchLevel extends PIXI.Sprite {
 			this.addChild(indicator);
 			this.indicators.push(indicator);
 		}
+		
+		this.popup = new BrokenPopup();
+		var popup = this.popup;
+			popup.anchor.set(0.5);
+			popup.x = app.renderer.width/2;
+			popup.y = app.renderer.height/2+30;
+			popup.init();
+			popup.visible=false;
+		this.addChild(popup);
 		
 		//pick few items from the item list to throw them around
 		for (var i=0; i<this.selectedGameSortItemListNum;i++) {
@@ -181,7 +190,18 @@ class CatchLevel extends PIXI.Sprite {
 			}
 			
 			if (this.dragging && itemOnScanner(this)) {
-				gsap.to(this,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:this.width/10, height:this.height/10, alpha:0, rotation:this.rotation+2*Math.PI, onComplete: itemInScanner, onCompleteParams:[this]});
+				if (Math.random()>0.99) {
+					gsap.to(this,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:this.width/10, height:this.height/10, alpha:0, rotation:this.rotation+2*Math.PI, onComplete: context.itemInScanner, onCompleteParams:[context,this]})
+				} else {
+					context.stopRandomItemThrowing(context);
+					
+					context.lastItemCatch=this;
+					context.setChildIndex(context.popup,context.children.length-1);
+					context.popup.visible=true;
+					context.popup.desc="This item is Broken!";
+					context.popup.setResIcon(this.sortItem.textureName);
+					context.popup.setResIconTXT(this.sortItem.name);
+				}
 			}
 			
 			if (this.dragging) {
@@ -231,8 +251,9 @@ class CatchLevel extends PIXI.Sprite {
 			if (Math.hypot(item.x-context.scannerBar.x,item.y-context.scannerBar.y)<context.scannerRange) return true;
 			return false;
 		}
-		
-		function itemInScanner(item) {
+	}
+	
+	itemInScanner(context,item) {
 			context.indicators.forEach(function (indicator) {
 					var itemTextureName = item.sortItem.textureName;
 					indicator.texture = PIXI.Texture.from(itemTextureName);
@@ -247,10 +268,12 @@ class CatchLevel extends PIXI.Sprite {
 			window.addPoints(context.itemsInScanner);
 			context.indicators[context.itemsInScanner-1].alpha=context.indicatorsShownAlpha;
 			context.itemInScannerType = item.sortItem;
-			console.log("CatchLevel throwRandomItem->itemInScanner context: ",this);
-			console.log("CatchLevel throwRandomItem->itemInScanner context passed: ",context);
 			if (context.itemsInScanner>context.indicatorsNum-1) context.stop(context);
 		}
+	
+	completeItemDrop(context) {
+		var item = context.lastItemCatch;
+		gsap.to(item,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:item.width/10, height:item.height/10, alpha:0, rotation:item.rotation+2*Math.PI, onComplete: context.itemInScanner, onCompleteParams:[context,item]})
 	}
 	
 };

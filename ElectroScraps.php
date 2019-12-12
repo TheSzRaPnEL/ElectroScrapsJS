@@ -27,6 +27,7 @@
 	<script src="ItemCollectedPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="CollectedItemData.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="RecyclePopup.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="BrokenPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -324,6 +325,12 @@
 				app.stage.currentLevel.recyclePopup.visible=false;
 				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
+			}
+			
+			function hideCatchLevelBrokenPopup() {				
+				app.stage.currentLevel.popup.visible=false;
+				app.stage.currentLevel.completeItemDrop(app.stage.currentLevel);
+				app.stage.currentLevel.initRandomItemThrowing(app.stage.currentLevel);
 			}
 		</script>
 	</body>
