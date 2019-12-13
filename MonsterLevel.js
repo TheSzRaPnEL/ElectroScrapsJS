@@ -15,6 +15,17 @@ class MonsterLevel extends PIXI.Sprite {
 		this.lastItemInScanner;
 		this.itemsInScanner=[];
 		this.monsterLoop;
+		this.filterCounter=0;
+		
+		this.filter = new PIXI.filters.ColorMatrixFilter();
+		const { matrix } = this.filter;
+
+		matrix[1] = Math.sin(this.filterCounter) * 3;
+		matrix[2] = Math.cos(this.filterCounter);
+		matrix[3] = Math.cos(this.filterCounter) * 1.5;
+		matrix[4] = Math.sin(this.filterCounter / 3) * 2;
+		matrix[5] = Math.sin(this.filterCounter / 2);
+		matrix[6] = Math.sin(this.filterCounter / 4);
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
@@ -37,6 +48,15 @@ class MonsterLevel extends PIXI.Sprite {
 			recyclePopup.visible=false;
 			recyclePopup.desc="!!! Udało Ci się zebrać 600kg !!!";
 		this.addChild(recyclePopup);
+		
+		this.hazardQuizPopup = new HazardQuizPopup();
+		var hazardQuizPopup = this.hazardQuizPopup;
+			hazardQuizPopup.anchor.set(0.5);
+			hazardQuizPopup.x = app.renderer.width/2;
+			hazardQuizPopup.y = app.renderer.height/2+30;
+			hazardQuizPopup.init();
+			hazardQuizPopup.visible=false;
+		this.addChild(hazardQuizPopup);
 		
 		this.collectedListIcon = new PIXI.Sprite(PIXI.Texture.from("indexTXT.png"));
 		var collectedListIcon = this.collectedListIcon;
@@ -122,6 +142,14 @@ class MonsterLevel extends PIXI.Sprite {
 		this.addChild(otherContainer);
 		
 		context.monsterLoop = function(delta) {
+			context.filterCounter+=0.01;
+			matrix[1] = Math.sin(context.filterCounter) * 3;
+			matrix[2] = Math.cos(context.filterCounter);
+			matrix[3] = Math.cos(context.filterCounter) * 1.5;
+			matrix[4] = Math.sin(context.filterCounter / 3) * 2;
+			matrix[5] = Math.sin(context.filterCounter / 2);
+			matrix[6] = Math.sin(context.filterCounter / 4);
+			
 			context.items.forEach( function(item) {
 				item.y=item.y+2*delta;
 				if(!context.monsterEating && item.y>19*app.renderer.height/30) {
@@ -232,6 +260,9 @@ class MonsterLevel extends PIXI.Sprite {
 			item.rotation=0;
 		context.addChild(item);
 		context.items.push(item);
+		if(randomItem.name=="cadm" || randomItem.name=="lead" || randomItem.name=="mercury") {
+			item.filters = [context.filter];
+		}
 		
 		item.interactive=true;
 		item.anchor.set(0.5);
@@ -249,7 +280,8 @@ class MonsterLevel extends PIXI.Sprite {
 			this.alpha = 0.5;
 			context.itemCaught=this;
 			if (!this.dragging) {
-				context.itemCaught.texture=PIXI.Texture.from("res_"+context.itemCaught.refItem.name+".png");
+				if (context.itemCaught.refItem.name!="mercury") context.itemCaught.texture=PIXI.Texture.from("res_"+context.itemCaught.refItem.name+".png")
+				else  context.itemCaught.texture=PIXI.Texture.from("res_wolfram.png");
 				context.itemCaught.pivot.x = -100;
 				context.itemCaught.pivot.y = 0;
 				console.log("res_"+context.itemCaught.refItem.name+".png");
@@ -326,7 +358,12 @@ class MonsterLevel extends PIXI.Sprite {
 			} else {
 				window.removePoints(0);
 			}
-			if (collectedComponents[item.refItem.name]%600==0) {
+			if (item.refItem.name=="mercury") {
+				context.stopRandomItemDrop(context);
+				context.hazardQuizPopup.visible=true;
+				context.setChildIndex(context.hazardQuizPopup,context.children.length-1);
+			}
+			else if (collectedComponents[item.refItem.name]%600==0) {
 				context.stopRandomItemDrop(context);
 				context.recyclePopup.visible=true;
 				context.recyclePopup.setResIcon(item.refItem.textureName);

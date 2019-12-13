@@ -28,6 +28,7 @@
 	<script src="CollectedItemData.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="RecyclePopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="BrokenPopup.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="HazardQuizPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "GetTeamDropDownMenu.php";?><br>
@@ -331,6 +332,12 @@
 				app.stage.currentLevel.popup.visible=false;
 				app.stage.currentLevel.completeItemDrop(app.stage.currentLevel);
 				app.stage.currentLevel.initRandomItemThrowing(app.stage.currentLevel);
+			}
+			
+			function hideMonsterLevelHazardQuizPopup() {				
+				app.stage.currentLevel.hazardQuizPopup.visible=false;
+				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
+				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
 			}
 		</script>
 	</body>
