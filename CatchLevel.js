@@ -190,7 +190,7 @@ class CatchLevel extends PIXI.Sprite {
 			}
 			
 			if (this.dragging && itemOnScanner(this)) {
-				if (Math.random()>0.99) {
+				if (Math.random()>0.7) {
 					gsap.to(this,1,{x:context.scannerBar.x, y:context.scannerBar.y, width:this.width/10, height:this.height/10, alpha:0, rotation:this.rotation+2*Math.PI, onComplete: context.itemInScanner, onCompleteParams:[context,this]})
 				} else {
 					context.stopRandomItemThrowing(context);
