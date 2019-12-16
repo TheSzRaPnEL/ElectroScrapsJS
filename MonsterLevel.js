@@ -375,9 +375,14 @@ class MonsterLevel extends PIXI.Sprite {
 	
 	checkItemsInScanner(context) {
 		// if (context.itemCaught && context.itemsInScanner[context.itemCaught.refItem.name]>=3) {
-		if (context.lastItemInScanner && window.collectedComponents()[context.lastItemInScanner.refItem.name]%600==0) {
+		if (context.lastItemInScanner && context.itemValidForMapLevel(context.lastItemInScanner.refItem) && window.collectedComponents()[context.lastItemInScanner.refItem.name]%600==0) {
 			context.stop(context);
 		}
+	}
+	
+	itemValidForMapLevel(item) {
+		if (item.mineCountries.length>0) return true
+		else return false;
 	}
 	
 	begin() {
