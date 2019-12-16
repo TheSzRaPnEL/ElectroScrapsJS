@@ -113,6 +113,7 @@
 			let gameIteration;
 			let _selectedMineCountries=[];
 			let _collectedComponents=[];
+			let _recycledComponentNum=0;
 			
 			const countryName = {
 				POLSKA		:	'Poland',
@@ -160,6 +161,7 @@
 			PIXI.Loader.shared.add('bad','Assets/bad.mp3');
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
 			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
+			PIXI.Loader.shared.add("Assets/ES_SS_EN-addons.json");
 			PIXI.Loader.shared.onProgress.add( function() {
 				assetsLoaded++;
 				preloader.width=parseInt(960*assetsLoaded/assetsNum);
@@ -242,7 +244,7 @@
 			
 			function startScoreLevel() {
 				context.playMusic(4);
-				level = new ScoreLevel(parseInt(overlayMenu.points.text),context.startEndLevel);
+				level = new ScoreLevel(_recycledComponentNum,parseInt(overlayMenu.points.text),context.startEndLevel);
 				app.stage.currentLevel=level;
 				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();
@@ -269,6 +271,8 @@
 				overlayMenu.init();
 				gameIteration=1;
 				_selectedMineCountries=[];
+				_collectedComponents=[];
+				_recycledComponentNum=0;
 				startMenuLevel();
 			}
 			
@@ -322,7 +326,7 @@
 			
 			function hideMonsterLevelRecyclePopup() {
 				overlayMenu.addPoints(100*gameIteration);
-				
+				_recycledComponentNum++;
 				app.stage.currentLevel.recyclePopup.visible=false;
 				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);

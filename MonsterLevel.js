@@ -280,8 +280,7 @@ class MonsterLevel extends PIXI.Sprite {
 			this.alpha = 0.5;
 			context.itemCaught=this;
 			if (!this.dragging) {
-				if (context.itemCaught.refItem.name!="mercury") context.itemCaught.texture=PIXI.Texture.from("res_"+context.itemCaught.refItem.name+".png")
-				else  context.itemCaught.texture=PIXI.Texture.from("res_wolfram.png");
+				context.itemCaught.texture=PIXI.Texture.from("res_"+context.itemCaught.refItem.name+".png");
 				context.itemCaught.pivot.x = -100;
 				context.itemCaught.pivot.y = 0;
 				console.log("res_"+context.itemCaught.refItem.name+".png");
@@ -352,13 +351,14 @@ class MonsterLevel extends PIXI.Sprite {
 			if(correct) {
 				if (context.itemsInScanner[item.refItem.name]) context.itemsInScanner[item.refItem.name]++
 				else context.itemsInScanner[item.refItem.name]=1;
-				window.addPoints(item.refItem.points);
+				if (item.refItem.type=="Danger") window.addPoints(2*item.refItem.points)
+				else window.addPoints(2*item.refItem.points);
 				if (collectedComponents[item.refItem.name]) collectedComponents[item.refItem.name]=collectedComponents[item.refItem.name]+200;
 				else collectedComponents[item.refItem.name]=200;
 			} else {
 				window.removePoints(0);
 			}
-			if (item.refItem.name=="mercury") {
+			if (item.refItem.type=="Danger") {
 				context.stopRandomItemDrop(context);
 				context.hazardQuizPopup.visible=true;
 				context.setChildIndex(context.hazardQuizPopup,context.children.length-1);

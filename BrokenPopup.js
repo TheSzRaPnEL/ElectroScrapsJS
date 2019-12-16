@@ -60,20 +60,56 @@ class BrokenPopup extends Popup {
 			popupProcessBtnTXT.y=160;
 		this.addChild(popupProcessBtnTXT);
 		
+		this.popupResultIcon = new PIXI.Sprite(PIXI.Texture.from("tickIcon.png"));
+		var popupResultIcon = this.popupResultIcon;
+			popupResultIcon.pivot.x = popupResultIcon.width/2;
+			popupResultIcon.pivot.y = popupResultIcon.height/2;
+			popupResultIcon.visible=false;
+		this.addChild(popupResultIcon);
+		
 		this.popupDesc.y-=60;
 		this.popupDesc.x=0;
 		
 		this.popupCloseBtn.visible=false;
 		
 		function onRecycleBtnClick() {
-			if(context.itemShouldBeRecycled(context)) window.addPoints(10);
-			window.hideCatchLevelBrokenPopup();
+			context.popupRecycleBtn.interactive=false;
+			context.popupProcessBtn.interactive=false;
+			if(context.itemShouldBeRecycled(context)) {
+				context.popupResultIcon.texture=PIXI.Texture.from("tickIcon.png");
+				window.addPoints(10);
+			} else {
+				context.popupResultIcon.texture=PIXI.Texture.from("crossIcon.png");
+			}
+			context.popupResultIcon.visible=true;
+			context.popupResultIcon.alpha=0;
+			gsap.to(context.popupResultIcon,0.7,{alpha:1, onComplete:context.closePopupIn,onCompleteParams:[context,1]});
 		}
 		
 		function onProcessBtnClick() {
-			if(context.itemShouldBeProcessed(context)) window.addPoints(10);
-			window.hideCatchLevelBrokenPopup();
+			context.popupRecycleBtn.interactive=false;
+			context.popupProcessBtn.interactive=false;
+			if(context.itemShouldBeProcessed(context))  {
+				context.popupResultIcon.texture=PIXI.Texture.from("tickIcon.png");
+				window.addPoints(10);
+			} else {
+				context.popupResultIcon.texture=PIXI.Texture.from("crossIcon.png");
+			}
+			context.popupResultIcon.visible=true;
+			context.popupResultIcon.alpha=0;
+			gsap.to(context.popupResultIcon,0.7,{alpha:1, onComplete:context.closePopupIn,onCompleteParams:[context,1]});
 		}
+	}
+	
+	closePopupIn(context,value) {
+		gsap.delayedCall(value,context.closePopup,[context]);
+	}
+	
+	closePopup(context) {
+		context.popupResultIcon.visible=false;
+		context.popupRecycleBtn.interactive=true;
+		context.popupProcessBtn.interactive=true;
+		window.hideCatchLevelBrokenPopup();
 	}
 	
 	itemShouldBeRecycled(context) {

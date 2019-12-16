@@ -1,7 +1,8 @@
 class ScoreLevel extends PIXI.Sprite {
 	
-	constructor(points,endFunc) {
+	constructor(recCompNum,points,endFunc) {
 		super();
+		this.recCompNum=recCompNum;
 		this.points=points;
 		this.endFunc=endFunc;
 	}
@@ -39,6 +40,16 @@ class ScoreLevel extends PIXI.Sprite {
 		this.addChild(playerName);
 			
 		while(playerName.width>500) playerName.style.fontSize--;
+		
+		context.recycledComponentsTXT = new PIXI.Text(context.recCompNum.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var recycledComponentsTXT=this.recycledComponentsTXT;
+			recycledComponentsTXT.anchor.set(0.5);
+			recycledComponentsTXT.roundPixels=true;
+			recycledComponentsTXT.x=700
+			recycledComponentsTXT.y=430;
+		this.addChild(recycledComponentsTXT);
+			
+		while(recycledComponentsTXT.width>200) recycledComponentsTXT.style.fontSize--;
 	}
 	
 	begin() {

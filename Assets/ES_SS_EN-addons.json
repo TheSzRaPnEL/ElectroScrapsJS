@@ -1,0 +1,52 @@
+{"frames": {
+
+"crossIcon.png":
+{
+	"frame": {"x":212,"y":329,"w":208,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":208,"h":208},
+	"sourceSize": {"w":210,"h":210}
+},
+"raw_res_mercury.png":
+{
+	"frame": {"x":349,"y":1,"w":219,"h":77},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":77},
+	"sourceSize": {"w":219,"h":77}
+},
+"res_mercury.png":
+{
+	"frame": {"x":349,"y":222,"w":97,"h":77},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":97,"h":77},
+	"sourceSize": {"w":97,"h":77}
+},
+"tickIcon.png":
+{
+	"frame": {"x":1,"y":329,"w":209,"h":208},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":209,"h":208},
+	"sourceSize": {"w":211,"h":210}
+},
+"trophyIcon.png":
+{
+	"frame": {"x":1,"y":1,"w":346,"h":326},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":346,"h":326},
+	"sourceSize": {"w":346,"h":326}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ES_SS_EN-addons.png",
+	"format": "RGBA8888",
+	"size": {"w":427,"h":538},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8d85a9c1630edc520a3681ef87bea898:496aaea151d717a1012424efbbd0c0a5:090872c132aa0f4ff59cbbc39f92621c$"
+}
+}

@@ -12,13 +12,13 @@ class ItemConfig {
 		var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"Other",	5);
 		var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"Other",	5);
 		var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"Metal",	5);
-		var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"Metal",	10);
+		var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"Danger",	10);
 		var chrome = 		new ItemComponent("chrome",		"raw_res_chrome.png",		"Metal",	10);
 		var cobalt = 		new ItemComponent("cobalt",		"raw_res_cobalt.png",		"Metal",	10);
 		var copper = 		new ItemComponent("copper",		"raw_res_copper.png",		"Metal",	7);
 		var glass = 		new ItemComponent("glass",		"raw_res_glass.png",		"Other",	5);
 		var gold = 			new ItemComponent("gold",		"raw_res_gold.png",			"Rich",		10);
-		var lead = 			new ItemComponent("lead",		"raw_res_lead.png",			"Danger",	5);
+		var lead = 			new ItemComponent("lead",		"raw_res_lead.png",			"Danger",	10);
 		var nickel = 		new ItemComponent("nickel",		"raw_res_nickel.png",		"Metal",	10);
 		var plastic = 		new ItemComponent("plastic",	"raw_res_plastic.png",		"Other",	3);
 		var platinium = 	new ItemComponent("platinium",	"raw_res_platinium.png",	"Rich",		10);
@@ -28,7 +28,7 @@ class ItemConfig {
 		var steel = 		new ItemComponent("steel",		"raw_res_steel.png",		"Metal",	5);
 		var tin = 			new ItemComponent("tin",		"raw_res_tin.png",			"Metal",	5);
 		var wolfram = 		new ItemComponent("wolfram",	"raw_res_wolfram.png",		"Rich",		8);
-		var mercury = 		new ItemComponent("mercury",	"raw_res_wolfram.png",		"Danger",	7);
+		var mercury = 		new ItemComponent("mercury",	"raw_res_mercury.png",		"Danger",	10);
 		
 		aluminium.addMineCountry(countryName.AUSTRALIA);
 		aluminium.addMineCountry(countryName.GWINEA);
@@ -44,7 +44,7 @@ class ItemConfig {
 		cadm.addMineCountry(countryName.CHINY);
 		cadm.addMineCountry(countryName.POLSKA);
 		cadm.addMineCountry(countryName.USA);
-		cadm.desc = "";
+		cadm.desc = "Stosowany w metalurgii, używany w stopach do przewodów elektrycznych i bezpieczników, a także w produkcji baterii akumulatorowych (na przykład baterii niklowo-kadmowych)";
 		
 		chrome.desc = "";
 		
@@ -68,7 +68,7 @@ class ItemConfig {
 		lead.addMineCountry(countryName.AUSTRALIA);
 		lead.addMineCountry(countryName.KANADA);
 		lead.addMineCountry(countryName.MEKSYK);
-		lead.desc = "It is a heavy metal, dangerous for health. Proctects from X-rays, was used in old television's cathode ray tubes, CRT screens and soldering alloys.";
+		lead.desc = "Używany w akumulatorach, a także w postaci blach, rur, stopów, śrutu i w produkcji szkła, do powłok kabli elektrycznych czy osłony przed promieniowaniem jonizującym.";
 		
 		nickel.addMineCountry(countryName.KANADA);
 		nickel.addMineCountry(countryName.KUBA);
@@ -213,7 +213,8 @@ class ItemConfig {
 			tvNEW.addComponent(glass,30);
 			
 		var tvOLD = new SortItem("tvOLD","item_tvOLD.png");
-			tvOLD.addComponent(mercury,2);
+			tvOLD.addComponent(mercury,1);
+			tvOLD.addComponent(cadm,1);
 			tvOLD.addComponent(steel,4);
 			tvOLD.addComponent(lead,9);
 			tvOLD.addComponent(copper,15);
