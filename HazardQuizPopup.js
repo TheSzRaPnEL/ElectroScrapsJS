@@ -9,40 +9,45 @@ class HazardQuizPopup extends Popup {
 		
 		let context=this;
 		
-		this.answerA = new PIXI.Text("Wyczerpanie zasobów naturalnych",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
+		this.answerA = new PIXI.Text("a) Wyczerpanie zasobów naturalnych",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
 		var answerA=this.answerA;
-			answerA.anchor.set(0.5);
+			// answerA.anchor.set(0.5);
 			answerA.roundPixels=true;
-			answerA.x=0
-			answerA.y=-100;
+			answerA.x=-270;
+			answerA.y=-70;
 			answerA.interactive=true;
 			answerA.on('pointerdown',onAnswerAClick);
 		this.addChild(answerA);
 		while(this.answerA.width>3*this.popupBG.width/5) this.answerA.style.fontSize--;
 		
-		this.answerB = new PIXI.Text("Skażenie środowiska naturalnego",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
+		this.answerB = new PIXI.Text("b) Skażenie środowiska naturalnego",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
 		var answerB=this.answerB;
-			answerB.anchor.set(0.5);
+			// answerB.anchor.set(0.5);
 			answerB.roundPixels=true;
-			answerB.x=0
-			answerB.y=0;
+			answerB.x=-270;
+			answerB.y=30;
 			answerB.interactive=true;
 			answerB.on('pointerdown',onAnswerBClick);
 		this.addChild(answerB);
 		while(this.answerB.width>3*this.popupBG.width/5) this.answerB.style.fontSize--;
 		
-		this.answerC = new PIXI.Text("Toksyczny dla człowieka",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
+		this.answerC = new PIXI.Text("c) Toksyczny dla człowieka",{fontFamily : 'Arial', fontSize: 40, fill : 0xffffff, align : 'left'});
 		var answerC=this.answerC;
-			answerC.anchor.set(0.5);
+			// answerC.anchor.set(0.5);
 			answerC.roundPixels=true;
-			answerC.x=0
-			answerC.y=100;
+			answerC.x=-270;
+			answerC.y=130;
 			answerC.interactive=true;
 			answerC.on('pointerdown',onAnswerCClick);
 		this.addChild(answerC);
 		while(this.answerC.width>3*this.popupBG.width/5) this.answerC.style.fontSize--;
 		
-		this.desc="Jakie skutki mają ołów/rtęć/kadm mają dla człowieka i środowiska. Wybierz trafną odpowiedź:";
+		var minFontSize=Math.min(this.answerA.style.fontSize,this.answerB.style.fontSize,this.answerC.style.fontSize);
+		this.answerA.style.fontSize = minFontSize;
+		this.answerB.style.fontSize = minFontSize;
+		this.answerC.style.fontSize = minFontSize;
+		
+		this.desc="Jakie skutki mają ołów/rtęć/kadm dla człowieka i środowiska?\nWybierz trafną odpowiedź:";
 		this.popupDesc.y-=60;
 		this.popupDesc.x=0;
 		

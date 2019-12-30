@@ -19,13 +19,8 @@ class MonsterLevel extends PIXI.Sprite {
 		
 		this.filter = new PIXI.filters.ColorMatrixFilter();
 		const { matrix } = this.filter;
-
-		matrix[1] = Math.sin(this.filterCounter) * 3;
-		matrix[2] = Math.cos(this.filterCounter);
-		matrix[3] = Math.cos(this.filterCounter) * 1.5;
-		matrix[4] = Math.sin(this.filterCounter / 3) * 2;
-		matrix[5] = Math.sin(this.filterCounter / 2);
-		matrix[6] = Math.sin(this.filterCounter / 4);
+		//Default value
+		//[1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
 		
 		this.bg = new PIXI.Sprite(PIXI.Texture.from("EmptyScreen.jpg"));
 		this.addChild(this.bg);
@@ -142,13 +137,9 @@ class MonsterLevel extends PIXI.Sprite {
 		this.addChild(otherContainer);
 		
 		context.monsterLoop = function(delta) {
-			context.filterCounter+=0.01;
-			matrix[1] = Math.sin(context.filterCounter) * 3;
-			matrix[2] = Math.cos(context.filterCounter);
-			matrix[3] = Math.cos(context.filterCounter) * 1.5;
-			matrix[4] = Math.sin(context.filterCounter / 3) * 2;
-			matrix[5] = Math.sin(context.filterCounter / 2);
-			matrix[6] = Math.sin(context.filterCounter / 4);
+			context.filterCounter+=0.1;
+			matrix[1] = Math.sin(context.filterCounter)/2;
+			matrix[2] = Math.sin(context.filterCounter)/2;
 			
 			context.items.forEach( function(item) {
 				item.y=item.y+2*delta;

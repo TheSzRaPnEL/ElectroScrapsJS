@@ -135,7 +135,9 @@ class OverlayMenu extends PIXI.Sprite {
 	}
 	
 	removePoints(value) {
-		this.points.text=(parseInt(this.points.text)-value).toString();
+		var newPointsValue = parseInt(this.points.text)-value;
+		if (newPointsValue<0) newPointsValue=0;
+		this.points.text=newPointsValue.toString();
 		PIXI.sound.play("bad");
 		this.updatePoints();
 	}

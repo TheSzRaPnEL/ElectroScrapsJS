@@ -73,8 +73,11 @@ class CatchLevel extends PIXI.Sprite {
 			popup.visible=false;
 		this.addChild(popup);
 		
+		//put oldTV (ID=13) in the list
+		this.selectedGameSortItemList.push(this.gameSortItemListTemp[13]);
+		this.gameSortItemListTemp.splice(13,1);
 		//pick few items from the item list to throw them around
-		for (var i=0; i<this.selectedGameSortItemListNum;i++) {
+		for (var i=0; i<this.selectedGameSortItemListNum-1;i++) {
 			var randomIndex = parseInt(Math.random()*this.gameSortItemListTemp.length);
 			this.selectedGameSortItemList.push(this.gameSortItemListTemp[randomIndex]);
 			this.gameSortItemListTemp.splice(randomIndex,1);

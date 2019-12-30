@@ -63,6 +63,7 @@ class MapLevel extends PIXI.Sprite {
 				window.improveCondition();
 				window.addPoints(50);
 				window.selectedMineCountries().push(this.countryName);
+				_savedCountriesNum=_savedCountriesNum+1;
 				context.end(context);
 				gsap.delayedCall(2,context.stop,[context]);
 			}

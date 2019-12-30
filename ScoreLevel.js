@@ -1,8 +1,8 @@
 class ScoreLevel extends PIXI.Sprite {
 	
-	constructor(recCompNum,points,endFunc) {
+	constructor(recycledResourceNum,points,endFunc) {
 		super();
-		this.recCompNum=recCompNum;
+		this.recycledResourceNum=recycledResourceNum;
 		this.points=points;
 		this.endFunc=endFunc;
 	}
@@ -21,16 +21,6 @@ class ScoreLevel extends PIXI.Sprite {
 			bg.on('pointerdown',this.onBgMouseDown);
 		this.addChild(bg);
 		
-		context.pointsTxtF = new PIXI.Text(context.points.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
-		var pointsTxtF=this.pointsTxtF;
-			pointsTxtF.anchor.set(0.5);
-			pointsTxtF.roundPixels=true;
-			pointsTxtF.x=400;
-			pointsTxtF.y=265;
-		this.addChild(pointsTxtF);
-			
-		while(pointsTxtF.width>50) pointsTxtF.style.fontSize--;
-		
 		context.playerName = new PIXI.Text(overlayMenu.getPlayerName(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
 		var playerName=this.playerName;
 			playerName.anchor.set(0.5);
@@ -41,7 +31,37 @@ class ScoreLevel extends PIXI.Sprite {
 			
 		while(playerName.width>500) playerName.style.fontSize--;
 		
-		context.recycledComponentsTXT = new PIXI.Text(context.recCompNum.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		context.pointsTxtF = new PIXI.Text(context.points.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var pointsTxtF=this.pointsTxtF;
+			pointsTxtF.anchor.set(0.5);
+			pointsTxtF.roundPixels=true;
+			pointsTxtF.x=400;
+			pointsTxtF.y=265;
+		this.addChild(pointsTxtF);
+			
+		while(pointsTxtF.width>50) pointsTxtF.style.fontSize--;
+		
+		context.gameTimeTXT = new PIXI.Text((120-1-parseInt(overlayMenu.clock.text)).toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var gameTimeTXT=this.gameTimeTXT;
+			gameTimeTXT.anchor.set(0.5);
+			gameTimeTXT.roundPixels=true;
+			gameTimeTXT.x=750
+			gameTimeTXT.y=265;
+		this.addChild(gameTimeTXT);
+			
+		while(gameTimeTXT.width>200) gameTimeTXT.style.fontSize--;
+		
+		context.naturalDepositSavedTXT = new PIXI.Text(_savedCountriesNum.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var naturalDepositSavedTXT=this.naturalDepositSavedTXT;
+			naturalDepositSavedTXT.anchor.set(0.5);
+			naturalDepositSavedTXT.roundPixels=true;
+			naturalDepositSavedTXT.x=700
+			naturalDepositSavedTXT.y=349;
+		this.addChild(naturalDepositSavedTXT);
+			
+		while(naturalDepositSavedTXT.width>200) naturalDepositSavedTXT.style.fontSize--;
+		
+		context.recycledComponentsTXT = new PIXI.Text(context.recycledResourceNum.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
 		var recycledComponentsTXT=this.recycledComponentsTXT;
 			recycledComponentsTXT.anchor.set(0.5);
 			recycledComponentsTXT.roundPixels=true;
@@ -50,6 +70,25 @@ class ScoreLevel extends PIXI.Sprite {
 		this.addChild(recycledComponentsTXT);
 			
 		while(recycledComponentsTXT.width>200) recycledComponentsTXT.style.fontSize--;
+		
+		overlayMenu.removeChild(overlayMenu._earthIndicator);
+		context.earthIndicator = overlayMenu._earthIndicator;
+		var earthIndicator = context.earthIndicator;
+			earthIndicator.anchor.set(0.5);
+			earthIndicator.x=480;
+			earthIndicator.y=525;
+			earthIndicator.visible=true;
+		this.addChild(earthIndicator);
+		
+		context.earthIndicatorTXT = new PIXI.Text(context.earthIndicator.indicatorStateNames[context.earthIndicator.indicatorConditionIndex],{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
+		var earthIndicatorTXT=this.earthIndicatorTXT;
+			earthIndicatorTXT.anchor.set(0.5);
+			earthIndicatorTXT.roundPixels=true;
+			earthIndicatorTXT.x=680
+			earthIndicatorTXT.y=507;
+		this.addChild(earthIndicatorTXT);
+			
+		while(earthIndicatorTXT.width>200) earthIndicatorTXT.style.fontSize--;
 	}
 	
 	begin() {

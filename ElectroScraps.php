@@ -114,6 +114,7 @@
 			let _selectedMineCountries=[];
 			let _collectedComponents=[];
 			let _recycledComponentNum=0;
+			let _savedCountriesNum=0;
 			
 			const countryName = {
 				POLSKA		:	'Poland',
@@ -273,6 +274,7 @@
 				_selectedMineCountries=[];
 				_collectedComponents=[];
 				_recycledComponentNum=0;
+				_savedCountriesNum=0;
 				startMenuLevel();
 			}
 			

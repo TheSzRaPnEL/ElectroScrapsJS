@@ -10,19 +10,19 @@
 },
 "raw_res_mercury.png":
 {
-	"frame": {"x":349,"y":1,"w":219,"h":77},
-	"rotated": true,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":77},
-	"sourceSize": {"w":219,"h":77}
-},
-"res_mercury.png":
-{
 	"frame": {"x":349,"y":222,"w":97,"h":77},
 	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":97,"h":77},
 	"sourceSize": {"w":97,"h":77}
+},
+"res_mercury.png":
+{
+	"frame": {"x":349,"y":1,"w":219,"h":77},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":77},
+	"sourceSize": {"w":219,"h":77}
 },
 "tickIcon.png":
 {
@@ -47,6 +47,6 @@
 	"format": "RGBA8888",
 	"size": {"w":427,"h":538},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:8d85a9c1630edc520a3681ef87bea898:496aaea151d717a1012424efbbd0c0a5:090872c132aa0f4ff59cbbc39f92621c$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a2a9cb4d6cf0aa276fa804ebd9364b82:d69c650ef035daed2db44bbaaa50eaee:090872c132aa0f4ff59cbbc39f92621c$"
 }
 }
