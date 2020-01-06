@@ -53,6 +53,11 @@ class ScannerLevel extends PIXI.Sprite {
 				componentInScanner.pivot.y = componentInScanner.height/2;
 				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
 				componentInScanner.y = 9*app.renderer.height/10;
+				if (componentInScanner.width>80) {
+					var scaleFactor=80/componentInScanner.width;
+					componentInScanner.width=scaleFactor*componentInScanner.width;
+					componentInScanner.height=scaleFactor*componentInScanner.height;
+				}
 				componentInScanner.interactive=true;
 				componentInScanner.on('pointerdown', onComponentMouseDown);
 				// componentInScanner.visible = false;
@@ -110,6 +115,11 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupHeadIcon.x=resPopup.x-resPopup.pivot.x+resPopup.width/9;
 			resPopupHeadIcon.y=resPopup.y-8*resPopup.height/20;
 			resPopupHeadIcon.visible = false;
+			if (resPopupHeadIcon.width>80) {
+				var scaleFactor=80/resPopupHeadIcon.width;
+				resPopupHeadIcon.width=scaleFactor*resPopupHeadIcon.width;
+				resPopupHeadIcon.height=scaleFactor*resPopupHeadIcon.height;
+			}
 		this.addChild(resPopupHeadIcon);
 		
 		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].name.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});

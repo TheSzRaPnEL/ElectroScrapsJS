@@ -92,7 +92,8 @@ class ScoreLevel extends PIXI.Sprite {
 	}
 	
 	begin() {
-		//
+		var sendGamePointsEvent = new Event('SendGamePoints');
+		window.dispatchEvent(sendGamePointsEvent);
 	}
 	
 	stop(context) {

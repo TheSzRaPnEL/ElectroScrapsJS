@@ -37,7 +37,7 @@ class ItemConfig {
 		
 		batteryLit.desc = "There are different types of batteries. They may contain heavy metals harmful to health, such as cadmium (Cd) and nickel (Ni) nickel-cadmium batteries: Ni-Cd, as battery sticks AA, might be used in various devices e.g. small radios, becouse they can be recharged multiple times. For cordless, telephones, cameras etc., mass production of other batteries and producted: new generation lithium ion batteries (Li-Ion), inside which cathode are made out of cobalt oxide (CoO2).";
 		
-		batteryNik.desc = batteryNik.desc;
+		batteryNik.desc = batteryLit.desc;
 		
 		brass.desc = "Copper and zinc alloy with high corrosion resistance.";
 		
@@ -115,12 +115,12 @@ class ItemConfig {
 		context.gameSortItemList = [];
 		var calculator = new SortItem("calculator","item_calculator_big.png");
 			calculator.addComponent(copper,15);
-			calculator.addComponent(batteryLit,20);
+			calculator.addComponent(batteryNik,20);
 			calculator.addComponent(plastic,65);
 		
 		var car = new SortItem("car","item_car.png",true);
 			car.addComponent(copper,15);
-			car.addComponent(batteryLit,20);
+			car.addComponent(batteryNik,20);
 			car.addComponent(plastic,65);
 		
 		var kettle = new SortItem("kettle","item_kettle.png");
@@ -174,7 +174,7 @@ class ItemConfig {
 			radio.addComponent(steel,5);
 			radio.addComponent(aluminium,5);
 			radio.addComponent(copper,15);
-			radio.addComponent(batteryLit,20);
+			radio.addComponent(batteryNik,20);
 			radio.addComponent(plastic,55);
 		
 		var refrigerator = new SortItem("refrigerator","item_refrigerator.png");
@@ -188,7 +188,7 @@ class ItemConfig {
 			shaver.addComponent(steel,5);
 			shaver.addComponent(aluminium,5);
 			shaver.addComponent(copper,15);
-			shaver.addComponent(batteryLit,20);
+			shaver.addComponent(batteryNik,20);
 			shaver.addComponent(plastic,55);
 			
 		var smartphone = new SortItem("smartphone","item_smartphone.png");
