@@ -61,15 +61,28 @@ class ScoreLevel extends PIXI.Sprite {
 			
 		while(naturalDepositSavedTXT.width>200) naturalDepositSavedTXT.style.fontSize--;
 		
-		context.recycledComponentsTXT = new PIXI.Text(context.recycledResourceNum.toString(),{fontFamily : 'Arial', fontSize: 34, fill: 0xffffff, align: 'center'});
-		var recycledComponentsTXT=this.recycledComponentsTXT;
-			recycledComponentsTXT.anchor.set(0.5);
-			recycledComponentsTXT.roundPixels=true;
-			recycledComponentsTXT.x=700
-			recycledComponentsTXT.y=430;
-		this.addChild(recycledComponentsTXT);
-			
-		while(recycledComponentsTXT.width>200) recycledComponentsTXT.style.fontSize--;
+		console.log(_recycledComponentList);
+		console.log(_recycledComponentList.length);
+		var posXIndex=0;
+		for (var key in _recycledComponentList) {
+			var resIcon = new PIXI.Sprite(PIXI.Texture.from("raw_res_" + key + ".png"));
+				resIcon.anchor.set(0.5);
+				resIcon.x = 620+posXIndex*25;
+				resIcon.y = 421;
+			this.addChild(resIcon);
+			var resIconScaleFactor=22/resIcon.width;
+			resIcon.width=22;
+			resIcon.height=resIcon.height*resIconScaleFactor;
+			var recycledComponentsTXT = new PIXI.Text(_recycledComponentList[key],{fontFamily : 'Arial', fontSize: 16, fill: 0xffffff, align: 'center'});
+				recycledComponentsTXT.anchor.set(0.5);
+				recycledComponentsTXT.roundPixels=true;
+				recycledComponentsTXT.x=620+posXIndex*25;
+				recycledComponentsTXT.y=444;
+			this.addChild(recycledComponentsTXT);
+			posXIndex++;
+		}
+		
+		// while(recycledComponentsTXT.width>200) recycledComponentsTXT.style.fontSize--;
 		
 		overlayMenu.removeChild(overlayMenu._earthIndicator);
 		context.earthIndicator = overlayMenu._earthIndicator;

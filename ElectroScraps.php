@@ -170,6 +170,7 @@
 			let _selectedMineCountries=[];
 			let _collectedComponents=[];
 			let _recycledComponentNum=0;
+			let _recycledComponentList=[];
 			let _savedCountriesNum=0;
 			
 			const countryName = {
@@ -351,6 +352,7 @@
 				_selectedMineCountries=[];
 				_collectedComponents=[];
 				_recycledComponentNum=0;
+				_recycledComponentList=[];
 				_savedCountriesNum=0;
 				startMenuLevel();
 			}
@@ -403,9 +405,11 @@
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
 			}
 			
-			function hideMonsterLevelRecyclePopup() {
+			function hideMonsterLevelRecyclePopup(res) {
 				overlayMenu.addPoints(100*gameIteration);
 				_recycledComponentNum++;
+				if(_recycledComponentList[res.name]==null) _recycledComponentList[res.name]=0;
+				_recycledComponentList[res.name]=_recycledComponentList[res.name]+1;
 				app.stage.currentLevel.recyclePopup.visible=false;
 				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);

@@ -9,8 +9,8 @@ class ItemConfig {
 		
 		context.gameItemComponentsList = [];
 		var aluminium = 	new ItemComponent("aluminum",	"raw_res_aluminum.png",		"Metal",	7,	"Aluminium");
-		var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"Other",	5,	"Bateria litowo jonowa");
-		var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"Other",	5,	"Bateria niklowo kadmowa");
+		var batteryLit = 	new ItemComponent("batteryLit",	"raw_res_batteryLit.png",	"Battery",	5,	"Bateria litowo jonowa");
+		var batteryNik = 	new ItemComponent("batteryNik",	"raw_res_batteryNik.png",	"Battery",	5,	"Bateria niklowo kadmowa");
 		var brass = 		new ItemComponent("brass",		"raw_res_brass.png",		"Metal",	5,	"Mosiądz");
 		var cadm = 			new ItemComponent("cadm",		"raw_res_cadm.png",			"Danger",	10,	"Kadm");
 		var chrome = 		new ItemComponent("chrome",		"raw_res_chrome.png",		"Metal",	10,	"Chrom");

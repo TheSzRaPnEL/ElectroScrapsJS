@@ -100,7 +100,7 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupCloseBtn.visible = false;
 		this.addChild(resPopupCloseBtn);
 		
-		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 20, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
+		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
 		var resPopupDesc=this.resPopupDesc;
 			resPopupDesc.pivot.x=resPopupDesc.width/2;
 			resPopupDesc.roundPixels=true;
@@ -122,7 +122,7 @@ class ScannerLevel extends PIXI.Sprite {
 			}
 		this.addChild(resPopupHeadIcon);
 		
-		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].label.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].label.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left'});
 		var resPopupHead=this.resPopupHead;
 			resPopupHead.roundPixels=true;
 			resPopupHead.x=resPopup.x-resPopup.pivot.x+resPopup.width/5;
@@ -137,7 +137,7 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupType.visible = false;
 		this.addChild(resPopupType);
 		
-		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 34, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 34, fill : 0xffffff, align : 'left'});
 		var resPopupValue=this.resPopupValue;
 			resPopupValue.roundPixels=true;
 			resPopupValue.x=resPopup.x+resPopup.width/6;
@@ -165,8 +165,7 @@ class ScannerLevel extends PIXI.Sprite {
 				resPopupDesc.text=this.desc;
 				resPopupHeadIcon.texture=PIXI.Texture.from(this.textureName);
 				resPopupHead.text=this.label.toUpperCase();
-				resPopupHead.style.fontSize=34;
-				while(resPopupHead.width>2*resPopup.width/3) resPopupHead.style.fontSize--;
+				
 				resPopupType.texture=PIXI.Texture.from("containerType"+this.type+".png");
 				resPopupValue.text=this.points;
 				
@@ -177,6 +176,12 @@ class ScannerLevel extends PIXI.Sprite {
 				resPopupHead.visible=true;
 				resPopupType.visible=true;
 				resPopupValue.visible=true;
+				
+				resPopupDesc.style.fontSize=30;
+				while(resPopupDesc.height>180) resPopupDesc.style.fontSize--;
+				
+				resPopupHead.style.fontSize=34;
+				while(resPopupHead.width>2*resPopup.width/3) resPopupHead.style.fontSize--;
 				
 				overlayMenu.stopClock(overlayMenu);
 			}
