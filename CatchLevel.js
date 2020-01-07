@@ -201,9 +201,9 @@ class CatchLevel extends PIXI.Sprite {
 					context.lastItemCatch=this;
 					context.setChildIndex(context.popup,context.children.length-1);
 					context.popup.visible=true;
-					context.popup.desc="This item is Broken!";
+					context.popup.desc="Ten przedmiot jest uszkodzony!";
 					context.popup.setResIcon(this.sortItem.textureName);
-					context.popup.setResIconTXT(this.sortItem.name);
+					context.popup.setResIconTXT(this.sortItem.label);
 				}
 			}
 			

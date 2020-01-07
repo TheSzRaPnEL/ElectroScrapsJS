@@ -173,29 +173,29 @@
 			let _savedCountriesNum=0;
 			
 			const countryName = {
-				POLSKA		:	'Poland',
-				WENEZUELA	:	'Venezuela',
-				GWINEA		:	'Guinea',
+				POLSKA		:	'Polska',
+				WENEZUELA	:	'Wenezuela',
+				GWINEA		:	'Gwinea',
 				AUSTRALIA	:	'Australia',
 				USA			:	'USA',
-				CHINY		:	'China',
+				CHINY		:	'Chiny',
 				KONGO		:	'Kongo',
-				KUBA		:	'Cuba',
+				KUBA		:	'Kuba',
 				CHILE		:	'Chile',
 				ZAMBIA		:	'Zambia',
-				RPA			:	'South Africa',
-				ROSJA		:	'Russia',
-				KANADA		:	'Canada',
-				MEKSYK		:	'Mexico',
+				RPA			:	'RPA',
+				ROSJA		:	'Rosja',
+				KANADA		:	'Kanada',
+				MEKSYK		:	'Meksyk',
 				PERU		:	'Peru',
-				JAPONIA		:	'Japan',
-				INDIE		:	'India',
-				INDONEZJA	:	'Indonesia',
-				BOLIWIA		:	'Bolivia',
-				BRAZYLIA	:	'Brazil',
+				JAPONIA		:	'Japonia',
+				INDIE		:	'Indie',
+				INDONEZJA	:	'Indonezja',
+				BOLIWIA		:	'Boliwia',
+				BRAZYLIA	:	'Brazylia',
 				AUSTRIA		:	'Austria',
 				KOREA		:	'Korea',
-				KAMERUN		:	'Cameroon'
+				KAMERUN		:	'Kamerun'
 			}
 			
 			var preloader = new PIXI.Graphics();

@@ -1,10 +1,11 @@
 class SortItem {
 	
-	constructor(name,textureName) {
+	constructor(name,textureName,label,hasBatteries=false,hasRefrigerant=false) {
 		this._name=name;
 		this._textureName=textureName;
-		this._hasBatteries=false;
-		this._hasRefrigerant=false;
+		this._label=label;
+		this._hasBatteries=hasBatteries;
+		this._hasRefrigerant=hasRefrigerant;
 		this._components=[];
 		this._componentAmounts=[];
 	}
@@ -51,6 +52,10 @@ class SortItem {
 			if (component.name==componentName && !componentFound) componentFound=true;
 		});
 		return componentFound;
+	}
+	
+	get label() {
+		return this._label;
 	}
 
 };

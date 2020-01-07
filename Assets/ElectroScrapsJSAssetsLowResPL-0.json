@@ -16,6 +16,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":384,"h":55},
 	"sourceSize": {"w":384,"h":55}
 },
+"countryPlaceholder_Big.png":
+{
+	"frame": {"x":1999,"y":381,"w":162,"h":41},
+	"rotated": true,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":162,"h":41},
+	"sourceSize": {"w":162,"h":41}
+},
 "countryPlaceholder_BigH.png":
 {
 	"frame": {"x":1999,"y":812,"w":163,"h":41},
@@ -23,6 +31,22 @@
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":163,"h":41},
 	"sourceSize": {"w":163,"h":41}
+},
+"countryPlaceholder_Dot.png":
+{
+	"frame": {"x":390,"y":1994,"w":22,"h":22},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":22},
+	"sourceSize": {"w":22,"h":22}
+},
+"countryPlaceholder_Small.png":
+{
+	"frame": {"x":196,"y":1994,"w":126,"h":41},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":126,"h":41},
+	"sourceSize": {"w":126,"h":41}
 },
 "countryPlaceholder_VeryBig.png":
 {
@@ -42,27 +66,11 @@
 },
 "countryPlaceholder_VerySmall.png":
 {
-	"frame": {"x":1999,"y":381,"w":109,"h":41},
-	"rotated": true,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":109,"h":41},
-	"sourceSize": {"w":109,"h":41}
-},
-"countryPlaceholder_VerySmallH.png":
-{
 	"frame": {"x":1999,"y":979,"w":109,"h":41},
 	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":109,"h":41},
 	"sourceSize": {"w":109,"h":41}
-},
-"crosshair.png":
-{
-	"frame": {"x":1551,"y":1941,"w":85,"h":85},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":85,"h":85},
-	"sourceSize": {"w":85,"h":85}
 },
 "EarthMale.png":
 {
@@ -96,13 +104,13 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":282,"h":75},
 	"sourceSize": {"w":282,"h":75}
 },
-"item_mixer.png":
+"item_mobile.png":
 {
-	"frame": {"x":1432,"y":1941,"w":91,"h":115},
-	"rotated": true,
+	"frame": {"x":1999,"y":547,"w":40,"h":77},
+	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":91,"h":115},
-	"sourceSize": {"w":91,"h":115}
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":77},
+	"sourceSize": {"w":40,"h":77}
 },
 "item_pc.png":
 {
@@ -114,19 +122,11 @@
 },
 "item_shaver.png":
 {
-	"frame": {"x":196,"y":1994,"w":52,"h":60},
+	"frame": {"x":326,"y":1994,"w":52,"h":60},
 	"rotated": true,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":60},
 	"sourceSize": {"w":52,"h":60}
-},
-"item_smartphone.png":
-{
-	"frame": {"x":1354,"y":1941,"w":74,"h":58},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":74,"h":58},
-	"sourceSize": {"w":74,"h":58}
 },
 "LeagueScreen.jpg":
 {
@@ -168,22 +168,6 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":282,"h":75},
 	"sourceSize": {"w":282,"h":75}
 },
-"monsterEyesOpened.png":
-{
-	"frame": {"x":1274,"y":2003,"w":92,"h":43},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":92,"h":43},
-	"sourceSize": {"w":92,"h":43}
-},
-"monsterMouthClosed.png":
-{
-	"frame": {"x":260,"y":1994,"w":93,"h":50},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":93,"h":50},
-	"sourceSize": {"w":93,"h":50}
-},
 "niebezpieczneBG.png":
 {
 	"frame": {"x":1954,"y":1369,"w":231,"h":92},
@@ -200,6 +184,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":282,"h":75},
 	"sourceSize": {"w":282,"h":75}
 },
+"popupBTNuUp.png":
+{
+	"frame": {"x":1534,"y":1941,"w":102,"h":102},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":102,"h":102},
+	"sourceSize": {"w":102,"h":102}
+},
 "popupIndexBG.png":
 {
 	"frame": {"x":966,"y":1290,"w":905,"h":568},
@@ -208,21 +200,13 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":905,"h":568},
 	"sourceSize": {"w":905,"h":568}
 },
-"raw_res_ree.png":
+"res_batteryLit.png":
 {
-	"frame": {"x":1274,"y":1921,"w":78,"h":76},
-	"rotated": true,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":78,"h":76},
-	"sourceSize": {"w":78,"h":76}
-},
-"raw_res_tin.png":
-{
-	"frame": {"x":1999,"y":494,"w":41,"h":61},
+	"frame": {"x":1274,"y":1941,"w":256,"h":74},
 	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":41,"h":61},
-	"sourceSize": {"w":41,"h":61}
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":256,"h":74},
+	"sourceSize": {"w":259,"h":74}
 },
 "res_batteryNik.png":
 {
@@ -306,6 +290,6 @@
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
 	"related_multi_packs": [ "ElectroScrapsJSAssetsLowResPL-1.json" ],
-	"smartupdate": "$TexturePacker:SmartUpdate:a3fa48a96aaf7c111327bf86e7fdcf33:972a0227a115ee7674cd484fc9b3ac40:724316a72403c3192c043effd8aa0839$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5050e575d1691f671d6d530651c0104a:1f3d6b2938c7efbaa062bb50c0bfaa21:724316a72403c3192c043effd8aa0839$"
 }
 }

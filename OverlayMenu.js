@@ -28,7 +28,7 @@ class OverlayMenu extends PIXI.Sprite {
 			points.y=32;
 			points.visible = false;
 			
-		while(points.width>50) points.style.fontSize--;
+		while(points.width>40) points.style.fontSize--;
 		
 		if (context.playerName==null) context.playerName = new PIXI.Text("PlayerName",{fontFamily : 'Arial', fontSize: 34, fill: 0x000000, align: 'left'})
 		else context.playerName.text="PlayerName";
@@ -70,12 +70,20 @@ class OverlayMenu extends PIXI.Sprite {
 	showClock(context) {
 		context.clock.visible=true;
 		if (context.clock.parent==null) context.addChild(context.clock);
+		context.startClock(context);
+	}
+	
+	startClock(context) {
 		if (context.clockIntervalID) clearInterval(context.clockIntervalID);
 		context.clockIntervalID = setInterval(context.countdown,1000,context);
 	}
 	
 	hideClock(context) {
 		context.clock.visible=false;
+		context.stopClock(context);
+	}
+	
+	stopClock(context) {
 		clearInterval(context.clockIntervalID);
 	}
 	
@@ -144,7 +152,7 @@ class OverlayMenu extends PIXI.Sprite {
 	
 	updatePoints() {
 		this.points.style.fontSize=34;
-		while(this.points.width>50) this.points.style.fontSize--;
+		while(this.points.width>40) this.points.style.fontSize--;
 		this.points.scale.x=2;
 		this.points.scale.y=2;
 		gsap.to(this.points.scale,1,{x:1,y:1,ease:Elastic.easeOut.config(1, 0.3)});

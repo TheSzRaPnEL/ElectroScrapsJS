@@ -1,6 +1,6 @@
 class ItemComponent extends PIXI.Sprite {
 	
-	constructor(name,textureName,type,points=0,desc="") {
+	constructor(name,textureName,type,points=0, label="", desc="") {
 		super(PIXI.Texture.from(textureName));
 		this._name=name;
 		this._textureName=textureName;
@@ -8,6 +8,7 @@ class ItemComponent extends PIXI.Sprite {
 		this._points=points;
 		this._desc=desc;
 		this._mineCountries=[];
+		this._label=label;
 	}
 	
 	get name() {
@@ -40,6 +41,10 @@ class ItemComponent extends PIXI.Sprite {
 	
 	get mineCountries() {
 		return this._mineCountries;
+	}
+	
+	get label() {
+		return this._label;
 	}
 
 };
