@@ -109,7 +109,7 @@ class MonsterLevel extends PIXI.Sprite {
 			metalContainer.anchor.set(0.5);
 			metalContainer.name="Metal";
 			metalContainer.x = app.renderer.width-metalContainer.width/2+50;
-			metalContainer.y = 250;
+			metalContainer.y = 200;
 		this.addChild(metalContainer);
 		
 		this.dangerContainer = new PIXI.Sprite(PIXI.Texture.from("niebezpieczneBG2.png"));
@@ -135,6 +135,14 @@ class MonsterLevel extends PIXI.Sprite {
 			otherContainer.x = app.renderer.width-otherContainer.width/2+50;
 			otherContainer.y = 440;
 		this.addChild(otherContainer);
+		
+		this.batteryContainer = new PIXI.Sprite(PIXI.Texture.from("baterieBG2.png"));
+		var batteryContainer = this.batteryContainer;
+			batteryContainer.anchor.set(0.5);
+			batteryContainer.name="Battery";
+			batteryContainer.x = app.renderer.width-batteryContainer.width/2+50;
+			batteryContainer.y = 320;
+		this.addChild(batteryContainer);
 		
 		context.monsterLoop = function(delta) {
 			context.filterCounter+=0.1;
@@ -315,6 +323,7 @@ class MonsterLevel extends PIXI.Sprite {
 			if (Math.hypot(item.x-context.dangerContainer.x,	item.y-context.dangerContainer.y)	<90) return context.dangerContainer.name;
 			if (Math.hypot(item.x-context.richContainer.x,		item.y-context.richContainer.y)		<90) return context.richContainer.name;
 			if (Math.hypot(item.x-context.otherContainer.x,		item.y-context.otherContainer.y)	<90) return context.otherContainer.name;
+			if (Math.hypot(item.x-context.batteryContainer.x,	item.y-context.batteryContainer.y)	<90) return context.batteryContainer.name;
 			return null;
 		}
 		
@@ -357,8 +366,7 @@ class MonsterLevel extends PIXI.Sprite {
 			else if (collectedComponents[item.refItem.name]%600==0) {
 				context.stopRandomItemDrop(context);
 				context.recyclePopup.visible=true;
-				context.recyclePopup.setResIcon(item.refItem.textureName);
-				context.recyclePopup.setResIconTXT(item.refItem.name);
+				context.recyclePopup.setRes(item.refItem);
 				context.setChildIndex(context.recyclePopup,context.children.length-1);
 			}
 		}

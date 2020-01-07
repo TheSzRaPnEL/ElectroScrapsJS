@@ -7,21 +7,21 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = 'SELECT Name, ID FROM Player';
+$teamID = $_GET['ttt'];
+
+$sql = 'SELECT A.Name, A.ID FROM Player A INNER JOIN PlayerTeamSchoolRelation B ON A.ID=B.PlayerID WHERE B.TeamID='.$teamID;
 
 $result = $conn->query($sql);
 
-echo '<select id=PlayerSelect onChange=refreshPlayerDropDown()>';
+$resultArray = array();
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-		echo '<option value="' . $row[ID] . '">' . $row[Name] . '</option>';
+		array_push($resultArray,array('ID'=>$row[ID], 'Name'=>$row[Name]));
     }
-} else {
-    echo "siema";
 }
 
-echo '</select>';
+echo json_encode($resultArray);
 
 $conn->close();
 ?>

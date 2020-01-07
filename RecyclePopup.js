@@ -8,6 +8,7 @@ class RecyclePopup extends Popup {
 		super.init();
 		
 		let context=this;
+		let resItem;
 
 		this.popupRecycleBtn = new PIXI.Sprite(PIXI.Texture.from("popupBTNuUp.png"));
 		var popupRecycleBtn = this.popupRecycleBtn;
@@ -27,7 +28,7 @@ class RecyclePopup extends Popup {
 			popupRecycleResIcon.y = -60;
 		this.addChild(popupRecycleResIcon);
 		
-		this.popupRecycleResIconTXT = new PIXI.Text("RECYCLE",{fontFamily : 'Arial', fontSize: 20, fill : 0xffffff, align : 'left'});
+		this.popupRecycleResIconTXT = new PIXI.Text("Recykling",{fontFamily : 'Arial', fontSize: 20, fill : 0xffffff, align : 'left'});
 		var popupRecycleResIconTXT=this.popupRecycleResIconTXT;
 			popupRecycleResIconTXT.pivot.x=popupRecycleResIconTXT.width/2;
 			popupRecycleResIconTXT.roundPixels=true;
@@ -35,7 +36,7 @@ class RecyclePopup extends Popup {
 			popupRecycleResIconTXT.y=-25;
 		this.addChild(popupRecycleResIconTXT);
 		
-		this.popupRecycleBtnTXT = new PIXI.Text("RECYCLE",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
+		this.popupRecycleBtnTXT = new PIXI.Text("Recykling",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
 		var popupRecycleBtnTXT=this.popupRecycleBtnTXT;
 			popupRecycleBtnTXT.pivot.x=popupRecycleBtnTXT.width/2;
 			popupRecycleBtnTXT.roundPixels=true;
@@ -48,8 +49,14 @@ class RecyclePopup extends Popup {
 		
 		function onRecycleBtnClick() {
 			console.log("RECYCLE POPUP CLICK RECYCLE");
-			window.hideMonsterLevelRecyclePopup();
+			window.hideMonsterLevelRecyclePopup(context.resItem);
 		}
+	}
+	
+	setRes(res) {
+		this.resItem=res;
+		this.setResIcon(res.textureName);
+		this.setResIconTXT(res.label);
 	}
 	
 	setResIcon(textureName) {

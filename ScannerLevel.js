@@ -48,11 +48,16 @@ class ScannerLevel extends PIXI.Sprite {
 		var componentsNum = this._itemInScanner.components.length;
 		for (var i=0;i<componentsNum;i++) {
 			var component = this._itemInScanner.components[i];
-			var componentInScanner = new ItemComponent(component.name,component.textureName,component.type,component.points,component.desc);
+			var componentInScanner = new ItemComponent(component.name,component.textureName,component.type,component.points,component.label,component.desc);
 				componentInScanner.pivot.x = componentInScanner.width/2;
 				componentInScanner.pivot.y = componentInScanner.height/2;
 				componentInScanner.x = (i+1)*(app.renderer.width-200)/(componentsNum+1)+100;
 				componentInScanner.y = 9*app.renderer.height/10;
+				if (componentInScanner.width>80) {
+					var scaleFactor=80/componentInScanner.width;
+					componentInScanner.width=scaleFactor*componentInScanner.width;
+					componentInScanner.height=scaleFactor*componentInScanner.height;
+				}
 				componentInScanner.interactive=true;
 				componentInScanner.on('pointerdown', onComponentMouseDown);
 				// componentInScanner.visible = false;
@@ -95,7 +100,7 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupCloseBtn.visible = false;
 		this.addChild(resPopupCloseBtn);
 		
-		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 20, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
+		this.resPopupDesc = new PIXI.Text(this._itemInScanner.components[1].desc,{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: 9*resPopup.width/10});
 		var resPopupDesc=this.resPopupDesc;
 			resPopupDesc.pivot.x=resPopupDesc.width/2;
 			resPopupDesc.roundPixels=true;
@@ -110,9 +115,14 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupHeadIcon.x=resPopup.x-resPopup.pivot.x+resPopup.width/9;
 			resPopupHeadIcon.y=resPopup.y-8*resPopup.height/20;
 			resPopupHeadIcon.visible = false;
+			if (resPopupHeadIcon.width>80) {
+				var scaleFactor=80/resPopupHeadIcon.width;
+				resPopupHeadIcon.width=scaleFactor*resPopupHeadIcon.width;
+				resPopupHeadIcon.height=scaleFactor*resPopupHeadIcon.height;
+			}
 		this.addChild(resPopupHeadIcon);
 		
-		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].name.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupHead = new PIXI.Text(this._itemInScanner.components[1].label.toUpperCase(),{fontFamily : 'Arial', fontSize: 44, fill : 0xffffff, align : 'left'});
 		var resPopupHead=this.resPopupHead;
 			resPopupHead.roundPixels=true;
 			resPopupHead.x=resPopup.x-resPopup.pivot.x+resPopup.width/5;
@@ -127,10 +137,10 @@ class ScannerLevel extends PIXI.Sprite {
 			resPopupType.visible = false;
 		this.addChild(resPopupType);
 		
-		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 34, fill : 0xffffff, align : 'left', wordWrap:true, wordWrapWidth: resPopup.width});
+		this.resPopupValue = new PIXI.Text(this._itemInScanner.components[1].points,{fontFamily : 'Arial', fontSize: 34, fill : 0xffffff, align : 'left'});
 		var resPopupValue=this.resPopupValue;
 			resPopupValue.roundPixels=true;
-			resPopupValue.x=resPopup.x+resPopup.width/14;
+			resPopupValue.x=resPopup.x+resPopup.width/6;
 			resPopupValue.y=resPopup.y+18*resPopup.height/51;
 			resPopupValue.visible = false;
 		this.addChild(resPopupValue);
@@ -154,7 +164,8 @@ class ScannerLevel extends PIXI.Sprite {
 				
 				resPopupDesc.text=this.desc;
 				resPopupHeadIcon.texture=PIXI.Texture.from(this.textureName);
-				resPopupHead.text=this.name.toUpperCase();
+				resPopupHead.text=this.label.toUpperCase();
+				
 				resPopupType.texture=PIXI.Texture.from("containerType"+this.type+".png");
 				resPopupValue.text=this.points;
 				
@@ -165,6 +176,14 @@ class ScannerLevel extends PIXI.Sprite {
 				resPopupHead.visible=true;
 				resPopupType.visible=true;
 				resPopupValue.visible=true;
+				
+				resPopupDesc.style.fontSize=30;
+				while(resPopupDesc.height>180) resPopupDesc.style.fontSize--;
+				
+				resPopupHead.style.fontSize=34;
+				while(resPopupHead.width>2*resPopup.width/3) resPopupHead.style.fontSize--;
+				
+				overlayMenu.stopClock(overlayMenu);
 			}
 		}
 		
@@ -184,6 +203,8 @@ class ScannerLevel extends PIXI.Sprite {
 				resPopupType.visible=false;
 				resPopupValue.visible=false;
 				popupClosed();
+				
+				overlayMenu.startClock(overlayMenu);
 			// }
 		}
 		

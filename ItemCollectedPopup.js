@@ -25,12 +25,10 @@ class ItemCollectedPopup extends Popup {
 		for (var i=0;i<window.gameItemComponentsList.length;i++) {
 			var itemComponent = window.gameItemComponentsList[i];
 			var collectedComponents=window.collectedComponents();
-			console.log("KDHKJFHDJKFD",itemComponent);
-			console.log("KDHKJFHDJKFD2",itemComponent.name);
 			var collectedItemAmount=collectedComponents[itemComponent.name];
 			if (collectedItemAmount==null) collectedItemAmount="0kg"
 			else collectedItemAmount=collectedItemAmount+"kg";
-			var collectedItemData = new CollectedItemData(collectedItemAmount,itemComponent.textureName,itemComponent.name,itemComponent.type);
+			var collectedItemData = new CollectedItemData(collectedItemAmount,itemComponent.textureName,itemComponent.label,itemComponent.type);
 				collectedItemData.init();
 				collectedItemData.y=65*(i%this.gridLen)-120;
 				collectedItemData.visible=true;

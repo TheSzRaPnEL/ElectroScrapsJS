@@ -8,6 +8,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.js"></script>
 	<script src="pixi-sound.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	
 	<script src="CatchLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="ScannerLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="SortItem.js?t=<?=time()?>" type="text/javascript"></script>
@@ -31,17 +33,71 @@
 	<script src="HazardQuizPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
-		<?php include "GetTeamDropDownMenu.php";?><br>
-		<?php include "GetPlayerDropDownMenu.php";?><br>
+		<?php include "InitTeamDropDownMenu.php";?><br>
+		<?php include "InitPlayerDropDownMenu.php";?><br>
 		<br>
 		
 		<script type="text/javascript">
 			function refreshTeamDropDown() {
-				//
+				let schoolIDvalue = document.getElementById('SchoolSelect')[document.getElementById('SchoolSelect').selectedIndex].value;
+				var select = document.getElementById('PlayerSelect');
+				select.innerHTML="";
+				
+				jQuery.ajax({
+				type: "GET",
+				url: 'GetTeamDropDownMenu.php',
+				dataType: 'json',
+				data: {ttt: schoolIDvalue},
+
+				success: function (obj, textstatus) {
+					if( !('error' in obj) ) {
+						var select = document.getElementById('TeamSelect');
+						select.innerHTML="";
+						obj.forEach(function(item) {
+								var option = document.createElement('option');
+								option.value = item["ID"];
+								option.text =  item["Name"];
+								select.add(option);
+							});
+						}
+						else {
+							console.log(obj.error);
+						}
+						refreshPlayerDropDown();
+					}
+				});
 			}
 			
 			function refreshPlayerDropDown() {
-				overlayMenu.setPlayerName(document.getElementById('PlayerSelect')[document.getElementById('PlayerSelect').selectedIndex].text);
+				let teamIDvalue = document.getElementById('TeamSelect')[document.getElementById('TeamSelect').selectedIndex].value;
+				jQuery.ajax({
+				type: "GET",
+				url: 'GetPlayerDropDownMenu.php',
+				dataType: 'json',
+				data: {ttt: teamIDvalue},
+
+				success: function (obj, textstatus) {
+					var select = document.getElementById('PlayerSelect');
+						select.innerHTML="";
+					if( !('error' in obj) ) {
+						obj.forEach(function(item) {
+								var option = document.createElement('option');
+								option.value = item["ID"];
+								option.text =  item["Name"];
+								select.add(option);
+							});
+						}
+						else {
+							console.log(obj.error);
+						}
+					}
+				});
+			}
+			
+			function refreshPlayerSelection() {
+				window.playerID = document.getElementById('PlayerSelect')[document.getElementById('PlayerSelect').selectedIndex].value;
+				window.playerName = document.getElementById('PlayerSelect')[document.getElementById('PlayerSelect').selectedIndex].text;
+				overlayMenu.setPlayerName(window.playerName);
 			}
 		</script>
 		
@@ -114,32 +170,33 @@
 			let _selectedMineCountries=[];
 			let _collectedComponents=[];
 			let _recycledComponentNum=0;
+			let _recycledComponentList=[];
 			let _savedCountriesNum=0;
 			
 			const countryName = {
-				POLSKA		:	'Poland',
-				WENEZUELA	:	'Venezuela',
-				GWINEA		:	'Guinea',
+				POLSKA		:	'Polska',
+				WENEZUELA	:	'Wenezuela',
+				GWINEA		:	'Gwinea',
 				AUSTRALIA	:	'Australia',
 				USA			:	'USA',
-				CHINY		:	'China',
+				CHINY		:	'Chiny',
 				KONGO		:	'Kongo',
-				KUBA		:	'Cuba',
+				KUBA		:	'Kuba',
 				CHILE		:	'Chile',
 				ZAMBIA		:	'Zambia',
-				RPA			:	'South Africa',
-				ROSJA		:	'Russia',
-				KANADA		:	'Canada',
-				MEKSYK		:	'Mexico',
+				RPA			:	'RPA',
+				ROSJA		:	'Rosja',
+				KANADA		:	'Kanada',
+				MEKSYK		:	'Meksyk',
 				PERU		:	'Peru',
-				JAPONIA		:	'Japan',
-				INDIE		:	'India',
-				INDONEZJA	:	'Indonesia',
-				BOLIWIA		:	'Bolivia',
-				BRAZYLIA	:	'Brazil',
+				JAPONIA		:	'Japonia',
+				INDIE		:	'Indie',
+				INDONEZJA	:	'Indonezja',
+				BOLIWIA		:	'Boliwia',
+				BRAZYLIA	:	'Brazylia',
 				AUSTRIA		:	'Austria',
 				KOREA		:	'Korea',
-				KAMERUN		:	'Cameroon'
+				KAMERUN		:	'Kamerun'
 			}
 			
 			var preloader = new PIXI.Graphics();
@@ -151,8 +208,7 @@
 			app.stage.addChild(preloader);
 			
 			var assetsLoaded=0;
-			var assetsNum=9;
-
+			var assetsNum=8;
 			
 			PIXI.Loader.shared.add('songOne','Assets/music1.mp3');
 			PIXI.Loader.shared.add('songTwo','Assets/music2.mp3');
@@ -160,9 +216,8 @@
 			PIXI.Loader.shared.add('songFour','Assets/music4.mp3');
 			PIXI.Loader.shared.add('good','Assets/good.mp3');
 			PIXI.Loader.shared.add('bad','Assets/bad.mp3');
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-0.json");
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-1.json");
-			PIXI.Loader.shared.add("Assets/ES_SS_EN-addons.json");
+			PIXI.Loader.shared.add("Assets/ElectroScrapsJSAssetsLowResPL-0.json");
+			PIXI.Loader.shared.add("Assets/ElectroScrapsJSAssetsLowResPL-1.json");
 			PIXI.Loader.shared.onProgress.add( function() {
 				assetsLoaded++;
 				preloader.width=parseInt(960*assetsLoaded/assetsNum);
@@ -185,7 +240,30 @@
 				overlayMenu.init();
 				app.stage.addChild(overlayMenu);
 				
-				gameIteration=1;				
+				gameIteration=1;
+
+				window.addEventListener('SendGamePoints', sendGamePoints, false);
+				function sendGamePoints(e) {
+					var gamePoints=parseInt(overlayMenu.points.text);
+					var token=parseInt(9000*Math.random())+1000;
+					token = parseInt(gamePoints.toString() + token.toString() + (parseInt(new Date().getTime()/1000)).toString());
+					jQuery.ajax({
+						type: "POST",
+						url: 'RegisterPoints.php',
+						dataType: 'json',
+						data: {playerID: window.playerID, points: gamePoints, token: token},
+
+						success: function (obj, textstatus) {
+									  if( !('error' in obj) ) {
+										  yourVariable = obj.result;
+									  }
+									  else {
+										  console.log(obj.error);
+									  }
+								}
+					});
+				}
+				
 				startMenuLevel();
 			}
 			
@@ -274,6 +352,7 @@
 				_selectedMineCountries=[];
 				_collectedComponents=[];
 				_recycledComponentNum=0;
+				_recycledComponentList=[];
 				_savedCountriesNum=0;
 				startMenuLevel();
 			}
@@ -326,9 +405,11 @@
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);
 			}
 			
-			function hideMonsterLevelRecyclePopup() {
+			function hideMonsterLevelRecyclePopup(res) {
 				overlayMenu.addPoints(100*gameIteration);
 				_recycledComponentNum++;
+				if(_recycledComponentList[res.name]==null) _recycledComponentList[res.name]=0;
+				_recycledComponentList[res.name]=_recycledComponentList[res.name]+1;
 				app.stage.currentLevel.recyclePopup.visible=false;
 				app.stage.currentLevel.initRandomItemDrop(app.stage.currentLevel);
 				app.stage.currentLevel.checkItemsInScanner(app.stage.currentLevel);

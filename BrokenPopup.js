@@ -34,7 +34,7 @@ class BrokenPopup extends Popup {
 			popupRecycleResIconTXT.y=0;
 		this.addChild(popupRecycleResIconTXT);
 		
-		this.popupRecycleBtnTXT = new PIXI.Text("RECYCLE",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
+		this.popupRecycleBtnTXT = new PIXI.Text("Recykling",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
 		var popupRecycleBtnTXT=this.popupRecycleBtnTXT;
 			popupRecycleBtnTXT.pivot.x=popupRecycleBtnTXT.width/2;
 			popupRecycleBtnTXT.roundPixels=true;
@@ -52,7 +52,7 @@ class BrokenPopup extends Popup {
 			popupProcessBtn.on('pointerdown', onProcessBtnClick);
 		this.addChild(popupProcessBtn);
 		
-		this.popupProcessBtnTXT = new PIXI.Text("PROCESS",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
+		this.popupProcessBtnTXT = new PIXI.Text("Przetwórz",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
 		var popupProcessBtnTXT=this.popupProcessBtnTXT;
 			popupProcessBtnTXT.pivot.x=popupProcessBtnTXT.width/2;
 			popupProcessBtnTXT.roundPixels=true;
