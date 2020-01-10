@@ -6,7 +6,7 @@ class OverlayMenu extends PIXI.Sprite {
 	
 	init() {
 		let context = this;
-		let startClockValue="120";
+		let startClockValue="5";
 		let startPointsValue="0";
 		
 		if (context.menuBar==null) context.menuBar = new PIXI.Sprite(PIXI.Texture.from("MenuScreen.png"));

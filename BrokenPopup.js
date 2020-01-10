@@ -52,7 +52,7 @@ class BrokenPopup extends Popup {
 			popupProcessBtn.on('pointerdown', onProcessBtnClick);
 		this.addChild(popupProcessBtn);
 		
-		this.popupProcessBtnTXT = new PIXI.Text("Przetwórz",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
+		this.popupProcessBtnTXT = new PIXI.Text("Napraw",{fontFamily : 'Arial', fontSize: 30, fill : 0xffffff, align : 'left'});
 		var popupProcessBtnTXT=this.popupProcessBtnTXT;
 			popupProcessBtnTXT.pivot.x=popupProcessBtnTXT.width/2;
 			popupProcessBtnTXT.roundPixels=true;

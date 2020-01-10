@@ -31,6 +31,7 @@
 	<script src="RecyclePopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="BrokenPopup.js?t=<?=time()?>" type="text/javascript"></script>
 	<script src="HazardQuizPopup.js?t=<?=time()?>" type="text/javascript"></script>
+	<script src="LoginLevel.js?t=<?=time()?>" type="text/javascript"></script>
 	<body>
 		<?php include "GetSchoolDropDownMenu.php";?><br>
 		<?php include "InitTeamDropDownMenu.php";?><br>
@@ -264,12 +265,33 @@
 					});
 				}
 				
+				window.playerID = 1;
+				window.playerName = "Domyślny Gracz";
+				
 				startMenuLevel();
+				
+				gsap.delayedCall(1,hidePreloader);
+			}
+			
+			function hidePreloader() {
+				var preloader = document.getElementById("GamePreloader");
+				preloader.hidden=true;
 			}
 			
 			function startMenuLevel() {
+				overlayMenu.setPlayerName(window.playerName);
+				
 				context.playMusic(1);
 				level = new MenuLevel(context.initGame);
+				app.stage.currentLevel=level;
+				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
+				level.init();
+				level.begin(level);
+			}
+			
+			function startLoginLevel() {
+				context.playMusic(0);
+				level = new LoginLevel(context.initGame);
 				app.stage.currentLevel=level;
 				app.stage.addChildAt(level,app.stage.children.length-childOnTop);
 				level.init();

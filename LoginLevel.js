@@ -1,4 +1,4 @@
-class MenuLevel extends PIXI.Sprite {
+class LoginLevel extends PIXI.Sprite {
 	
 	constructor(endFunc) {
 		super();
@@ -8,17 +8,16 @@ class MenuLevel extends PIXI.Sprite {
 	init() {
 		let context = this;
 
-		var bg = new PIXI.Sprite(PIXI.Texture.from("LoadingScreen.png"));
+		var bg = new PIXI.Sprite(PIXI.Texture.from("LeagueScreen.jpg"));
 		context.addChild(bg);
 		
 		context.startBtn = new PIXI.Sprite(PIXI.Texture.from("StartButton.png"));
 		var startBtn=context.startBtn;
-			startBtn.visible=false;
 			startBtn.buttonMode = true;
 			startBtn.pivot.x=startBtn.width/2;
 			startBtn.pivot.y=startBtn.height/2;
-			startBtn.x = app.renderer.width/2;
-			startBtn.y = 8*app.renderer.height/9;
+			startBtn.x = 6*app.renderer.width/7;
+			startBtn.y = 10*app.renderer.height/11;
 			startBtn.interactive = true;
 			startBtn.on('pointerdown', onButtonDown);
 		context.addChild(startBtn);
@@ -33,7 +32,7 @@ class MenuLevel extends PIXI.Sprite {
 	}
 	
 	begin(context) {
-		context.startBtn.visible=true;
+		//
 	}
 	
 	stop(context) {

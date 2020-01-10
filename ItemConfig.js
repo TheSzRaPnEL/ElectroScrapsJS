@@ -42,8 +42,8 @@ class ItemConfig {
 		brass.desc = "Stop miedzi i cynku, o wysokiej odporności na korozję.";
 		
 		cadm.addMineCountry(countryName.CHINY);
+		cadm.addMineCountry(countryName.KANADA);
 		cadm.addMineCountry(countryName.POLSKA);
-		cadm.addMineCountry(countryName.USA);
 		cadm.desc = "Kadm jest bardzo toksycznym pierwiastkiem. Gdy dostanie się do organizmu, po spożyciu lub wdychaniu, przenika do krwi i gromadzi się w wątrobie, a także powoduje zaburzenia czynności nerek. Jest bardzo zbliżony do wapnia i jako taki może wchodzić w interakcje z wapniem w kościach. Ulega bioakumulacji w organizmach żywych.Stosowany w metalurgii, używany w stopach do przewodów elektrycznych i bezpieczników, a także w produkcji baterii akumulatorowych (na przykład baterii niklowo-kadmowych)";
 		
 		chrome.desc = "";
@@ -65,9 +65,9 @@ class ItemConfig {
 		gold.addMineCountry(countryName.USA);
 		gold.desc = "Metal szlachetny stosowany w elektronice ze względu na swoją odporność na działanie czynników atmosferycznych, np.: do powlekania procesorów, styków kabli, chipów i innych elementów PC.";
 		
+		lead.addMineCountry(countryName.CHINY);
 		lead.addMineCountry(countryName.AUSTRALIA);
-		lead.addMineCountry(countryName.KANADA);
-		lead.addMineCountry(countryName.MEKSYK);
+		lead.addMineCountry(countryName.PERU);
 		lead.desc = "Związki ołowiu działają szkodliwie przez drogi oddechowe i  po połknięciu. Są szkodliwie dla dziecka w łonie matki. Niebezpieczeństwo kumulacji w organizmie i chorób neurologicznych. Mogą powodować długo utrzymujące się niekorzystne zmiany w środowisku wodnym i przenikać do sieci troficznej ryb i ptaków żywiących się organizmami wodnymi. Ulega bioakumulacji w organizmach żywych. Używany w akumulatorach, a także w postaci blach, rur, stopów, śrutu i w produkcji szkła, do powłok kabli elektrycznych czy osłony przed promieniowaniem jonizującym.";
 		
 		nickel.addMineCountry(countryName.KANADA);
@@ -108,6 +108,8 @@ class ItemConfig {
 		wolfram.desc = "Inaczej tungsten. Metal bardzo ważny dla przemysłu zbrojeniowego, a cienki drucik wolframu znajdujący się w bańce żarówki, powoduje, że żarówka świeci.";
 		
 		mercury.addMineCountry(countryName.CHINY);
+		mercury.addMineCountry(countryName.CHILE);
+		mercury.addMineCountry(countryName.ROSJA);
 		mercury.desc = "Rtęć jest toksyczna we wszystkich formach organicznych i we wszystkich stanach chemicznych. W postaci pary rtęć jest toksyczna dla dróg oddechowych i rozpuszcza się we krwi; atakuje nerki, mózg i układ nerwowy. Bardzo groźna dla kobiet w ciąży i dla płodu. Ulega bioakumulacji w organizmach żywych. Była ceniona w medycynie ( w termometrach) i technice dentystycznej ( amalgamaty). Lampy rtęciowe szeroko stosowane były w oświetleniu zewnętrznym, hal przemysłowych oraz magazynów, a także w kineskopach starych telewizorów.";
 		
 		context.gameItemComponentsList.push(aluminium,batteryLit,batteryNik,brass,cadm,chrome,cobalt,copper,glass,gold,lead,nickel,plastic,platinium,ree,refrigerant,silver,steel,tin,wolfram,mercury);
