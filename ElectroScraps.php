@@ -54,6 +54,12 @@
 					if( !('error' in obj) ) {
 						var select = document.getElementById('TeamSelect');
 						select.innerHTML="";
+						var option = document.createElement('option');
+						option.value = "";
+						option.text =  "Wybierz Zespół";
+						option.selected =  true;
+						option.disabled =  true;
+						select.add(option);
 						obj.forEach(function(item) {
 								var option = document.createElement('option');
 								option.value = item["ID"];
@@ -80,6 +86,12 @@
 				success: function (obj, textstatus) {
 					var select = document.getElementById('PlayerSelect');
 						select.innerHTML="";
+						var option = document.createElement('option');
+						option.value = "";
+						option.text =  "Wybierz Gracza";
+						option.selected =  true;
+						option.disabled =  true;
+						select.add(option);
 					if( !('error' in obj) ) {
 						obj.forEach(function(item) {
 								var option = document.createElement('option');
