@@ -7,6 +7,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$conn->set_charset("utf8");
+
 $schoolID = $_GET['ttt'];
 
 $sql = 'SELECT DISTINCT A.Name, A.ID FROM Team A INNER JOIN PlayerTeamSchoolRelation B ON A.ID=B.TeamID WHERE B.SchoolID='.$schoolID;

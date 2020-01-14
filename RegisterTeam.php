@@ -7,8 +7,8 @@
 	</head>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	
-	<body>
-		<?php include "GetSchoolDropDownMenu.php";?><br>
+	<body id="Body">
+		<?php include "GetSchoolDropDownMenu.php";?><br><br>
 		Dodaj Zespół: <input id="TeamNameInput" value="Nazwa Zespołu">
 		<button onclick="createTeam();" style="margin-bottom:8px">Zapisz nowy Zespół</button>
 		<script type="text/javascript">
@@ -18,20 +18,25 @@
 				console.log(teamName);
 				console.log(schoolName);
 				
+				var body = document.getElementById('Body');
+				
 				jQuery.ajax({
 				type: "GET",
 				url: 'CreateTeam.php',
 				dataType: 'json',
 				data: {schoolName: schoolName, teamName: teamName},
 
-				success: function (obj, textstatus) {
-					if( !('error' in obj) ) {
-							console.log("Team created.");
-						}
-						else {
-							console.log(obj.error);
-						}
+				success: function (result) {
+					if( result=="111" ) {
+						body.innerHTML="Zespół został dodany.";
 					}
+					else if( result=="222" ) {
+						body.innerHTML="Taki Zespół już istnieje.";
+					}
+					else {
+						body.innerHTML="Błąd przy tworzeniu wpisu!";
+					}
+				}
 				});
 			}
 			

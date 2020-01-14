@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
 		$schoolID=$row[ID];
     }
 }
-echo 'schoolID: '.$schoolID.'<br>';
+//echo 'schoolID: '.$schoolID.'<br>';
 
 if (!empty($schoolID) AND $schoolID!=-1) {
 	$schoolExists=true;
@@ -31,20 +31,24 @@ if (!empty($schoolID) AND $schoolID!=-1) {
 
 //Check if SCHOOL exists
 if (!$schoolExists) {
-	echo 'there is no such School Name - it will be created';
+	//echo 'there is no such School Name - it will be created';
 	
 	//CREATE NEW SCHOOL
 	$sql = 'INSERT INTO School (Name) VALUES ("'.$schoolName.'")';
 	if ($conn->query($sql) === TRUE) {
 		$newSchoolID = $conn->insert_id;
-		echo "1st operation OK";
+		//echo "1st operation OK";
+		$result=111;
 	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
+		//echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	
 } else {
-	echo 'there already is School with this Name - it will NOT be duplicated';
+	$result=222;
+	//echo 'there already is School with this Name - it will NOT be duplicated';
 }
+
+echo json_encode($result);
 
 $conn->close();
 ?>

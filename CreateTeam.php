@@ -24,14 +24,17 @@ if ($result->num_rows > 0) {
 		$schoolID=$row[ID];
     }
 }
-echo 'schoolID: '.$schoolID.'<br>';
+// echo 'schoolID: '.$schoolID.'<br>';
 
 if (!empty($schoolID) AND $schoolID!=-1) {
 	$schoolExists=true;
 }
 
 //Check if SCHOOL exists
-if (!$schoolExists) exit("SCHOOL DOESNT EXIST");
+if (!$schoolExists) {
+	echo json_encode($result);
+	exit("SCHOOL DOESNT EXIST");
+}
 
 //Check if TEAM exist for given SCHOOL
 $schoolTeamID=-1;
@@ -44,7 +47,7 @@ if ($result->num_rows > 0) {
 		$schoolTeamID=$row[TeamID];
 	}
 }
-echo 'schoolteamid: '.$schoolTeamID.'<br>';
+// echo 'schoolteamid: '.$schoolTeamID.'<br>';
 $teamBelongsToSchool=false;
 
 if (!empty($schoolTeamID) AND $schoolTeamID!=-1) {
@@ -52,29 +55,33 @@ if (!empty($schoolTeamID) AND $schoolTeamID!=-1) {
 }
 
 if (!$teamBelongsToSchool) {
-	echo 'there is no such Team for this School - it will be created<br>';
+	// echo 'there is no such Team for this School - it will be created<br>';
 	
 	//CREATE NEW TEAM
 	$sql = 'INSERT INTO Team (Name) VALUES ("'.$teamName.'")';
 	if ($conn->query($sql) === TRUE) {
 		$newTeamID = $conn->insert_id;
-		echo "1st operation OK<br>";
+		// echo "1st operation OK<br>";
 	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
+		// echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	
 	//CREATE NEW PLAYER-TEAM-SCHOOL relation with MOCKUP PLAYER ID 0
 	$sql = 'INSERT INTO PlayerTeamSchoolRelation (SchoolID,TeamID,PlayerID) VALUES ('.$schoolID.','.$newTeamID.',0)';
 	if ($conn->query($sql) === TRUE) {
 		$newRelationID = $conn->insert_id;
-		echo "2nd operation OK<br>";
+		// echo "2nd operation OK<br>";
+		$result=111;
 	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error ."<br>";
+		// echo "Error: " . $sql . "<br>" . $conn->error ."<br>";
 	}
 	
 } else {
-	echo 'there already is Team for this School - it will NOT be duplicated';
+	$result=222;
+	// echo 'there already is Team for this School - it will NOT be duplicated';
 }
+
+echo json_encode($result);
 
 $conn->close();
 ?>

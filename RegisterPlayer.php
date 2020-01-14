@@ -7,9 +7,9 @@
 	</head>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	
-	<body>
+	<body id="Body">
 		<?php include "GetSchoolDropDownMenu.php";?><br>
-		<?php include "InitTeamDropDownMenu.php";?><br>
+		<?php include "InitTeamDropDownMenu.php";?><br><br>
 		Dodaj Gracza: <input id="PlayerNameInput" value="Nazwa Gracza">
 		<button onclick="createPlayer();" style="margin-bottom:8px">Zapisz nowego Gracza</button>
 		<script type="text/javascript">
@@ -21,20 +21,25 @@
 				console.log(teamName);
 				console.log(schoolName);
 				
+				var body = document.getElementById('Body');
+				
 				jQuery.ajax({
 				type: "GET",
 				url: 'CreatePlayer.php',
 				dataType: 'json',
 				data: {schoolName: schoolName, teamName: teamName, playerName: playerName},
 
-				success: function (obj, textstatus) {
-					if( !('error' in obj) ) {
-							console.log("Player created.");
-						}
-						else {
-							console.log(obj.error);
-						}
+				success: function (result) {
+					if( result=="111" ) {
+						body.innerHTML="Gracz został dodany.";
 					}
+					else if( result=="222" ) {
+						body.innerHTML="Taki Gracz już istnieje.";
+					}
+					else {
+						body.innerHTML="Błąd przy tworzeniu wpisu!";
+					}
+				}
 				});
 			}
 			
