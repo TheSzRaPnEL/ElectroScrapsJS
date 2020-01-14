@@ -7,6 +7,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$conn->set_charset("utf8");
+
 $schoolName = $_GET['schoolName'];
 $teamName = $_GET['teamName'];
 $playerName = $_GET['playerName'];
